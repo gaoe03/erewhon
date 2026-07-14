@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-frame="0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Erewhon Smoothie Archive</title>
+  <meta name="description" content="Every smoothie sold at the Erewhon Tonic Bar, with full ingredient lists and a profile for every ingredient." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🥤</text></svg>" />
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+  <!-- Shared wobble filters: every .wob element cycles through these seeds -->
+  <svg class="filter-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="wob-a-0" x="-12%" y="-12%" width="124%" height="124%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="wob-a-1" x="-12%" y="-12%" width="124%" height="124%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="17" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="wob-a-2" x="-12%" y="-12%" width="124%" height="124%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="29" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="wob-a-3" x="-12%" y="-12%" width="124%" height="124%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="41" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="nav">
+    <a class="brand" href="#/">Erewhon Smoothie Archive</a>
+    <nav>
+      <a href="#/" data-nav="archive">Smoothies</a>
+      <a href="#/ingredients" data-nav="ingredients">Ingredients</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-archive">
+      <div class="hero">
+        <h1 class="serif">The Erewhon<br/>Smoothie Archive</h1>
+        <p class="hero-line" id="hero-stats"></p>
+      </div>
+      <div class="toolbar">
+        <div class="segmented" id="chips" role="group" aria-label="filter by type"></div>
+        <select class="sort-select" id="sort-select" aria-label="sort order">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="az">A to Z</option>
+        </select>
+      </div>
+      <ol class="catalog" id="catalog"></ol>
+    </section>
+
+    <section id="view-ingredients" hidden>
+      <div class="hero">
+        <h1 class="serif">Ingredients</h1>
+        <p class="hero-line" id="ing-hero-stats"></p>
+      </div>
+      <div class="toolbar ing-toolbar">
+        <input class="ing-search" id="ing-search" type="search" placeholder="Search ingredients" aria-label="search ingredients" />
+        <label class="ing-sort-label" for="ing-sort">Sort</label>
+        <select class="sort-select" id="ing-sort" aria-label="sort ingredients">
+          <option value="type">By type</option>
+          <option value="most">Most used</option>
+          <option value="az">A to Z</option>
+        </select>
+      </div>
+      <div id="ing-categories"></div>
+      <div class="ing-most">
+        <h2>Most used</h2>
+        <ol class="most-list" id="most-list"></ol>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="sheet" id="sheet">
+    <div class="sheet-inner" id="sheet-inner"></div>
+  </dialog>
+
+  <footer class="footer">
+    <p>An unofficial archive, not affiliated with Erewhon Market. Sources are listed on each smoothie.</p>
+  </footer>
+
+  <script src="icons.js"></script>
+  <script src="ingredients.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
