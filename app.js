@@ -29,7 +29,7 @@
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const PILLS = {
-    permanent: { text: 'On the menu', cls: 'green' },
+    permanent: { text: 'House staple', cls: 'green' },
     limited: { text: 'Limited run', cls: 'orange' },
     discontinued: { text: 'Discontinued', cls: 'gray' },
     unknown: { text: 'Status unknown', cls: 'gray' },

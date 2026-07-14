@@ -875,6 +875,49 @@
       <path d="M41 32 L53 24 L51 33 L54 42 L41 34 Z" fill="#A8C8E8" stroke="#2A2118" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M28 25 Q31 33 28 41" stroke="#2A2118" stroke-width="2" fill="none" stroke-linecap="round"/>
       <circle cx="19" cy="30" r="2" fill="#2A2118" stroke="none"/>`,
+    jasmine: `
+      <path d="M32 33 C33 43 32 50 29 57" ${S} stroke="${C.green}" fill="none"/>
+      <path d="M30 48 Q21 46 19 39 Q27 39 30 48 Z" fill="${C.green}" ${S2}/>
+      <g transform="rotate(0 32 24)"><path d="M32 24 L27 10 Q32 4 37 10 Z" fill="${C.white}" ${S2}/></g>
+      <g transform="rotate(72 32 24)"><path d="M32 24 L27 10 Q32 4 37 10 Z" fill="${C.white}" ${S2}/></g>
+      <g transform="rotate(144 32 24)"><path d="M32 24 L27 10 Q32 4 37 10 Z" fill="${C.white}" ${S2}/></g>
+      <g transform="rotate(216 32 24)"><path d="M32 24 L27 10 Q32 4 37 10 Z" fill="${C.white}" ${S2}/></g>
+      <g transform="rotate(288 32 24)"><path d="M32 24 L27 10 Q32 4 37 10 Z" fill="${C.white}" ${S2}/></g>
+      <circle cx="32" cy="24" r="4" fill="${C.yellow}" ${S2}/>`,
+    hojicha: `
+      <path d="M25 15 q3 -6 0 -11 M33 15 q3 -6 0 -11" stroke="${C.wheat}" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".75"/>
+      <path d="M14 26 H46 C46 42 38 50 30 50 C22 50 14 42 14 26 Z" fill="${C.cream}" ${S}/>
+      <path d="M14 26 H46 C46 31 39 34 30 34 C21 34 14 31 14 26 Z" fill="${C.wheat}" ${S2}/>
+      <path d="M46 28 C55 28 55 41 46 41" ${S} fill="none"/>
+      <ellipse cx="30" cy="55" rx="21" ry="4" fill="${C.cream}" ${S2}/>`,
+    grape: `
+      <path d="M31 22 L33 11" ${S} stroke="${C.brown}" fill="none"/>
+      <path d="M33 11 Q44 6 48 14 Q40 18 33 11 Z" fill="${C.green}" ${S2}/>
+      <circle cx="27" cy="24" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="38" cy="24" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="21" cy="32" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="32" cy="32" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="43" cy="32" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="27" cy="41" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="38" cy="41" r="5.5" fill="${C.lime}" ${S2}/>
+      <circle cx="32" cy="50" r="5.5" fill="${C.lime}" ${S2}/>`,
+    holybasil: `
+      <path d="M32 58 C32 47 32 36 32 22" ${S} fill="none" stroke="${C.deep}"/>
+      <path d="M32 33 C19 32 14 21 24 16 C32 13 35 25 32 33 Z" fill="${C.green}" ${S}/>
+      <path d="M32 41 C45 40 50 29 40 24 C32 21 29 33 32 41 Z" fill="${C.green}" ${S}/>
+      <path d="M24 18 Q28 25 31 32 M40 26 Q36 32 33 39" stroke="${C.deep}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".8"/>
+      <circle cx="30" cy="16" r="2.8" fill="${C.purple}" ${S2}/>
+      <circle cx="35" cy="13" r="2.8" fill="${C.purple}" ${S2}/>`,
+    anisehyssop: `
+      <path d="M32 58 L32 36" ${S} fill="none" stroke="${C.green}"/>
+      <path d="M32 7 C27 7 25 12 25 21 C25 31 28 37 32 39 C36 37 39 31 39 21 C39 12 37 7 32 7 Z" fill="${C.purple}" ${S}/>
+      <path d="M27 14 h10 M26 20 h12 M26 26 h12 M27 32 h10" stroke="${C.magenta}" stroke-width="1.7" stroke-linecap="round" opacity=".7"/>
+      <path d="M32 48 C25 47 22 41 28 38 Q33 42 32 48 Z" fill="${C.green}" ${S2}/>`,
+    cardamom: `
+      <path d="M32 11 L32 6" ${S} stroke="${C.wheat}" fill="none"/>
+      <path d="M32 12 C41 19 41 41 32 51 C23 41 23 19 32 12 Z" fill="${C.lime}" ${S}/>
+      <path d="M32 16 V47 M27 21 Q26 32 27 43 M37 21 Q38 32 37 43" stroke="${C.deep}" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85"/>
+      <path d="M30 52 L28 57 M34 52 L36 57" ${S2} stroke="${C.wheat}" fill="none"/>`,
   };
 
   /* keyword → icon. First match wins, so specific rules go first. */
