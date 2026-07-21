@@ -55,7 +55,7 @@ export function makeAgent(canon) {
       method: 'POST',
       headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-5',
         max_tokens: 40,
         messages: [{
           role: 'user',

@@ -7,7 +7,7 @@ import { classify } from './dedupe.mjs';
 import { checkGuards } from './guards.mjs';
 import { applyClassifications } from './append.mjs';
 import { fetchIngredients } from './fetch-ingredients.mjs';
-import { loadArchiveIngredients } from './enrich.mjs';
+import { loadArchiveIngredients, normalizeIngredients, makeAgent } from './enrich.mjs';
 import { buildData } from './build-data.mjs';
 import { healthCheck } from './health.mjs';
 
@@ -32,16 +32,20 @@ console.log(`live ${candidates.length} | ${JSON.stringify(summary)} | ${apply ? 
 if (added.length) console.log('new/relaunch:', added.join(', '));
 
 if (apply) {
-  // fetch each new drink's ingredients from its product page, match to the canon (regex only, no API cost)
-  const { matchCanon } = loadArchiveIngredients();
+  // fetch each new drink's ingredients from its product page; match by regex first,
+  // and only fall back to the Sonnet agent on a miss (a handful of calls a month).
+  const { matchCanon, canon } = loadArchiveIngredients();
+  const agent = makeAgent(canon); // null when ANTHROPIC_API_KEY is unset -> regex only
   for (const e of addedEntries) {
     const raw = await fetchIngredients(e.productId, e.id);
     if (raw && raw.length) {
-      const misses = raw.filter((r) => !matchCanon(r));
+      const { matched, newOnes } = await normalizeIngredients(raw, matchCanon, agent);
+      const viaAgent = matched.filter((m) => m.via === 'agent').length;
       e.ingredients = raw;
-      e.ingredientsComplete = misses.length === 0;
-      e.needsReview = misses.length > 0;
-      console.log(`  ${e.id}: ${raw.length} ingredients, ${misses.length ? 'new to canon: ' + misses.join(', ') : 'all matched'}`);
+      e.ingredientsComplete = newOnes.length === 0;
+      e.needsReview = newOnes.length > 0;
+      console.log(`  ${e.id}: ${raw.length} ingredients, ${matched.length} matched (${viaAgent} via agent)`
+        + (newOnes.length ? `, new to canon: ${newOnes.map((n) => n.raw).join(', ')}` : ''));
     } else {
       console.log(`  ${e.id}: ingredients not fetched, left for review`);
     }
