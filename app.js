@@ -392,3 +392,24 @@
   renderIngredients();
   route();
 })();
+
+/* Fit each sort dropdown to its selected label, so the chevron sits right after the
+   text instead of at the far right of the widest option. */
+(function () {
+  const fit = (sel) => {
+    if (!sel || !sel.options.length) return;
+    const cs = getComputedStyle(sel);
+    const probe = document.createElement('span');
+    probe.style.cssText = `position:absolute;visibility:hidden;white-space:pre;font-size:${cs.fontSize};font-family:${cs.fontFamily};font-weight:${cs.fontWeight}`;
+    probe.textContent = sel.options[sel.selectedIndex].text;
+    document.body.appendChild(probe);
+    sel.style.width = (Math.ceil(probe.getBoundingClientRect().width) + 42) + 'px';
+    probe.remove();
+  };
+  ['sort-select', 'ing-sort'].forEach((id) => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    fit(sel);
+    sel.addEventListener('change', () => fit(sel));
+  });
+})();
