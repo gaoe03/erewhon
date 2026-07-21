@@ -368,6 +368,7 @@
       blurb: 'The soft flesh of a young coconut, blended for body and a mild sweetness in the tropical recipes.' },
     { id: 'pink-peppercorn', name: 'Pink peppercorn', cat: 'sweet', band: 'functional', icon: 'peppercorn', re: /peppercorn/,
       blurb: 'Not a true pepper but a dried berry, floral and barely spicy. Laufey\'s Madwoman smoothie used it as its signature twist.' },
+    // AUTO-CANON: the pipeline appends new ingredients below this line (jar icon, review it)
   ];
 
 

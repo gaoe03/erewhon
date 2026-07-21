@@ -8,6 +8,7 @@ import { checkGuards } from './guards.mjs';
 import { applyClassifications } from './append.mjs';
 import { fetchIngredients } from './fetch-ingredients.mjs';
 import { loadArchiveIngredients, normalizeIngredients, makeAgent } from './enrich.mjs';
+import { addCanonEntry } from './add-canon.mjs';
 import { buildData } from './build-data.mjs';
 import { healthCheck } from './health.mjs';
 
@@ -40,12 +41,20 @@ if (apply) {
     const raw = await fetchIngredients(e.productId, e.id);
     if (raw && raw.length) {
       const { matched, newOnes } = await normalizeIngredients(raw, matchCanon, agent);
-      const viaAgent = matched.filter((m) => m.via === 'agent').length;
+      // a genuinely-new ingredient the agent could describe gets appended to the canon
+      const canonAdds = [];
+      for (const n of newOnes) {
+        if (!n.proposal) continue;
+        const r = addCanonEntry(REPO, { ...n.proposal, raw: n.raw });
+        if (r.status === 'added') canonAdds.push(r.id);
+      }
       e.ingredients = raw;
-      e.ingredientsComplete = newOnes.length === 0;
-      e.needsReview = newOnes.length > 0;
+      e.ingredientsComplete = true;
+      e.needsReview = newOnes.length > 0; // a new canon row exists -> you review its icon
+      const viaAgent = matched.filter((m) => m.via === 'agent').length;
       console.log(`  ${e.id}: ${raw.length} ingredients, ${matched.length} matched (${viaAgent} via agent)`
-        + (newOnes.length ? `, new to canon: ${newOnes.map((n) => n.raw).join(', ')}` : ''));
+        + (canonAdds.length ? `, canon += ${canonAdds.join(', ')} (jar icon, review it)` : '')
+        + (newOnes.length && !canonAdds.length ? `, ${newOnes.length} new but not auto-added` : ''));
     } else {
       console.log(`  ${e.id}: ingredients not fetched, left for review`);
     }
