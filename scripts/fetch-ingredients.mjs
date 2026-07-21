@@ -15,7 +15,9 @@ export function parseIngredients(block) {
     .split(',')
     .map((x) => x.trim().replace(/^(and |topped with )\s*/i, '').replace(/[.\s]+$/, '').trim())
     .filter((p) => p.length > 1 && p.length < 60);
-  return parts.length ? parts : null;
+  // a sane ingredient list is a handful of items; anything outside that is a broken
+  // scrape (a layout change or the wrong text block), so return nothing and leave it for review
+  return parts.length >= 2 && parts.length <= 30 ? parts : null;
 }
 
 export async function fetchIngredients(productId, slug, { timeoutMs = 30000 } = {}) {

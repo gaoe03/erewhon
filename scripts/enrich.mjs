@@ -33,7 +33,8 @@ export async function normalizeIngredients(rawList, matchCanon, agentFn) {
     const id = matchCanon(raw);
     if (id) { matched.push({ raw, id, via: 'regex' }); continue; }
     if (agentFn) {
-      const a = await agentFn(raw);
+      let a = null;
+      try { a = await agentFn(raw); } catch { a = null; } // a flaky model call becomes a miss, never aborts the run
       if (a && a.id) matched.push({ raw, id: a.id, via: 'agent' });
       else newOnes.push({ raw, proposal: (a && a.newEntry) || null });
     } else {

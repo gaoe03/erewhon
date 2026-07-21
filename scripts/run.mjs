@@ -27,7 +27,8 @@ if (!guard.ok) { console.error('GUARDS FAILED, aborting:', guard.errors.join('; 
 // already aborted a suspicious fetch, so this only runs on a full, sane menu. Last
 // safety net: never discontinue more than half the archive in a single run.
 const gone = findDiscontinued(archive, candidates);
-if (gone.length > archive.length * 0.5) { console.error(`ABORT: ${gone.length} would be discontinued, too many.`); process.exit(1); }
+const active = archive.filter((s) => s.status !== 'discontinued').length;
+if (gone.length > active * 0.5) { console.error(`ABORT: ${gone.length} of ${active} live drinks would be discontinued, too many.`); process.exit(1); }
 
 // Only touch the archive when there is something worth a human's review. This keeps
 // quiet runs a true no-op, so the workflow opens no pull request when nothing changed.
