@@ -369,6 +369,9 @@
     { id: 'pink-peppercorn', name: 'Pink peppercorn', cat: 'sweet', band: 'functional', icon: 'peppercorn', re: /peppercorn/,
       blurb: 'Not a true pepper but a dried berry, floral and barely spicy. Laufey\'s Madwoman smoothie used it as its signature twist.' },
     // AUTO-CANON: the pipeline appends new ingredients below this line (jar icon, review it)
+    { id: 'granola', name: "Granola", cat: 'super', band: 'everyday', icon: 'jar', re: /granola/,
+      blurb: "Auto-added from the tonic bar. Review this entry." }, // auto-added
+
   ];
 
 
