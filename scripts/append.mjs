@@ -41,6 +41,7 @@ export async function applyClassifications(archive, candidates, classifications,
   const bySlug = Object.fromEntries(archive.map((s) => [s.id, s]));
   const summary = { stillLive: 0, rename: 0, relaunch: 0, new: 0, skip: 0, images: 0 };
   const added = [];
+  const addedEntries = [];
   for (let i = 0; i < candidates.length; i++) {
     const cand = candidates[i];
     const cls = classifications[i];
@@ -59,8 +60,8 @@ export async function applyClassifications(archive, candidates, classifications,
       const r = await downloadImage(cand.imageUrl, `${imgDir}/${slug}.jpg`);
       if (r.status === 'downloaded' || r.status === 'skipped') summary.images++;
     }
-    if (apply) archive.push(makeNewEntry(cand, slug, imagePath));
+    if (apply) { const entry = makeNewEntry(cand, slug, imagePath); archive.push(entry); addedEntries.push(entry); }
     added.push(cand.name);
   }
-  return { summary, added };
+  return { summary, added, addedEntries };
 }
