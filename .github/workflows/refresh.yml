@@ -47,10 +47,7 @@ jobs:
             img/**
             ingredients.js
           branch: smoothie-refresh
-          title: new smoothies from the tonic bar
+          title: Menu refresh from the tonic bar
           commit-message: refresh smoothies
-          body: |
-            Automated refresh from the live tonic-bar menu. Ingredients are auto-filled.
-            Anything flagged needsReview has an ingredient the canon does not know yet,
-            so add a rule for it, then merge.
+          body-path: pr-body.md
           labels: automated

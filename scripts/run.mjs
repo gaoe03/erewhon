@@ -37,6 +37,7 @@ if (apply) {
   // and only fall back to the Sonnet agent on a miss (a handful of calls a month).
   const { matchCanon, canon } = loadArchiveIngredients();
   const agent = makeAgent(canon); // null when ANTHROPIC_API_KEY is unset -> regex only
+  const allCanonAdds = [];
   for (const e of addedEntries) {
     const raw = await fetchIngredients(e.productId, e.id);
     if (raw && raw.length) {
@@ -48,6 +49,7 @@ if (apply) {
         const r = addCanonEntry(REPO, { ...n.proposal, raw: n.raw });
         if (r.status === 'added') canonAdds.push(r.id);
       }
+      allCanonAdds.push(...canonAdds);
       e.ingredients = raw;
       e.ingredientsComplete = true;
       e.needsReview = newOnes.length > 0; // a new canon row exists -> you review its icon
@@ -64,4 +66,11 @@ if (apply) {
   const h = healthCheck(REPO);
   console.log(`health: ${h.ok ? 'OK' : 'FAIL'} | ${h.count} smoothies | errors: ${h.errors.join('; ') || 'none'} | ingredient warnings: ${h.warns.length}`);
   if (!h.ok) process.exit(1);
+
+  // a neutral, third-person changelog used as the pull request body (this is a public repo)
+  const body = ['Automated menu refresh.', ''];
+  if (added.length) body.push('New or updated smoothies:', ...added.map((n) => `- ${n}`), '');
+  if (summary.rename) body.push(`Backfilled the product id for ${summary.rename} returning item${summary.rename > 1 ? 's' : ''}.`, '');
+  if (allCanonAdds.length) body.push('New canonical ingredients, added with a placeholder icon:', ...allCanonAdds.map((id) => `- ${id}`), '');
+  writeFileSync(`${REPO}/pr-body.md`, body.join('\n').trim() + '\n');
 }
