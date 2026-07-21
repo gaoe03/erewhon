@@ -34,3 +34,17 @@ export function classify(cand, archive) {
 
   return { action: 'new' };
 }
+
+// Archived drinks no longer on the live menu. A drink counts as live if its productId
+// or its normalized name is in the live set. Anything already discontinued is skipped.
+export function findDiscontinued(archive, candidates) {
+  const liveP = new Set(candidates.filter((c) => c.productId).map((c) => c.productId));
+  const liveN = new Set(candidates.map((c) => normName(c.name)));
+  const gone = [];
+  for (const s of archive) {
+    if (s.status === 'discontinued') continue;
+    const live = (s.productId && liveP.has(s.productId)) || liveN.has(normName(s.name));
+    if (!live) gone.push({ id: s.id, name: s.name, from: s.status });
+  }
+  return gone;
+}

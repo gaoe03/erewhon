@@ -3,7 +3,7 @@
 //   node scripts/run.mjs --apply    write smoothies.json, images, regenerate data.js
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fetchLiveSmoothies, hitToCandidate } from './fetch-live.mjs';
-import { classify } from './dedupe.mjs';
+import { classify, findDiscontinued } from './dedupe.mjs';
 import { checkGuards } from './guards.mjs';
 import { applyClassifications } from './append.mjs';
 import { fetchIngredients } from './fetch-ingredients.mjs';
@@ -23,16 +23,24 @@ const classifications = candidates.map((c) => classify(c, archive));
 const guard = checkGuards(candidates, classifications);
 if (!guard.ok) { console.error('GUARDS FAILED, aborting:', guard.errors.join('; ')); process.exit(1); }
 
+// Archived drinks no longer on the live menu become discontinued. The guard above
+// already aborted a suspicious fetch, so this only runs on a full, sane menu. Last
+// safety net: never discontinue more than half the archive in a single run.
+const gone = findDiscontinued(archive, candidates);
+if (gone.length > archive.length * 0.5) { console.error(`ABORT: ${gone.length} would be discontinued, too many.`); process.exit(1); }
+
 // Only touch the archive when there is something worth a human's review. This keeps
-// quiet runs a true no-op, so the workflow opens no pull request when nothing is new.
-const reviewable = classifications.filter((c) => ['new', 'relaunch', 'rename'].includes(c.action)).length;
-if (reviewable === 0) { console.log(`live ${candidates.length}, nothing new. No changes.`); process.exit(0); }
+// quiet runs a true no-op, so the workflow opens no pull request when nothing changed.
+const reviewable = classifications.filter((c) => ['new', 'relaunch', 'rename'].includes(c.action)).length + gone.length;
+if (reviewable === 0) { console.log(`live ${candidates.length}, nothing new or gone. No changes.`); process.exit(0); }
 
 const { summary, added, addedEntries } = await applyClassifications(archive, candidates, classifications, { imgDir: `${REPO}/img`, apply });
 console.log(`live ${candidates.length} | ${JSON.stringify(summary)} | ${apply ? 'APPLIED' : 'dry run'}`);
 if (added.length) console.log('new/relaunch:', added.join(', '));
+if (gone.length) console.log(`discontinued ${gone.length}:`, gone.map((g) => g.name).join(', '));
 
 if (apply) {
+  for (const g of gone) { const e = archive.find((s) => s.id === g.id); if (e) e.status = 'discontinued'; }
   // fetch each new drink's ingredients from its product page; match by regex first,
   // and only fall back to the Sonnet agent on a miss (a handful of calls a month).
   const { matchCanon, canon } = loadArchiveIngredients();
@@ -70,6 +78,7 @@ if (apply) {
   // a neutral, third-person changelog used as the pull request body (this is a public repo)
   const body = ['Automated menu refresh.', ''];
   if (added.length) body.push('New or updated smoothies:', ...added.map((n) => `- ${n}`), '');
+  if (gone.length) body.push('Marked discontinued, no longer on the menu:', ...gone.map((g) => `- ${g.name}`), '');
   if (summary.rename) body.push(`Backfilled the product id for ${summary.rename} returning item${summary.rename > 1 ? 's' : ''}.`, '');
   if (allCanonAdds.length) body.push('New canonical ingredients, added with a placeholder icon:', ...allCanonAdds.map((id) => `- ${id}`), '');
   writeFileSync(`${REPO}/pr-body.md`, body.join('\n').trim() + '\n');
