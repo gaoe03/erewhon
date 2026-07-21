@@ -1,0 +1,42 @@
+name: refresh smoothies
+
+# Runs on the 1st and 15th (about every two weeks), plus a manual button.
+on:
+  schedule:
+    - cron: '0 14 1,15 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: run the pipeline
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          ALGOLIA_INDEX: ${{ secrets.ALGOLIA_INDEX }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/run.mjs --apply
+
+      # Only opens a PR if the run actually changed files. Merging it deploys via Vercel.
+      - name: open a pull request if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: smoothie-refresh
+          title: new smoothies from the tonic bar
+          commit-message: refresh smoothies
+          body: |
+            Automated refresh from the live tonic-bar menu.
+            Review the diff, fill in ingredients for anything flagged needsReview,
+            add a canon rule for any unresolved ingredient the health check named,
+            then merge to deploy.
+          labels: automated

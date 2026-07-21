@@ -20,6 +20,11 @@ const classifications = candidates.map((c) => classify(c, archive));
 const guard = checkGuards(candidates, classifications);
 if (!guard.ok) { console.error('GUARDS FAILED, aborting:', guard.errors.join('; ')); process.exit(1); }
 
+// Only touch the archive when there is something worth a human's review. This keeps
+// quiet runs a true no-op, so the workflow opens no pull request when nothing is new.
+const reviewable = classifications.filter((c) => ['new', 'relaunch', 'rename'].includes(c.action)).length;
+if (reviewable === 0) { console.log(`live ${candidates.length}, nothing new. No changes.`); process.exit(0); }
+
 const { summary, added } = await applyClassifications(archive, candidates, classifications, { imgDir: `${REPO}/img`, apply });
 console.log(`live ${candidates.length} | ${JSON.stringify(summary)} | ${apply ? 'APPLIED' : 'dry run'}`);
 if (added.length) console.log('new/relaunch:', added.join(', '));
