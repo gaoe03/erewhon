@@ -1,0 +1,56 @@
+name: refresh smoothies
+
+# Runs on the 1st and 15th (about every two weeks), plus a manual button.
+on:
+  schedule:
+    - cron: '0 14 1,15 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Playwright renders a new drink's product page to read its ingredients.
+      # Installed only here in the runner, never committed, so the static site
+      # and its Vercel deploy stay untouched.
+      - name: install playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps chromium
+
+      - name: run the pipeline
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          ALGOLIA_INDEX: ${{ secrets.ALGOLIA_INDEX }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/run.mjs --apply
+
+      # Only opens a PR if data actually changed. add-paths keeps node_modules and
+      # the ephemeral package.json out of the commit. Merging deploys via Vercel.
+      - name: open a pull request if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          add-paths: |
+            data/smoothies.json
+            data.js
+            img/**
+            ingredients.js
+          branch: smoothie-refresh
+          title: new smoothies from the tonic bar
+          commit-message: refresh smoothies
+          body: |
+            Automated refresh from the live tonic-bar menu. Ingredients are auto-filled.
+            Anything flagged needsReview has an ingredient the canon does not know yet,
+            so add a rule for it, then merge.
+          labels: automated

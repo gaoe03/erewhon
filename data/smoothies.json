@@ -1,5 +1,4 @@
-/* Generated from data/smoothies.json by scripts/build-data.mjs. Do not edit by hand. */
-window.SMOOTHIES = [
+[
   {
     "id": "activated-smoothie",
     "productId": "6852841000",
@@ -3775,4 +3774,4 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8541281000/caramel-nut-superfood-sundae"
     ]
   }
-];
+]
