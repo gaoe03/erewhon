@@ -1,7 +1,8 @@
 // Phase 6b: apply the dedupe result to the archive.
 //  still-live -> update lastSeen
 //  rename     -> attach the productId to the legacy entry, update lastSeen
-//  relaunch   -> add a new edition (the reused id belongs to the newer one)
+//  relaunch   -> add a new edition and hand the reused id to it (the older entry keeps
+//                its copy in retiredProductId, so productId stays unique)
 //  new        -> add, with mechanical fields filled and ingredients left for review
 // Images for new/relaunch are downloaded to img/<slug>.jpg (skip if present).
 import { downloadImage } from './images.mjs';
@@ -42,6 +43,7 @@ export async function applyClassifications(archive, candidates, classifications,
   const summary = { stillLive: 0, rename: 0, relaunch: 0, new: 0, skip: 0, images: 0 };
   const added = [];
   const addedEntries = [];
+  const relaunches = [];
   for (let i = 0; i < candidates.length; i++) {
     const cand = candidates[i];
     const cls = classifications[i];
@@ -56,6 +58,15 @@ export async function applyClassifications(archive, candidates, classifications,
     summary[cls.action]++;
     const slug = slugify(cand.name);
     const imagePath = `img/${slug}.jpg`;
+    if (cls.action === 'relaunch') {
+      // Erewhon reassigned the listing id, so the archive follows it: the newer drink
+      // owns productId and the displaced entry keeps its copy in retiredProductId. That
+      // keeps productId unique (health.mjs stays strict) and lets the displaced drink
+      // fall off as discontinued on the next run instead of looking live forever.
+      const prev = bySlug[cls.reusedFrom];
+      relaunches.push({ id: slug, name: cand.name, productId: cand.productId, fromId: cls.reusedFrom, fromName: prev ? prev.name : cls.reusedFrom });
+      if (apply && prev && prev.productId === cand.productId) { prev.retiredProductId = prev.productId; prev.productId = ''; }
+    }
     if (apply && cand.imageUrl) {
       const r = await downloadImage(cand.imageUrl, `${imgDir}/${slug}.jpg`);
       if (r.status === 'downloaded' || r.status === 'skipped') summary.images++;
@@ -63,5 +74,5 @@ export async function applyClassifications(archive, candidates, classifications,
     if (apply) { const entry = makeNewEntry(cand, slug, imagePath); archive.push(entry); addedEntries.push(entry); }
     added.push(cand.name);
   }
-  return { summary, added, addedEntries };
+  return { summary, added, addedEntries, relaunches };
 }

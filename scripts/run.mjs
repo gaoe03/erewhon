@@ -35,9 +35,10 @@ if (gone.length > active * 0.5) { console.error(`ABORT: ${gone.length} of ${acti
 const reviewable = classifications.filter((c) => ['new', 'relaunch', 'rename'].includes(c.action)).length + gone.length;
 if (reviewable === 0) { console.log(`live ${candidates.length}, nothing new or gone. No changes.`); process.exit(0); }
 
-const { summary, added, addedEntries } = await applyClassifications(archive, candidates, classifications, { imgDir: `${REPO}/img`, apply });
+const { summary, added, addedEntries, relaunches } = await applyClassifications(archive, candidates, classifications, { imgDir: `${REPO}/img`, apply });
 console.log(`live ${candidates.length} | ${JSON.stringify(summary)} | ${apply ? 'APPLIED' : 'dry run'}`);
 if (added.length) console.log('new/relaunch:', added.join(', '));
+for (const r of relaunches) console.log(`  relaunch: ${r.name} takes id ${r.productId} from ${r.fromName} (${r.fromId})`);
 if (gone.length) console.log(`discontinued ${gone.length}:`, gone.map((g) => g.name).join(', '));
 
 if (apply) {
@@ -80,6 +81,8 @@ if (apply) {
   const body = ['Automated menu refresh.', ''];
   if (added.length) body.push('New or updated smoothies:', ...added.map((n) => `- ${n}`), '');
   if (gone.length) body.push('Marked discontinued, no longer on the menu:', ...gone.map((g) => `- ${g.name}`), '');
+  if (relaunches.length) body.push('Reused product ids, handed to the newer drink (the older entry keeps its copy in retiredProductId):',
+    ...relaunches.map((r) => `- ${r.name} reused id ${r.productId} from ${r.fromName}`), '');
   if (summary.rename) body.push(`Backfilled the product id for ${summary.rename} returning item${summary.rename > 1 ? 's' : ''}.`, '');
   if (allCanonAdds.length) body.push('New canonical ingredients, added with a placeholder icon:', ...allCanonAdds.map((id) => `- ${id}`), '');
   writeFileSync(`${REPO}/pr-body.md`, body.join('\n').trim() + '\n');
