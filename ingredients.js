@@ -369,6 +369,21 @@
     { id: 'pink-peppercorn', name: 'Pink peppercorn', cat: 'sweet', band: 'functional', icon: 'peppercorn', re: /peppercorn/,
       blurb: 'Not a true pepper but a dried berry, floral and barely spicy. Laufey\'s Madwoman smoothie used it as its signature twist.' },
     // AUTO-CANON: the pipeline appends new ingredients below this line (jar icon, review it)
+    { id: 'housemade-fig-jam', name: "Housemade Fig Jam", cat: 'super', band: 'everyday', icon: 'jar', re: /jam/,
+      blurb: "Auto-added from the tonic bar. Review this entry." }, // auto-added
+
+    { id: 'pistachio', name: "Pistachio", cat: 'fat', band: 'everyday', icon: 'jar', re: /pistachio/,
+      blurb: "Pistachios are a nutrient-dense nut rich in protein, healthy fats, and antioxidants." }, // auto-added
+
+    { id: 'black-mission-figs', name: "Black Mission Figs", cat: 'super', band: 'everyday', icon: 'jar', re: /figs/,
+      blurb: "Auto-added from the tonic bar. Review this entry." }, // auto-added
+
+    { id: 'thyme', name: "Thyme", cat: 'super', band: 'everyday', icon: 'jar', re: /thyme/,
+      blurb: "Auto-added from the tonic bar. Review this entry." }, // auto-added
+
+    { id: 'balsamic-vinegar', name: "Balsamic vinegar", cat: 'fat', band: 'everyday', icon: 'jar', re: /balsamic/,
+      blurb: "Balsamic vinegar is a dark, concentrated vinegar made from grape must, often used to add tangy sweetness to recipes." }, // auto-added
+
     { id: 'cordyceps', name: "Cordyceps", cat: 'super', band: 'everyday', icon: 'jar', re: /cordyceps/,
       blurb: "Auto-added from the tonic bar. Review this entry." }, // auto-added
 
