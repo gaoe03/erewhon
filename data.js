@@ -17,31 +17,64 @@ window.SMOOTHIES = [
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
-      "Cold Brew Coffee",
-      "Raw Almond Milk",
-      "Coconut Cream",
-      "Dates",
+      "Organic Cold Brew Coffee",
+      "Organic Raw Almond Milk",
+      "Organic Coconut Cream",
+      "Organic Dates",
       "Dandy Blend",
-      "Coffee Beans",
-      "Lucuma",
-      "Mesquite",
-      "Maca",
-      "Cacao Nibs",
-      "Raw Cacao Powder",
-      "Grass-fed Collagen",
+      "Organic Coffee Beans",
+      "Organic Lucuma",
+      "Organic Mesquite",
+      "Organic Maca",
+      "Organic Cacao Nibs",
+      "Organic Raw Cacao Powder",
+      "Organic Grass-fed Collagen",
       "MCT Oil",
-      "Ghee",
-      "Tocos",
-      "Cinnamon",
+      "Organic Ghee",
+      "Organic Tocos",
+      "Organic Cinnamon",
       "Toffee Stevia",
-      "Hemp Seeds"
+      "Organic Hemp Seeds"
     ],
     "ingredientsComplete": true,
     "notes": "Coffee-based house smoothie with the longest ingredient list on the menu.",
     "sources": [
       "https://erewhon.com/product/6852841000/activated-smoothie",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6852841000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Cold Brew Coffee",
+          "Raw Almond Milk",
+          "Coconut Cream",
+          "Dates",
+          "Dandy Blend",
+          "Coffee Beans",
+          "Lucuma",
+          "Mesquite",
+          "Maca",
+          "Cacao Nibs",
+          "Raw Cacao Powder",
+          "Grass-fed Collagen",
+          "MCT Oil",
+          "Ghee",
+          "Tocos",
+          "Cinnamon",
+          "Toffee Stevia",
+          "Hemp Seeds"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6852841000/activated-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "almond-butter-blast",
@@ -60,17 +93,37 @@ window.SMOOTHIES = [
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
-      "Raw Almond Milk",
-      "Raw Cacao Powder",
+      "Organic Raw Almond Milk",
+      "Organic Raw Cacao Powder",
       "Mikuna Chocho Superfood Plant Protein Powder",
-      "Almond Butter",
-      "Banana"
+      "Organic Almond Butter",
+      "Organic Banana"
     ],
     "ingredientsComplete": true,
     "notes": "Vegan, gluten-free sibling of the Peanut Butter Blast.",
     "sources": [
       "https://erewhon.com/product/6852941000/almond-butter-blast"
-    ]
+    ],
+    "productIds": [
+      "6852941000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "Raw Cacao Powder",
+          "Mikuna Chocho Superfood Plant Protein Powder",
+          "Almond Butter",
+          "Banana"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6852941000/almond-butter-blast",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "body-ecology-smoothie",
@@ -89,12 +142,12 @@ window.SMOOTHIES = [
     "color": "#F3EADA",
     "colorDark": "#CDB892",
     "ingredients": [
-      "Avocado",
-      "Green Apple",
-      "Celery",
-      "Parsley",
-      "Lemon",
-      "Cayenne",
+      "Organic Avocado",
+      "Organic Green Apple",
+      "Organic Celery",
+      "Organic Parsley",
+      "Organic Lemon",
+      "Organic Cayenne",
       "Sea Salt"
     ],
     "ingredientsComplete": true,
@@ -102,7 +155,29 @@ window.SMOOTHIES = [
     "sources": [
       "https://erewhon.com/product/6852891000/body-ecology-smoothie",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6852891000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Avocado",
+          "Green Apple",
+          "Celery",
+          "Parsley",
+          "Lemon",
+          "Cayenne",
+          "Sea Salt"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6852891000/body-ecology-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "brainstorm",
@@ -214,17 +289,17 @@ window.SMOOTHIES = [
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
-      "Raw Almond Milk",
-      "Hemp Seeds",
-      "Maca",
-      "Mesquite",
-      "Tocos",
-      "Lucuma",
-      "Cacao Nibs",
-      "Goji Berries",
-      "Almonds",
-      "Dates",
-      "Toffee Stevia"
+      "Organic Raw Almond Milk",
+      "Organic Hemp Seeds",
+      "Organic Maca",
+      "Organic Mesquite",
+      "Organic Tocos",
+      "Organic Lucuma",
+      "Organic Cacao Nibs",
+      "Organic Goji Berries",
+      "Organic Almonds",
+      "Organic Dates",
+      "Vanilla Stevia"
     ],
     "ingredientsComplete": true,
     "notes": "Vegan, gluten-free house staple, unchanged for years.",
@@ -232,7 +307,33 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/6853361000/maca-bomb",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/",
       "https://kalejunkie.com/copycat-erewhon-maca-bomb-smoothie/"
-    ]
+    ],
+    "productIds": [
+      "6853361000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "Hemp Seeds",
+          "Maca",
+          "Mesquite",
+          "Tocos",
+          "Lucuma",
+          "Cacao Nibs",
+          "Goji Berries",
+          "Almonds",
+          "Dates",
+          "Toffee Stevia"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6853361000/maca-bomb",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "matchacado-smoothie",
@@ -251,22 +352,48 @@ window.SMOOTHIES = [
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
-      "Raw Almond Milk",
-      "GROW Banana",
-      "Avocado",
-      "Raw Honey",
+      "Organic Raw Almond Milk",
+      "GROW Organic Banana",
+      "Organic Avocado",
+      "Organic Raw Honey",
       "Grass-fed Collagen",
-      "Matcha",
-      "Ashwagandha",
-      "Astragalus",
-      "Pine Pollen"
+      "Organic Matcha",
+      "Organic Ashwagandha",
+      "Organic Astragalus",
+      "Organic Pine Pollen"
     ],
     "ingredientsComplete": true,
     "notes": "Ceremonial matcha + avocado Classics smoothie with adaptogens.",
     "sources": [
       "https://erewhon.com/product/6855121000/matchacado-smoothie",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6855121000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "GROW Banana",
+          "Avocado",
+          "Raw Honey",
+          "Grass-fed Collagen",
+          "Matcha",
+          "Ashwagandha",
+          "Astragalus",
+          "Pine Pollen"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6855121000/matchacado-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: GROW Organic Banana"
+    ],
+    "needsReview": true
   },
   {
     "id": "mint-chip-energizer",
@@ -285,16 +412,17 @@ window.SMOOTHIES = [
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
-      "Raw Almond Milk",
-      "Maca",
-      "Mesquite",
-      "Vitality Greens",
+      "Organic Raw Almond Milk",
+      "Organic Maca",
+      "Organic Mesquite",
+      "Probiotic Greens Blend",
+      "Organic Barley Grass",
       "Xylitol",
-      "Lucuma",
-      "Hemp Seeds",
-      "Cacao Nibs",
-      "Tocos",
-      "Peppermint",
+      "Organic Lucuma",
+      "Organic Hemp Seeds",
+      "Organic Cacao Nibs",
+      "Organic Tocos",
+      "Organic Peppermint",
       "Chocolate Stevia"
     ],
     "ingredientsComplete": true,
@@ -302,7 +430,35 @@ window.SMOOTHIES = [
     "sources": [
       "https://erewhon.com/product/6853391000/mint-chip-energizer",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6853391000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "Maca",
+          "Mesquite",
+          "Vitality Greens",
+          "Xylitol",
+          "Lucuma",
+          "Hemp Seeds",
+          "Cacao Nibs",
+          "Tocos",
+          "Peppermint",
+          "Chocolate Stevia"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6853391000/mint-chip-energizer",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: Probiotic Greens Blend"
+    ],
+    "needsReview": true
   },
   {
     "id": "peanut-butter-blast",
@@ -321,18 +477,40 @@ window.SMOOTHIES = [
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
-      "Raw Almond Milk",
-      "Raw Cacao Powder",
+      "Organic Raw Almond Milk",
+      "Organic Raw Cacao Powder",
       "Mikuna Chocho Superfood Plant Protein Powder",
-      "Peanut Butter",
-      "GROW Banana"
+      "Organic Peanut Butter",
+      "GROW Organic Banana"
     ],
     "ingredientsComplete": true,
     "notes": "Classics staple; the protein switched from whey to Mikuna chocho in late 2023.",
     "sources": [
       "https://erewhon.com/product/6852881000/peanut-butter-blast",
       "https://web.archive.org/web/20240223193604/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6852881000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "Raw Cacao Powder",
+          "Mikuna Chocho Superfood Plant Protein Powder",
+          "Peanut Butter",
+          "GROW Banana"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6852881000/peanut-butter-blast",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: GROW Organic Banana"
+    ],
+    "needsReview": true
   },
   {
     "id": "pitaya-smoothie",
@@ -351,18 +529,38 @@ window.SMOOTHIES = [
     "color": "#E687AE",
     "colorDark": "#C2517F",
     "ingredients": [
-      "Apple Juice",
-      "Lemon",
-      "Pitaya",
-      "Pineapple",
-      "Banana"
+      "Organic Apple Juice",
+      "Organic Lemon",
+      "Organic Pitaya",
+      "Organic Pineapple",
+      "Organic Banana"
     ],
     "ingredientsComplete": true,
     "notes": "Simple vegan dragon-fruit Classics smoothie, the most stripped-down recipe on the standing menu.",
     "sources": [
       "https://erewhon.com/product/6852911000/pitaya-smoothie",
       "https://web.archive.org/web/20230608155847/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6852911000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Apple Juice",
+          "Lemon",
+          "Pitaya",
+          "Pineapple",
+          "Banana"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6852911000/pitaya-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "royal-defense",
@@ -411,12 +609,12 @@ window.SMOOTHIES = [
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
     "ingredients": [
-      "Strawberries",
-      "Raw Almond Milk",
-      "Coconut Kefir",
+      "Organic Strawberries",
+      "Organic Raw Almond Milk",
+      "Organic Coconut Kefir",
       "Grass-fed Collagen",
-      "Tocos",
-      "Probiotics",
+      "Organic Tocos",
+      "Organic Probiotics",
       "Xylitol",
       "Vanilla Stevia"
     ],
@@ -433,7 +631,30 @@ window.SMOOTHIES = [
       "http://web.archive.org/web/20241209130404/https://erewhon.com/product/8105011000/gary-brecka-perfect-amino-smoothie",
       "https://x.com/thegarybrecka/status/1894749390767853728",
       "https://erewhon.com/product/8359081000/perfect-amino-choco-revive-by-gary-brecka"
-    ]
+    ],
+    "productIds": [
+      "6853501000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Strawberries",
+          "Raw Almond Milk",
+          "Coconut Kefir",
+          "Grass-fed Collagen",
+          "Tocos",
+          "Probiotics",
+          "Xylitol",
+          "Vanilla Stevia"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6853501000/strawberry-probiotic-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "the-goddess-smoothie",
@@ -452,18 +673,18 @@ window.SMOOTHIES = [
     "color": "#7BA48E",
     "colorDark": "#4C7A62",
     "ingredients": [
-      "Raw Almond Milk",
-      "Barley Grass",
-      "Chlorella",
-      "Spirulina",
-      "Hemp Seeds",
-      "Lucuma",
-      "Maca",
-      "Mesquite",
+      "Organic Raw Almond Milk",
+      "Organic Barley Grass",
+      "Organic Chlorella",
+      "Organic Spirulina",
+      "Organic Hemp Seeds",
+      "Organic Lucuma",
+      "Organic Maca",
+      "Organic Mesquite",
       "Xylitol",
-      "Tocos",
-      "Pumpkin Seed Oil",
-      "Cinnamon",
+      "Organic Tocos",
+      "Organic Pumpkin Seed Oil",
+      "Organic Cinnamon",
       "Vanilla Stevia"
     ],
     "ingredientsComplete": true,
@@ -472,7 +693,35 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/6860971000/the-goddess-smoothie",
       "https://web.archive.org/web/20220625023712/https://www.erewhonmarket.com/smoothies/",
       "https://www.aol.com/tried-ranked-every-smoothie-erewhon-120000375.html"
-    ]
+    ],
+    "productIds": [
+      "6860971000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Almond Milk",
+          "Barley Grass",
+          "Chlorella",
+          "Spirulina",
+          "Hemp Seeds",
+          "Lucuma",
+          "Maca",
+          "Mesquite",
+          "Xylitol",
+          "Tocos",
+          "Pumpkin Seed Oil",
+          "Cinnamon",
+          "Vanilla Stevia"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6860971000/the-goddess-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "turmeric-crush",
@@ -491,22 +740,46 @@ window.SMOOTHIES = [
     "color": "#F0B45A",
     "colorDark": "#D88A35",
     "ingredients": [
-      "Carrot Juice",
-      "Orange Juice",
-      "Ginger Juice",
-      "Turmeric Juice",
-      "Mango",
-      "Pineapple",
-      "Camu Camu",
-      "Lemon",
-      "Beet Juice"
+      "Organic Carrot Juice",
+      "Organic Orange Juice",
+      "Organic Ginger Juice",
+      "Organic Turmeric Juice",
+      "Organic Mango",
+      "Organic Pineapple",
+      "Organic Camu Camu",
+      "Organic Lemon",
+      "Organic Beet Juice"
     ],
     "ingredientsComplete": true,
     "notes": "Juice-based vegan Classics smoothie; camu camu joined the recipe in early 2024.",
     "sources": [
       "https://erewhon.com/product/6853031000/turmeric-crush",
       "https://web.archive.org/web/20240223193604/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "6853031000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Carrot Juice",
+          "Orange Juice",
+          "Ginger Juice",
+          "Turmeric Juice",
+          "Mango",
+          "Pineapple",
+          "Camu Camu",
+          "Lemon",
+          "Beet Juice"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/6853031000/turmeric-crush",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "tinx-smoothie",
@@ -591,14 +864,14 @@ window.SMOOTHIES = [
     "color": "#F3EADA",
     "colorDark": "#CDB892",
     "ingredients": [
-      "Malk Almond Milk",
-      "Pineapple",
-      "GROW Banana",
-      "Avocado",
-      "Almond Butter",
+      "Malk Organic Almond Milk",
+      "Organic Pineapple",
+      "GROW Organic Banana",
+      "Organic Avocado",
+      "Organic Almond Butter",
       "Grass-fed Vanilla Collagen",
       "Blue Majik Spirulina",
-      "Coconut Cream"
+      "Organic Coconut Cream"
     ],
     "ingredientsComplete": true,
     "notes": "Pitched by Summer Fridays co-founder Marianna Hewitt; launched March 2022 as a one-month item (1,000+ orders in week one at Beverly Hills), went viral, and was made permanent. A $100 at-home kit with Tahitian vanilla and vitamin C variants followed.",
@@ -607,7 +880,32 @@ window.SMOOTHIES = [
       "https://ship.erewhon.com/products/coconut-cloud-smoothie-kit",
       "https://marianainla.com/2022/03/27/i-tried-the-17-erewhon-smoothie-the-coconut-cloud-smoothie/",
       "https://lifewithmarianna.substack.com/p/the-smoothie-i-made-in-2022-and-what"
-    ]
+    ],
+    "productIds": [
+      "7784411000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Malk Almond Milk",
+          "Pineapple",
+          "GROW Banana",
+          "Avocado",
+          "Almond Butter",
+          "Grass-fed Vanilla Collagen",
+          "Blue Majik Spirulina",
+          "Coconut Cream"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/7784411000/coconut-cloud-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: GROW Organic Banana"
+    ],
+    "needsReview": true
   },
   {
     "id": "orange-ya-glad-there-are-mushrooms-in-here-smoothie",
@@ -688,17 +986,17 @@ window.SMOOTHIES = [
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
     "ingredients": [
-      "Almond Milk",
-      "GROW Banana",
-      "Strawberries",
-      "Avocado",
-      "Dates",
-      "Maple Syrup",
+      "Organic Almond Milk",
+      "GROW Organic Banana",
+      "Organic Strawberries",
+      "Organic Avocado",
+      "Organic Dates",
+      "Organic Maple Syrup",
       "Grass-fed Vanilla Collagen",
       "Vanilla Stevia",
       "Sea Moss",
-      "Coconut Cream",
-      "Strawberry Glaze"
+      "Organic Coconut Cream",
+      "Organic Strawberry Glaze"
     ],
     "ingredientsComplete": true,
     "notes": "Launched June 2022 with Rhode (portion of early proceeds to the Robb School Memorial Fund for Uvalde families); sold ~40,000/month and ignited the celebrity-collab craze. Bieber's name was dropped in Nov 2025 when her contract expired, but it remains a permanent Signature; earlier menu versions listed Malk almond milk, Vital Proteins collagen, hyaluronic acid and Driscoll's glaze.",
@@ -708,7 +1006,35 @@ window.SMOOTHIES = [
       "https://abcnews.com/GMA/Food/make-hailey-biebers-17-strawberry-glaze-skin-smoothie/story?id=86813334",
       "https://ktla.com/news/local-news/hailey-biebers-name-removed-from-erewhons-iconic-strawberry-smoothie/",
       "https://web.archive.org/web/20240223193604/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "7791691000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Almond Milk",
+          "GROW Banana",
+          "Strawberries",
+          "Avocado",
+          "Dates",
+          "Maple Syrup",
+          "Grass-fed Vanilla Collagen",
+          "Vanilla Stevia",
+          "Sea Moss",
+          "Coconut Cream",
+          "Strawberry Glaze"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/7791691000/strawberry-glaze-skin-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: GROW Organic Banana"
+    ],
+    "needsReview": true
   },
   {
     "id": "kefir-matcha-cloud",
@@ -1061,19 +1387,18 @@ window.SMOOTHIES = [
     "color": "#F0B45A",
     "colorDark": "#D88A35",
     "ingredients": [
-      "Vita Coco® Farmers Coconut Water",
+      "Vita Coco Farmers Organic Coconut Water",
       "Grass-fed Vanilla Collagen",
-      "Maple Syrup",
-      "Mango",
-      "Pineapple",
-      "GROW Banana",
-      "Orange Juice",
+      "Organic Maple Syrup",
+      "Organic Mango",
+      "Organic Pineapple",
+      "GROW Organic Banana",
+      "Organic Orange Juice",
       "Lions Mane",
-      "Coconut Flakes",
-      "Coconut Cream",
+      "Organic Coconut Flakes",
+      "Organic Coconut Cream",
       "Agent Nateur Marine Collagen",
-      "Mango Glaze",
-      "Stevia Coconut"
+      "Organic Mango Glaze"
     ],
     "ingredientsComplete": true,
     "notes": "House Signature added in fall 2023; a tropical lion's-mane blend with Agent Nateur marine collagen.",
@@ -1081,7 +1406,38 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/7879461000/malibu-mango-smoothie",
       "https://web.archive.org/web/20231002055337/https://www.erewhonmarket.com/smoothies/",
       "https://www.timeout.com/los-angeles/restaurants/erewhon-smoothie-ranking"
-    ]
+    ],
+    "productIds": [
+      "7879461000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Vita Coco® Farmers Coconut Water",
+          "Grass-fed Vanilla Collagen",
+          "Maple Syrup",
+          "Mango",
+          "Pineapple",
+          "GROW Banana",
+          "Orange Juice",
+          "Lions Mane",
+          "Coconut Flakes",
+          "Coconut Cream",
+          "Agent Nateur Marine Collagen",
+          "Mango Glaze",
+          "Stevia Coconut"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/7879461000/malibu-mango-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: Vita Coco Farmers Organic Coconut Water",
+      "Unresolved ingredient: GROW Organic Banana"
+    ],
+    "needsReview": true
   },
   {
     "id": "post-workout-smoothie",
@@ -1113,7 +1469,14 @@ window.SMOOTHIES = [
     "sources": [
       "https://erewhon.com/product/7805821000/post-workout-smoothie",
       "https://web.archive.org/web/20230608155847/https://www.erewhonmarket.com/smoothies/"
-    ]
+    ],
+    "productIds": [
+      "7805821000"
+    ],
+    "reviewReasons": [
+      "Recipe fetch failed: no complete ingredient list returned"
+    ],
+    "needsReview": true
   },
   {
     "id": "summer-crush-strawberry-lemonade-smoothie",
@@ -2205,17 +2568,17 @@ window.SMOOTHIES = [
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
-      "Matcha",
-      "Malk Oat Milk",
+      "Organic Matcha",
+      "Malk Organic Oat Milk*",
       "Grass-fed Vanilla Collagen",
       "Agent Nateur Marine Collagen",
-      "Maple Syrup",
-      "MCT Oil",
+      "Organic Maple Syrup",
+      "Mct Oil",
       "Sea Moss",
       "Tocos",
       "Lions Mane",
       "Chlorella",
-      "Coconut Cream",
+      "Organic Coconut Cream",
       "Vegan Cream Top"
     ],
     "ingredientsComplete": true,
@@ -2225,7 +2588,36 @@ window.SMOOTHIES = [
       "https://ommushrooms.com/blogs/blog/lori-harveys-erewhon-vanilla-matcha-smoothie-feat-om-lions-mane",
       "https://ktla.com/entertainment/lori-harvey-launches-smoothie-at-erewhon/",
       "https://web.archive.org/web/20251016185745/https://erewhon.com/product/8359071000/vanilla-matcha-smoothie"
-    ]
+    ],
+    "productIds": [
+      "8359071000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Matcha",
+          "Malk Oat Milk",
+          "Grass-fed Vanilla Collagen",
+          "Agent Nateur Marine Collagen",
+          "Maple Syrup",
+          "MCT Oil",
+          "Sea Moss",
+          "Tocos",
+          "Lions Mane",
+          "Chlorella",
+          "Coconut Cream",
+          "Vegan Cream Top"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8359071000/vanilla-matcha-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: Malk Organic Oat Milk*"
+    ],
+    "needsReview": true
   },
   {
     "id": "jflare-smoothie-by-jack-flaherty",
@@ -2315,16 +2707,16 @@ window.SMOOTHIES = [
     "colorDark": "#C76A86",
     "ingredients": [
       "Raw Farm Kefir",
-      "Strawberries",
-      "GROW Banana",
-      "Grass-fed Whey Protein",
-      "Grass-fed Colostrum",
-      "Goji Berries",
+      "Organic Strawberries",
+      "GROW Organic Banana",
+      "Erewhon A2 Whey Protein (Milk)",
+      "Colostrum (Milk)",
+      "Organic Goji Berries",
       "Lucuma",
       "Tocos",
-      "Honey",
+      "Organic Honey",
       "Sea Salt",
-      "Coconut Cream"
+      "Organic Coconut Cream"
     ],
     "ingredientsComplete": true,
     "notes": "Built on unpasteurized Raw Farm kefir; on the menu since late 2024 and a Signature as of June 2026. AOL's reviewer rated it 9/10.",
@@ -2332,7 +2724,37 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8343881000/raw-farms-strawberry-smoothie",
       "https://www.instagram.com/raw_farm_usa/p/DG88irjSl70/",
       "https://www.aol.com/tried-ranked-every-smoothie-erewhon-120000375.html"
-    ]
+    ],
+    "productIds": [
+      "8343881000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Raw Farm Kefir",
+          "Strawberries",
+          "GROW Banana",
+          "Grass-fed Whey Protein",
+          "Grass-fed Colostrum",
+          "Goji Berries",
+          "Lucuma",
+          "Tocos",
+          "Honey",
+          "Sea Salt",
+          "Coconut Cream"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8343881000/raw-farms-strawberry-smoothie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: GROW Organic Banana",
+      "Unresolved ingredient: Erewhon A2 Whey Protein (Milk)",
+      "Unresolved ingredient: Colostrum (Milk)"
+    ],
+    "needsReview": true
   },
   {
     "id": "kupp-of-sunshine-smoothie",
@@ -3669,14 +4091,14 @@ window.SMOOTHIES = [
     "color": "#E8E9D6",
     "colorDark": "#B9C29C",
     "ingredients": [
-      "Coconut Water",
-      "Jasmine Tea",
-      "Raw Honey",
-      "Holy Basil",
-      "Anise Hyssop",
-      "Green Cardamom",
-      "White Grape Juice",
-      "Coconut Milk"
+      "Organic Grape Juice",
+      "Organic Coconut Milk",
+      "Organic Coconut Water",
+      "Organic Jasmine Tea",
+      "Organic Holy Basil",
+      "Organic Anise",
+      "Organic Cardamom",
+      "Organic Raw Honey"
     ],
     "ingredientsComplete": true,
     "notes": "A brand collab with Jolie, the shower-filter company, built on clarified coconut water and jasmine tea with raw honey, holy basil, anise hyssop and green cardamom. A still herbal tonic poured over ice rather than a blended smoothie, and the $12 price for a cup of water drew a wave of press.",
@@ -3684,7 +4106,33 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8559671000/sacred-water-by-jolie",
       "https://ktla.com/news/local-news/luxury-la-grocery-chain-erewhon-debuts-12-cup-of-water/",
       "https://www.tmz.com/2026/07/10/erewhon-selling-expensive-cups-of-water/"
-    ]
+    ],
+    "productIds": [
+      "8559671000"
+    ],
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Coconut Water",
+          "Jasmine Tea",
+          "Raw Honey",
+          "Holy Basil",
+          "Anise Hyssop",
+          "Green Cardamom",
+          "White Grape Juice",
+          "Coconut Milk"
+        ]
+      }
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8559671000/sacred-water-by-jolie",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
+    "reviewReasons": [
+      "Unresolved ingredient: Organic Grape Juice",
+      "Unresolved ingredient: Organic Anise"
+    ],
+    "needsReview": true
   },
   {
     "id": "iced-chocolate-hojicha",
@@ -3911,9 +4359,13 @@ window.SMOOTHIES = [
         ]
       }
     ],
-    "ingredientsCheckedAt": "2026-09-05T06:59:09.755Z",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
     "dateKind": "first-seen",
-    "ingredientsSource": "https://erewhon.com/product/8564051000/blueberry-syrn-by-sydney-sweeney"
+    "ingredientsSource": "https://erewhon.com/product/8564051000/blueberry-syrn-by-sydney-sweeney",
+    "productIds": [
+      "8564051000"
+    ],
+    "reviewReasons": []
   },
   {
     "id": "gary-brecka-s-perfect-amino-passionfruit-lemonade",
@@ -3959,7 +4411,12 @@ window.SMOOTHIES = [
     "dateKind": "first-seen",
     "reviewReasons": [
       "Editorial review of the imported recipe and ingredient profiles is pending."
-    ]
+    ],
+    "productIds": [
+      "8568771000"
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8568771000/gary-brecka-s-perfect-amino-passionfruit-lemonade",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z"
   },
   {
     "id": "the-fig-sea-salt-smoothie",
@@ -3999,13 +4456,17 @@ window.SMOOTHIES = [
     ],
     "subcategory": "Signatures",
     "needsReview": false,
-    "ingredientsCheckedAt": "2026-09-05T06:59:09.755Z",
+    "ingredientsCheckedAt": "2026-09-05T19:53:10.710Z",
     "dateKind": "first-seen",
-    "ingredientsSource": "https://erewhon.com/product/8578511000/the-fig-sea-salt-smoothie"
+    "ingredientsSource": "https://erewhon.com/product/8578511000/the-fig-sea-salt-smoothie",
+    "productIds": [
+      "8578511000"
+    ],
+    "reviewReasons": []
   }
 ];
 window.MENU = {
-  "checkedAt": "2026-09-05T06:59:09.755Z",
+  "checkedAt": "2026-09-05T19:53:10.710Z",
   "source": "https://erewhon.com/shop",
   "scope": "Grove online tonic bar menu",
   "index": "GROVE_SEARCH_INDEX",
@@ -4023,9 +4484,9 @@ window.MENU = {
     "raw-farms-strawberry-smoothie",
     "post-workout-smoothie",
     "almond-butter-blast",
-    "the-goddess-smoothie",
     "activated-smoothie",
     "pitaya-smoothie",
+    "the-goddess-smoothie",
     "gary-brecka-s-perfect-amino-passionfruit-lemonade",
     "the-fig-sea-salt-smoothie",
     "mint-chip-energizer",
