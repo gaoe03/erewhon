@@ -1,4 +1,4 @@
-/* Generated from data/smoothies.json by scripts/build-data.mjs. Do not edit by hand. */
+/* Generated from data/smoothies.json and data/menu.json by scripts/build-data.mjs. Do not edit by hand. */
 window.SMOOTHIES = [
   {
     "id": "activated-smoothie",
@@ -12,8 +12,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$20.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
@@ -55,8 +55,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$16.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
@@ -84,8 +84,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$13.00",
     "color": "#F3EADA",
     "colorDark": "#CDB892",
     "ingredients": [
@@ -209,8 +209,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$19.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
@@ -246,8 +246,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$18.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
@@ -280,8 +280,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$19.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
@@ -316,8 +316,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$16.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
     "ingredients": [
@@ -346,8 +346,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$13.00",
     "color": "#E687AE",
     "colorDark": "#C2517F",
     "ingredients": [
@@ -406,8 +406,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$22",
+    "lastSeen": "2026-09-05",
+    "price": "$22.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
     "ingredients": [
@@ -447,8 +447,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$19.00",
     "color": "#7BA48E",
     "colorDark": "#4C7A62",
     "ingredients": [
@@ -486,8 +486,8 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "",
+    "lastSeen": "2026-09-05",
+    "price": "$16.00",
     "color": "#F0B45A",
     "colorDark": "#D88A35",
     "ingredients": [
@@ -586,8 +586,8 @@ window.SMOOTHIES = [
     "era": "2022",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$17",
+    "lastSeen": "2026-09-05",
+    "price": "$20.00",
     "color": "#F3EADA",
     "colorDark": "#CDB892",
     "ingredients": [
@@ -683,8 +683,8 @@ window.SMOOTHIES = [
     "era": "2022",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$17",
+    "lastSeen": "2026-09-05",
+    "price": "$21.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
     "ingredients": [
@@ -1056,8 +1056,8 @@ window.SMOOTHIES = [
     "era": "2023",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$19",
+    "lastSeen": "2026-09-05",
+    "price": "$21.00",
     "color": "#F0B45A",
     "colorDark": "#D88A35",
     "ingredients": [
@@ -1095,8 +1095,8 @@ window.SMOOTHIES = [
     "era": "2023",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$15",
+    "lastSeen": "2026-09-05",
+    "price": "$18.00",
     "color": "#8FB3DC",
     "colorDark": "#4F7BC0",
     "ingredients": [
@@ -2200,8 +2200,8 @@ window.SMOOTHIES = [
     "era": "2024",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$23",
+    "lastSeen": "2026-09-05",
+    "price": "$21.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
     "ingredients": [
@@ -2309,8 +2309,8 @@ window.SMOOTHIES = [
     "era": "2024",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$20",
+    "lastSeen": "2026-09-05",
+    "price": "$20.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
     "ingredients": [
@@ -3664,8 +3664,8 @@ window.SMOOTHIES = [
     "era": "2026",
     "status": "limited",
     "firstSeen": "",
-    "lastSeen": "2026-08-15",
-    "price": "$12",
+    "lastSeen": "2026-09-05",
+    "price": "$12.00",
     "color": "#E8E9D6",
     "colorDark": "#B9C29C",
     "ingredients": [
@@ -3780,8 +3780,8 @@ window.SMOOTHIES = [
     "productId": "8560981000",
     "image": "img/tree-ripe-mango-protein-trifle.jpg",
     "name": "Tree-Ripe Mango Protein Trifle",
-    "collaborator": "Erewhon",
-    "collabType": "unknown",
+    "collaborator": "",
+    "collabType": "house",
     "sortKey": 2026.542,
     "date": "Jul 2026",
     "era": "2026",
@@ -3810,15 +3810,19 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8560981000/tree-ripe-mango-protein-trifle"
     ],
     "subcategory": "Signatures",
-    "needsReview": true
+    "needsReview": true,
+    "dateKind": "first-seen",
+    "reviewReasons": [
+      "Editorial review of the imported recipe and ingredient profiles is pending."
+    ]
   },
   {
     "id": "dedcool-mocha-magic-smoothie",
     "productId": "8561781000",
     "image": "img/dedcool-mocha-magic-smoothie.jpg",
     "name": "DedCool Mocha Magic Smoothie",
-    "collaborator": "Erewhon",
-    "collabType": "unknown",
+    "collaborator": "DedCool",
+    "collabType": "brand",
     "sortKey": 2026.625,
     "date": "Aug 2026",
     "era": "2026",
@@ -3842,21 +3846,22 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8561781000/dedcool-mocha-magic-smoothie"
     ],
     "subcategory": "Signatures",
-    "needsReview": false
+    "needsReview": false,
+    "dateKind": "first-seen"
   },
   {
     "id": "blueberry-syrn-by-sydney-sweeney",
     "productId": "8564051000",
     "image": "img/blueberry-syrn-by-sydney-sweeney.jpg",
     "name": "Blueberry SYRN by Sydney Sweeney",
-    "collaborator": "Erewhon",
-    "collabType": "unknown",
+    "collaborator": "Sydney Sweeney",
+    "collabType": "celebrity",
     "sortKey": 2026.625,
     "date": "Aug 2026",
     "era": "2026",
     "status": "limited",
     "firstSeen": "2026-08-15",
-    "lastSeen": "2026-08-15",
+    "lastSeen": "2026-09-05",
     "price": "$22.00",
     "color": "#E7DFCF",
     "colorDark": "#B7A98C",
@@ -3874,7 +3879,9 @@ window.SMOOTHIES = [
       "Organic Lucuma",
       "Organic Maple",
       "Organic Pitaya Whipped Cream",
-      "Organic Blue Spirulina Whipped Cream"
+      "Organic Blue Spirulina Whipped Cream",
+      "Organic Vegan Coconut Bacon",
+      "Erewhon Organic Blueberry Muffin Crumbles"
     ],
     "ingredientsComplete": true,
     "notes": "",
@@ -3882,21 +3889,45 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8564051000/blueberry-syrn-by-sydney-sweeney"
     ],
     "subcategory": "Signatures",
-    "needsReview": false
+    "needsReview": false,
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "ingredients": [
+          "MALK Organic Almond Milk",
+          "Banagua Organic Banana Water",
+          "Codeage Hair Vitamins",
+          "Ancient Nutrition Vanilla Bone Broth Protein",
+          "Erewhon Organic A2 Whey Protein",
+          "Organic Blueberries",
+          "Organic Acai",
+          "Organic Banana",
+          "Organic Almond Butter",
+          "Organic Tocotrienols",
+          "Organic Lucuma",
+          "Organic Maple",
+          "Organic Pitaya Whipped Cream",
+          "Organic Blue Spirulina Whipped Cream"
+        ]
+      }
+    ],
+    "ingredientsCheckedAt": "2026-09-05T06:59:09.755Z",
+    "dateKind": "first-seen",
+    "ingredientsSource": "https://erewhon.com/product/8564051000/blueberry-syrn-by-sydney-sweeney"
   },
   {
     "id": "gary-brecka-s-perfect-amino-passionfruit-lemonade",
     "productId": "8568771000",
     "image": "img/gary-brecka-s-perfect-amino-passionfruit-lemonade.jpg",
     "name": "Gary Brecka's Perfect Amino Passionfruit Lemonade",
-    "collaborator": "Erewhon",
-    "collabType": "unknown",
+    "collaborator": "Gary Brecka",
+    "collabType": "celebrity",
     "sortKey": 2026.625,
     "date": "Aug 2026",
     "era": "2026",
     "status": "limited",
     "firstSeen": "2026-08-15",
-    "lastSeen": "2026-08-15",
+    "lastSeen": "2026-09-05",
     "price": "$22.00",
     "color": "#E7DFCF",
     "colorDark": "#B7A98C",
@@ -3924,6 +3955,81 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8568771000/gary-brecka-s-perfect-amino-passionfruit-lemonade"
     ],
     "subcategory": "Signatures",
-    "needsReview": true
+    "needsReview": true,
+    "dateKind": "first-seen",
+    "reviewReasons": [
+      "Editorial review of the imported recipe and ingredient profiles is pending."
+    ]
+  },
+  {
+    "id": "the-fig-sea-salt-smoothie",
+    "productId": "8578511000",
+    "image": "img/the-fig-sea-salt-smoothie.jpg",
+    "name": "The Fig & Sea Salt Smoothie",
+    "collaborator": "",
+    "collabType": "house",
+    "sortKey": 2026.708,
+    "date": "Sep 2026",
+    "era": "2026",
+    "status": "limited",
+    "firstSeen": "2026-09-01",
+    "lastSeen": "2026-09-05",
+    "price": "$12.00",
+    "color": "#E7DFCF",
+    "colorDark": "#B7A98C",
+    "ingredients": [
+      "Organic Coconut Water",
+      "Organic Coconut Cream",
+      "Organic Almond Butter",
+      "Organic Balsamic Vinegar",
+      "Organic Thyme",
+      "Organic Black Mission Figs",
+      "Organic Dates",
+      "Organic Pistachio",
+      "Organic Banana",
+      "Organic Vanilla",
+      "Organic Housemade Fig Jam",
+      "Organic Matcha",
+      "Sea Salt"
+    ],
+    "ingredientsComplete": true,
+    "notes": "",
+    "sources": [
+      "https://erewhon.com/product/8578511000/the-fig-sea-salt-smoothie"
+    ],
+    "subcategory": "Signatures",
+    "needsReview": false,
+    "ingredientsCheckedAt": "2026-09-05T06:59:09.755Z",
+    "dateKind": "first-seen",
+    "ingredientsSource": "https://erewhon.com/product/8578511000/the-fig-sea-salt-smoothie"
   }
 ];
+window.MENU = {
+  "checkedAt": "2026-09-05T06:59:09.755Z",
+  "source": "https://erewhon.com/shop",
+  "scope": "Grove online tonic bar menu",
+  "index": "GROVE_SEARCH_INDEX",
+  "smoothieIds": [
+    "strawberry-glaze-skin-smoothie",
+    "malibu-mango-smoothie",
+    "coconut-cloud-smoothie",
+    "peanut-butter-blast",
+    "matchacado-smoothie",
+    "strawberry-probiotic-smoothie",
+    "blueberry-syrn-by-sydney-sweeney",
+    "turmeric-crush",
+    "vanilla-matcha-smoothie",
+    "body-ecology-smoothie",
+    "raw-farms-strawberry-smoothie",
+    "post-workout-smoothie",
+    "almond-butter-blast",
+    "the-goddess-smoothie",
+    "activated-smoothie",
+    "pitaya-smoothie",
+    "gary-brecka-s-perfect-amino-passionfruit-lemonade",
+    "the-fig-sea-salt-smoothie",
+    "mint-chip-energizer",
+    "sacred-water-by-jolie",
+    "maca-bomb"
+  ]
+};

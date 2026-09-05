@@ -5,32 +5,59 @@ on:
   schedule:
     - cron: '0 14 1,15 * *'
   workflow_dispatch:
+  pull_request:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 # Never let a scheduled run and a manual run overlap on the shared refresh branch.
 concurrency:
-  group: refresh
+  group: refresh-${{ github.event.pull_request.number || 'scheduled' }}
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  validate:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: run offline pipeline tests
+        run: node --test tests/*.test.mjs
+      - name: validate archive and generated data
+        run: |
+          node scripts/health.mjs
+          node scripts/build-data.mjs --check
+          node scripts/ingredient-audit.mjs --check
 
-      # Playwright renders a new drink's product page to read its ingredients.
-      # Installed only here in the runner, never committed, so the static site
-      # and its Vercel deploy stay untouched.
+  refresh:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: validate current archive
+        run: |
+          node --test tests/*.test.mjs
+          node scripts/health.mjs
+          node scripts/build-data.mjs --check
+          node scripts/ingredient-audit.mjs --check
+
+      # Playwright checks each current drink's product page for recipe changes.
+      # Installed only in the runner, so the static site stays dependency free.
       - name: install playwright
         run: |
           npm init -y
-          npm install playwright
+          npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
       - name: run the pipeline
@@ -38,21 +65,59 @@ jobs:
           ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
           ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
           ALGOLIA_INDEX: ${{ secrets.ALGOLIA_INDEX }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/run.mjs --apply
+
+      - name: validate the proposed refresh
+        run: |
+          node --test tests/*.test.mjs
+          node scripts/health.mjs
+          node scripts/build-data.mjs --check
+          node scripts/ingredient-audit.mjs --low-use
+
+      - name: check whether editorial review is needed
+        id: review
+        run: |
+          node --input-type=module - <<'NODE'
+          import fs from 'node:fs';
+          const rows = JSON.parse(fs.readFileSync('data/smoothies.json', 'utf8'));
+          const menu = JSON.parse(fs.readFileSync('data/menu.json', 'utf8'));
+          const needed = rows.some((row) => menu.smoothieIds.includes(row.id) && row.needsReview);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `needed=${needed}\n`);
+          NODE
 
       # Only opens a PR if data actually changed. add-paths keeps node_modules and
       # the ephemeral package.json out of the commit. Merging deploys via Vercel.
       - name: open a pull request if anything changed
+        id: proposal
         uses: peter-evans/create-pull-request@v6
         with:
           add-paths: |
             data/smoothies.json
+            data/menu.json
             data.js
             img/**
-            ingredients.js
           branch: smoothie-refresh
           title: Menu refresh from the tonic bar
           commit-message: refresh smoothies
+          committer: gaoe03 <gaoe2003@gmail.com>
+          author: gaoe03 <gaoe2003@gmail.com>
           body-path: pr-body.md
           labels: automated
+          draft: ${{ steps.review.outputs.needed == 'true' }}
+
+      # The action's draft input only applies when creating a PR. An existing
+      # proposal must also return to draft when a later refresh needs review.
+      - name: keep unresolved proposals in draft
+        if: steps.review.outputs.needed == 'true' && steps.proposal.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.proposal.outputs.pull-request-number }}
+        run: |
+          if [ "$(gh pr view "$PR_NUMBER" --json isDraft --jq '.isDraft')" = 'false' ]; then
+            gh pr ready "$PR_NUMBER" --undo
+          fi
+
+      # Token-created PR workflows can require approval. Check in this run too,
+      # after the review draft has been saved, without depending on another run.
+      - name: require reviewed ingredient mappings
+        run: node scripts/ingredient-audit.mjs --check

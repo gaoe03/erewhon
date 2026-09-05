@@ -2,16 +2,23 @@
    Erewhon Smoothie Archive.
    Two views (smoothies, ingredients), two modals (smoothie
    sheet, ingredient profile), all driven by the URL hash:
-     #/             archive
+     #/             full archive (#/archive is a supported alias)
+     #/menu         current menu
      #/ingredients  ingredient stats
      #/s/<id>       smoothie sheet
      #/i/<id>       ingredient profile
    ============================================================ */
 
 (function () {
-  const { matchIcon, iconSVG, cupSVG } = window.ArchiveIcons;
-  const { CANON, CATS, BY_ID, matchCanon } = window.ArchiveIngredients;
+  const { iconSVG, cupSVG } = window.ArchiveIcons;
+  const { CATS, BY_ID, ALIASES, matchCanon, groupIngredients } = window.ArchiveIngredients;
   const DATA = window.SMOOTHIES;
+  const MENU = window.MENU;
+  const MENU_IDS = new Set(MENU?.smoothieIds || []);
+  const menuDate = MENU?.checkedAt && new Date(MENU.checkedAt).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/Los_Angeles',
+  });
+  const GROUPS = new Map(DATA.map((s) => [s.id, groupIngredients(s.ingredients)]));
 
   /* ---- the boil ---- */
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -31,7 +38,7 @@
   const PILLS = {
     permanent: { text: 'House staple', cls: 'green' },
     limited: { text: 'Limited run', cls: 'orange' },
-    discontinued: { text: 'Discontinued', cls: 'gray' },
+    discontinued: { text: 'Archived', cls: 'gray' },
     unknown: { text: 'Status unknown', cls: 'gray' },
   };
   const TYPE_LABEL = {
@@ -81,14 +88,22 @@
   }
 
   /* ---- hero stats ---- */
-  document.getElementById('hero-stats').textContent =
-    `A catalog of every Erewhon smoothie since 2022 (that I could find).`;
   document.getElementById('ing-hero-stats').textContent =
-    `${ING.size} ingredients across ${DATA.length} smoothies.`;
+    `Explore what goes into ${DATA.length} smoothies. Each drink counts once per ingredient.`;
+  document.getElementById('archive-count').textContent = DATA.length;
+  document.getElementById('menu-count').textContent = MENU_IDS.size;
+  document.getElementById('ingredient-count').textContent = ING.size;
 
   /* ---- archive view ---- */
   let filter = 'all';
   let sort = 'newest';
+  let query = '';
+  let view = 'archive';
+  let catalogView = 'archive';
+  let routed = false;
+
+  const catalogData = () => catalogView === 'menu' ? DATA.filter((s) => MENU_IDS.has(s.id)) : DATA;
+  const dateLabel = (s) => s.dateKind === 'first-seen' ? `First seen ${s.date}` : s.date;
 
   const FILTERS = [
     ['all', 'All'],
@@ -99,7 +114,8 @@
 
   function renderChips() {
     document.getElementById('chips').innerHTML = FILTERS.map(([key, label]) => {
-      const n = key === 'all' ? DATA.length : DATA.filter((s) => s.collabType === key).length;
+      const data = catalogData();
+      const n = key === 'all' ? data.length : data.filter((s) => s.collabType === key).length;
       return `<button data-filter="${key}" aria-pressed="${filter === key}">${label}<span class="count">${n}</span></button>`;
     }).join('');
   }
@@ -117,12 +133,20 @@
     renderCatalog();
   });
 
+  document.getElementById('catalog-search').addEventListener('input', (e) => {
+    query = e.target.value;
+    renderCatalog();
+  });
+
   function visible() {
-    const list = filter === 'all' ? [...DATA] : DATA.filter((s) => s.collabType === filter);
+    const data = catalogData();
+    const q = query.trim().toLocaleLowerCase();
+    const list = data.filter((s) => (filter === 'all' || s.collabType === filter)
+      && (!q || `${s.name} ${s.collaborator}`.toLocaleLowerCase().includes(q)));
     if (sort === 'az') list.sort((a, b) => a.name.localeCompare(b.name));
     else list.sort((a, b) => {
-      const d = (a.sortKey - b.sortKey) || a.name.localeCompare(b.name);
-      return sort === 'newest' ? -d : d;
+      const d = a.sortKey - b.sortKey;
+      return (sort === 'newest' ? -d : d) || a.name.localeCompare(b.name);
     });
     return list;
   }
@@ -134,33 +158,38 @@
   }
 
   function cardHTML(s) {
-    const pill = PILLS[s.status] || PILLS.unknown;
+    const pill = MENU_IDS.has(s.id) ? { text: 'On the menu', cls: 'green' } : PILLS[s.status] || PILLS.unknown;
     const collab = s.collaborator || (s.collabType === 'house' ? 'House recipe' : 'Collaborator unknown');
-    const meta = [s.date, s.ingredients.length ? s.ingredients.length + ' ingredients' : null]
+    const count = GROUPS.get(s.id).length;
+    const meta = [dateLabel(s), count ? count + ' ingredients' : null]
       .filter(Boolean).join(', ');
+    const price = s.price ? s.price.replace(/\.00$/, '') : '';
     return `<li>
       <button class="card" data-s="${esc(s.id)}" aria-haspopup="dialog">
         ${artHTML(s, 'card')}
         <h3 class="card-name">${esc(s.name)}</h3>
         <span class="card-collab">${esc(collab)}</span>
-        <span class="card-meta">${esc(meta)}</span>
-        <span class="pill ${pill.cls}">${pill.text}</span>
+        <span class="card-meta">${esc(catalogView === 'menu' ? `${count} ingredients` : meta)}</span>
+        ${catalogView === 'menu' ? `<span class="card-price">${esc(price)}</span>`
+          : `<span class="pill ${pill.cls}">${pill.text}</span>`}
       </button>
     </li>`;
   }
 
   function renderCatalog() {
     const list = visible();
+    document.getElementById('catalog-results').textContent = `${list.length} of ${catalogData().length} smoothies`;
     if (!list.length) {
-      document.getElementById('catalog').innerHTML = '<li class="catalog-empty">Nothing matches this filter.</li>';
+      document.getElementById('catalog').innerHTML = `<li class="catalog-empty">${catalogView === 'menu' && !MENU
+        ? 'The current menu has not been checked yet. Browse the archive above.' : 'Nothing matches this filter.'}</li>`;
       return;
     }
     let html = '';
     let era = null;
     for (const s of list) {
-      if (sort !== 'az' && s.era !== era) {
+      if (catalogView === 'archive' && sort !== 'az' && s.era !== era) {
         era = s.era;
-        html += `<li class="year-head" aria-hidden="true">${esc(era)}</li>`;
+        html += `<li class="year-head"><h2>${esc(era)}</h2></li>`;
       }
       html += cardHTML(s);
     }
@@ -170,47 +199,31 @@
   /* ---- ingredients view ---- */
   let ingSort = 'type';
   let ingQuery = '';
-  const BANDS = [
-    ['everyday', 'Everyday ingredients',
-      'Whole foods and the close-enough staples: fruit, greens, milks, nut butters and the basic sweeteners.'],
-    ['functional', 'Functional ingredients',
-      'The adaptogens, algae, collagen and supplements, added for a wellness reason rather than for flavor.'],
-    ['treats', 'Toppings & treats',
-      'The dessert leaning layer: swirls, crumbles, whips and the sweet seasonal extras spooned on top.'],
-  ];
-
+  let ingCategory = 'all';
+  const categorySelect = document.getElementById('ing-category');
+  categorySelect.innerHTML += Object.entries(CATS).map(([id, label]) =>
+    `<option value="${id}">${esc(label)}</option>`).join('');
   function renderIngredients() {
-    const top = ING_LIST.slice(0, 15);
-    const max = top[0].count;
-    document.getElementById('most-list').innerHTML = top.map((e) => `
-      <li><button class="most-row" data-i="${e.def.id}">
-        ${iconSVG(e.def.icon, '', 'icon')}
-        <span>${esc(e.def.name)}</span>
-        <span class="bar-track"><span class="bar" style="width:${Math.round((e.count / max) * 100)}%"></span></span>
-        <span class="n">${e.count}</span>
-      </button></li>`).join('');
-
     const q = ingQuery.trim().toLowerCase();
     const matches = (e) => !q
       || e.def.name.toLowerCase().includes(q)
       || [...e.variants].some((v) => v.toLowerCase().includes(q));
 
-    // 'type' groups by what the ingredient is (fruit, vegetable...); the
-    // other sorts keep the everyday / functional / treats bands.
+    const byName = (a, b) => a.def.name.localeCompare(b.def.name);
+    const filtered = ING_LIST.filter((e) => matches(e) && (ingCategory === 'all' || e.def.cat === ingCategory));
     const groups = ingSort === 'type'
-      ? Object.keys(CATS).map((cat) => [ING_LIST.filter((e) => e.def.cat === cat && matches(e)), CATS[cat], ''])
-      : BANDS.map(([band, title, intro]) => [ING_LIST.filter((e) => e.def.band === band && matches(e)), title, intro]);
+      ? Object.keys(CATS).map((cat) => [filtered.filter((e) => e.def.cat === cat), CATS[cat]])
+      : [[ingSort === 'az' ? [...filtered].sort(byName) : filtered, ingSort === 'az' ? 'All ingredients' : 'Most used']];
     if (groups.every(([items]) => !items.length)) {
       document.getElementById('ing-categories').innerHTML =
-        `<p class="ing-empty">No ingredient matches "${esc(ingQuery.trim())}".</p>`;
+        `<p class="ing-empty">No ingredients match these filters. Try another search or category.</p>`;
       return;
     }
-    document.getElementById('ing-categories').innerHTML = groups.map(([items, title, intro]) => {
+    document.getElementById('ing-categories').innerHTML = groups.map(([items, title]) => {
       if (!items.length) return '';
-      if (ingSort === 'az') items = [...items].sort((a, b) => a.def.name.localeCompare(b.def.name));
       return `<section class="ing-band">
-        <h2>${esc(title)}</h2>
-        ${intro ? `<p class="band-intro">${esc(intro)}</p>` : ''}
+        <h2>${esc(title)} <span class="category-count">${items.length}</span></h2>
+        ${title === CATS.specialty ? '<p class="ing-category-note">Distinct formulas kept under their product names. Everyday ingredients and familiar mixes are grouped by type.</p>' : ''}
         <div class="ing-grid">
           ${items.map((e) => `
             <button class="ing-tile" data-i="${e.def.id}">
@@ -233,6 +246,11 @@
     renderIngredients();
   });
 
+  categorySelect.addEventListener('change', (e) => {
+    ingCategory = e.target.value;
+    renderIngredients();
+  });
+
   /* ---- modals ---- */
   const sheet = document.getElementById('sheet');
   const sheetInner = document.getElementById('sheet-inner');
@@ -246,21 +264,22 @@
   }
 
   function smoothieSheetHTML(s) {
-    const pill = PILLS[s.status] || PILLS.unknown;
-    const sub = s.collaborator
+    const pill = MENU_IDS.has(s.id) ? { text: 'On the menu', cls: 'green' } : PILLS[s.status] || PILLS.unknown;
+    const sub = s.collaborator && s.collaborator.toLowerCase() !== 'erewhon'
       ? `${s.collaborator} × Erewhon`
       : (s.collabType === 'house' ? 'Erewhon house recipe' : 'Collaborator unknown');
-    const meta = [s.date, TYPE_LABEL[s.collabType]].filter(Boolean).join(', ');
-    const rows = s.ingredients.map((raw) => {
-      const id = matchCanon(raw);
+    const meta = [dateLabel(s), TYPE_LABEL[s.collabType]].filter(Boolean).join(', ');
+    const groups = GROUPS.get(s.id);
+    const rows = groups.map(({ id, variants }) => {
       const def = id ? BY_ID.get(id) : null;
-      const name = def ? def.name : raw;
-      const showRaw = def && rawAddsInfo(raw, def.name);
-      return `<li><button class="ing-row" data-i="${def ? def.id : ''}">
-        ${iconSVG(def ? def.icon : matchIcon(raw), '', 'icon')}
+      const name = def ? def.name : variants[0];
+      const detail = def ? variants.filter((raw) => variants.length > 1 || rawAddsInfo(raw, def.name)) : [];
+      const tag = def ? 'button' : 'div';
+      return `<li><${tag} class="ing-row"${def ? ` data-i="${def.id}"` : ''}>
+        ${iconSVG(def ? def.icon : 'jar', '', 'icon')}
         <span><span class="r-name">${esc(name)}</span>
-        ${showRaw ? `<br/><span class="r-raw">${esc(raw)}</span>` : ''}</span>
-      </button></li>`;
+        ${detail.map((raw) => `<span class="r-raw">${esc(raw)}</span>`).join('')}</span>
+      </${tag}></li>`;
     }).join('');
     const sources = (s.sources || []).slice(0, 4).map((u) => {
       let d; try { d = new URL(u).hostname.replace(/^www\./, ''); } catch { d = u; }
@@ -272,19 +291,21 @@
       <div class="sheet-head">
         ${artHTML(s, 'sheet')}
         <div style="flex:1; min-width:0;">
-          <h2 class="sheet-title">${esc(s.name)}</h2>
+          <h2 class="sheet-title" id="sheet-title">${esc(s.name)}</h2>
           <p class="sheet-sub">${esc(sub)}</p>
           <p class="sheet-metaline">${esc(meta)}</p>
           <span class="pill ${pill.cls}">${pill.text}</span>
+          ${MENU_IDS.has(s.id) ? `<p class="sheet-metaline">Listed on the ${esc(MENU.scope)}. Checked ${esc(menuDate)}.${s.price ? ` Listed price ${esc(s.price)}.` : ''}</p>` : ''}
         </div>
       </div>
       ${s.notes ? `<p class="sheet-notes">${esc(s.notes)}</p>` : ''}
       <h3>Ingredients</h3>
+      ${groups.some((g) => g.variants.length > 1) ? '<p class="partial-note">Versions of the same ingredient are grouped together. The listed flavors and brands appear underneath.</p>' : ''}
       ${s.ingredients.length
         ? `<ul class="ing-rows">${rows}</ul>`
-        : '<p class="partial-note">No complete recipe survives in public sources.</p>'}
+        : '<p class="partial-note">An ingredient list has not been verified for this record.</p>'}
       ${s.ingredientsComplete === false && s.ingredients.length
-        ? '<p class="partial-note">Partial record. The full official list was never published.</p>' : ''}
+        ? '<p class="partial-note">Partial record. Some listed ingredients may be missing.</p>' : ''}
       ${sources ? `<h3>Sources</h3><div class="sheet-sources">${sources}</div>` : ''}`;
   }
 
@@ -301,8 +322,7 @@
         if (seenVar.has(k)) return false;
         seenVar.add(k);
         return true;
-      })
-      .slice(0, 3);
+      });
     const co = CO.get(def.id) || [];
     const coLink = (cid) => `<button class="prof-colink" data-i="${cid}">${esc(BY_ID.get(cid).name.toLowerCase())}</button>`;
     const coText = co.length === 1
@@ -314,11 +334,12 @@
       <div class="sheet-head">
         ${iconSVG(def.icon, def.name, 'icon-lg wob')}
         <div style="flex:1; min-width:0;">
-          <h2 class="sheet-title">${esc(def.name)}</h2>
+          <h2 class="sheet-title" id="sheet-title">${esc(def.name)}</h2>
           <p class="sheet-notes" style="margin-top:6px">${esc(def.blurb)}</p>
           <p class="prof-stat">In ${e.count} of ${DATA.length} smoothies.</p>
           ${co.length ? `<p class="prof-co">Usually blended with ${coText}.</p>` : ''}
-          ${variants.length ? `<p class="prof-variants">On menus as: ${esc(variants.join(', '))}</p>` : ''}
+          ${variants.length ? `<p class="prof-variants">On menus as: ${esc(variants.slice(0, 3).join(', '))}</p>` : ''}
+          ${variants.length > 3 ? `<details class="prof-variants"><summary>More menu names (${variants.length - 3})</summary><ul>${variants.slice(3).map((v) => `<li>${esc(v)}</li>`).join('')}</ul></details>` : ''}
         </div>
       </div>
       <h3>Appears in</h3>
@@ -326,20 +347,26 @@
         ${list.map((s) => `<li><button class="smoothie-row" data-s="${esc(s.id)}">
           <span class="dot" style="background:${esc(s.color)}"></span>
           <span class="s-name">${esc(s.name)}</span>
-          <span class="s-year">${esc(String(s.era).startsWith('Undated') ? 'pre-2022' : s.date)}</span>
+          <span class="s-year">${esc(String(s.era).startsWith('Undated') ? 'pre-2022' : dateLabel(s))}</span>
         </button></li>`).join('')}
       </ul>`;
   }
 
   /* ---- routing ---- */
-  let view = 'archive';
-
   function setView(v) {
     view = v;
-    document.getElementById('view-archive').hidden = v !== 'archive';
+    document.getElementById('view-archive').hidden = v === 'ingredients';
     document.getElementById('view-ingredients').hidden = v !== 'ingredients';
+    if (v !== 'ingredients') {
+      catalogView = v;
+      document.getElementById('menu-note').textContent = v === 'menu' && MENU
+        ? `${MENU.scope}. Checked ${menuDate}. Listed prices and availability may vary by store.` : '';
+      renderChips();
+      renderCatalog();
+    }
     document.querySelectorAll('[data-nav]').forEach((a) => {
-      a.setAttribute('aria-current', a.dataset.nav === v ? 'true' : 'false');
+      if (a.dataset.nav === v) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
     });
   }
 
@@ -351,7 +378,7 @@
   }
 
   function closeToView() {
-    location.hash = view === 'ingredients' ? '#/ingredients' : '#/';
+    location.hash = view === 'ingredients' ? '#/ingredients' : catalogView === 'menu' ? '#/menu' : '#/';
   }
 
   function route() {
@@ -359,15 +386,27 @@
     let m;
     if ((m = h.match(/^#\/s\/(.+)$/))) {
       const s = BY_SID.get(decodeURIComponent(m[1]));
-      if (s) { setView('archive'); openSheet(smoothieSheetHTML(s)); return; }
+      if (s) {
+        if (!routed) setView('archive');
+        routed = true;
+        openSheet(smoothieSheetHTML(s)); return;
+      }
     }
     if ((m = h.match(/^#\/i\/(.+)$/))) {
-      const e = ING.get(decodeURIComponent(m[1]));
-      if (e) { openSheet(ingredientSheetHTML(e)); return; }
+      const requestedId = decodeURIComponent(m[1]);
+      const id = ALIASES[requestedId] || requestedId;
+      const e = ING.get(id);
+      if (e) {
+        if (id !== requestedId) history.replaceState(null, '', '#/i/' + id);
+        if (!routed) setView('ingredients');
+        routed = true;
+        openSheet(ingredientSheetHTML(e)); return;
+      }
     }
     if (sheet.open) sheet.close();
-    setView(h === '#/ingredients' ? 'ingredients' : 'archive');
-    if (h !== '#/ingredients' && h !== '#/' && h !== '') history.replaceState(null, '', '#/');
+    setView(h === '#/ingredients' ? 'ingredients' : h === '#/menu' ? 'menu' : 'archive');
+    routed = true;
+    if (!['#/ingredients', '#/menu', '#/', ''].includes(h)) history.replaceState(null, '', '#/');
   }
 
   window.addEventListener('hashchange', route);

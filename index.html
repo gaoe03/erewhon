@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Erewhon Smoothie Archive</title>
-  <meta name="description" content="Every smoothie sold at the Erewhon Tonic Bar, with full ingredient lists and a profile for every ingredient." />
+  <meta name="description" content="The latest checked Erewhon smoothie menu and an illustrated archive of past drinks, with sourced ingredient lists and profiles." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet" />
@@ -36,21 +36,21 @@
     </defs>
   </svg>
 
-  <header class="nav">
-    <a class="brand" href="#/">Erewhon Smoothie Archive</a>
-    <nav>
-      <a href="#/" data-nav="archive">Smoothies</a>
-      <a href="#/ingredients" data-nav="ingredients">Ingredients</a>
-    </nav>
-  </header>
-
   <main>
-    <section id="view-archive">
-      <div class="hero">
-        <h1 class="serif">The Erewhon<br/>Smoothie Archive</h1>
-        <p class="hero-line" id="hero-stats"></p>
-      </div>
+    <header class="hero">
+      <h1 class="serif"><a href="#/">The Erewhon<br/>Smoothie Archive</a></h1>
+      <p class="hero-line">Past collaborations, house staples, and what’s on the menu.</p>
+    </header>
+    <nav class="view-tabs" aria-label="Browse the archive">
+      <a href="#/" data-nav="archive">All smoothies <span id="archive-count" class="view-count"></span></a>
+      <a href="#/menu" data-nav="menu">Current menu <span id="menu-count" class="view-count"></span></a>
+      <a href="#/ingredients" data-nav="ingredients">Ingredients <span id="ingredient-count" class="view-count"></span></a>
+    </nav>
+
+    <section id="view-archive" aria-label="Smoothies">
+      <p class="menu-note" id="menu-note"></p>
       <div class="toolbar">
+        <input class="catalog-search" id="catalog-search" type="search" placeholder="Find a smoothie or collaborator" aria-label="Search smoothies and collaborators" />
         <div class="segmented" id="chips" role="group" aria-label="filter by type"></div>
         <select class="sort-select" id="sort-select" aria-label="sort order">
           <option value="newest">Newest first</option>
@@ -58,16 +58,18 @@
           <option value="az">A to Z</option>
         </select>
       </div>
+      <p class="result-count" id="catalog-results" aria-live="polite"></p>
       <ol class="catalog" id="catalog"></ol>
     </section>
 
-    <section id="view-ingredients" hidden>
-      <div class="hero">
-        <h1 class="serif">Ingredients</h1>
-        <p class="hero-line" id="ing-hero-stats"></p>
-      </div>
+    <section id="view-ingredients" aria-label="Ingredients" hidden>
+      <p class="view-note" id="ing-hero-stats"></p>
       <div class="toolbar ing-toolbar">
         <input class="ing-search" id="ing-search" type="search" placeholder="Search ingredients" aria-label="search ingredients" />
+        <label class="ing-filter-label" for="ing-category">Category</label>
+        <select class="sort-select" id="ing-category">
+          <option value="all">All categories</option>
+        </select>
         <label class="ing-sort-label" for="ing-sort">Sort</label>
         <select class="sort-select" id="ing-sort" aria-label="sort ingredients">
           <option value="type">By type</option>
@@ -75,15 +77,12 @@
           <option value="az">A to Z</option>
         </select>
       </div>
+      <p class="ing-policy">Brands share ingredient profiles where they fit. Original names and flavors stay in the recipes. Most-used ingredients come first within each type.</p>
       <div id="ing-categories"></div>
-      <div class="ing-most">
-        <h2>Most used</h2>
-        <ol class="most-list" id="most-list"></ol>
-      </div>
     </section>
   </main>
 
-  <dialog class="sheet" id="sheet">
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
     <div class="sheet-inner" id="sheet-inner"></div>
   </dialog>
 
@@ -92,6 +91,7 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script src="data/ingredient-labels.js"></script>
   <script src="ingredients.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>

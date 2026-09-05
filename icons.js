@@ -37,6 +37,150 @@
 
   const ICONS = {
 
+    bananaWater: `
+      <path d="M20 20 H44 V53 C44 57 40 59 32 59 C24 59 20 57 20 53 Z" fill="${C.sky}" ${S}/>
+      <path d="M20 28 H44" ${S2} fill="none"/>
+      <path d="M25 13 C23 27 32 36 43 34 C47 33 47 29 43 29 C35 30 31 24 32 14 Z" fill="${C.yellow}" ${S2}/>
+      <path d="M39 8 L37 22" stroke="${C.red}" stroke-width="3" stroke-linecap="round"/>`,
+
+    appleJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.yellow}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <path d="M32 30 C27 25 22 29 23 37 C24 45 29 48 32 46 C35 48 40 45 41 37 C42 29 37 25 32 30 Z" fill="${C.red}" ${S2}/>
+      <path d="M37 8 L35 25" stroke="${C.green}" stroke-width="3" stroke-linecap="round"/>`,
+
+    orangeJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.orange}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="32" cy="39" r="7" fill="${C.peach}" ${S2}/>
+      <path d="M32 32 V46 M25 39 H39 M38 8 L36 25" stroke="${C.ink}" stroke-width="2" stroke-linecap="round"/>`,
+
+    blueberryJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.purple}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="28" cy="39" r="5" fill="${C.blue}" ${S2}/><circle cx="37" cy="41" r="5" fill="${C.blue}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.red}" stroke-width="3" stroke-linecap="round"/>`,
+
+    cherryJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.red}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="28" cy="42" r="5" fill="${C.magenta}" ${S2}/><circle cx="38" cy="42" r="5" fill="${C.magenta}" ${S2}/>
+      <path d="M28 37 Q30 29 35 30 Q37 34 38 37 M38 8 L36 25" stroke="${C.green}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
+
+    lemonJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.yellow}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <path d="M24 40 Q23 34 31 33 Q41 32 42 38 Q43 42 39 45 Q31 49 26 46 Q24 44 24 40 Z" fill="${C.cream}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.red}" stroke-width="3" stroke-linecap="round"/>`,
+
+    limeJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.lime}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="32" cy="40" r="8" fill="${C.green}" ${S2}/>
+      <path d="M32 32 V48 M24 40 H40 M38 8 L36 25" stroke="${C.ink}" stroke-width="2" stroke-linecap="round"/>`,
+
+    pomegranateJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.magenta}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <path d="M27 36 L32 32 L37 36 L40 44 H24 Z" fill="${C.red}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.green}" stroke-width="3" stroke-linecap="round"/>`,
+
+    watermelonJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.pink}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <path d="M25 45 L32 32 L39 45 Z" fill="${C.red}" ${S2}/>
+      <path d="M25 45 H39" stroke="${C.green}" stroke-width="4"/><path d="M38 8 L36 25" stroke="${C.deep}" stroke-width="3" stroke-linecap="round"/>`,
+
+    grapeJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.purple}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="28" cy="36" r="4" fill="${C.lime}" ${S2}/><circle cx="36" cy="36" r="4" fill="${C.lime}" ${S2}/><circle cx="32" cy="44" r="4" fill="${C.lime}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.green}" stroke-width="3" stroke-linecap="round"/>`,
+
+    juiceBlend: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.peach}" ${S}/>
+      <path d="M18 24 H46" ${S2} fill="none"/>
+      <circle cx="28" cy="39" r="6" fill="${C.orange}" ${S2}/><circle cx="37" cy="42" r="6" fill="${C.green}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.purple}" stroke-width="3" stroke-linecap="round"/>`,
+
+    carrotJuice: `<path d="M18 24 H46 L43 55 H21 Z" fill="${C.orange}" ${S}/><path d="M27 34 L38 34 L35 49 L30 49 Z" fill="${C.yellow}" ${S2}/><path d="M30 34 L26 29 M34 34 L38 29" stroke="${C.green}" stroke-width="3" stroke-linecap="round"/>`,
+    beetJuice: `<path d="M18 24 H46 L43 55 H21 Z" fill="${C.magenta}" ${S}/><circle cx="32" cy="41" r="9" fill="${C.red}" ${S2}/><path d="M32 32 Q27 27 24 30 M32 32 Q37 27 41 30" stroke="${C.green}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+    gingerJuice: `<path d="M18 24 H46 L43 55 H21 Z" fill="${C.yellow}" ${S}/><path d="M23 42 C27 35 31 39 34 34 C39 31 43 37 39 42 C36 47 28 49 23 42 Z" fill="${C.wheat}" ${S2}/>` ,
+    turmericJuice: `<path d="M18 24 H46 L43 55 H21 Z" fill="${C.orange}" ${S}/><path d="M23 42 C27 35 31 39 34 34 C39 31 43 37 39 42 C36 47 28 49 23 42 Z" fill="${C.yellow}" ${S2}/>` ,
+
+    coconutMeat: `
+      <path d="M10 27 C10 45 18 56 32 56 C46 56 54 45 54 27 Z" fill="${C.brown}" ${S}/>
+      <ellipse cx="32" cy="27" rx="22" ry="15" fill="${C.white}" ${S}/>
+      <ellipse cx="32" cy="26" rx="12" ry="7" fill="${C.cream}" ${S2}/>
+      <path d="M16 42 L20 46 M25 49 L27 52 M44 45 L47 41" stroke="${C.cocoa}" stroke-width="2" stroke-linecap="round"/>`,
+    coconutWhip: `
+      <path d="M13 42 H51 C50 54 42 59 32 59 C22 59 14 54 13 42 Z" fill="${C.brown}" ${S}/>
+      <path d="M14 42 C11 36 17 32 22 32 C18 27 24 22 29 23 C26 17 31 13 38 9 C36 16 43 18 41 24 C47 25 48 30 43 33 C51 34 54 39 49 43 Z" fill="${C.white}" ${S}/>
+      <path d="M26 25 Q34 29 41 24 M21 33 Q32 38 43 33" stroke="${C.tan}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    whippedCream: `
+      <ellipse cx="32" cy="53" rx="24" ry="5" fill="${C.sky}" ${S2}/>
+      <path d="M13 50 C9 44 15 38 22 38 C16 33 23 26 29 27 C25 22 28 14 38 9 C34 18 44 19 41 27 C49 29 48 35 43 38 C51 39 56 45 50 50 C42 55 21 55 13 50 Z" fill="${C.white}" ${S}/>
+      <path d="M29 27 Q34 30 41 27 M22 38 Q31 42 43 38 M19 48 Q31 51 44 47" stroke="${C.tan}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    dairyWhip: `
+      <path d="M12 45 H52 L47 57 H17 Z" fill="${C.blue}" ${S}/>
+      <path d="M14 44 C10 38 17 32 22 33 C18 27 25 22 30 24 C26 18 31 12 38 9 C35 17 44 20 41 26 C48 28 47 34 43 35 C51 37 54 42 49 46 Z" fill="${C.cream}" ${S}/>
+      <path d="M29 26 Q35 29 41 26 M22 35 Q32 39 43 35" stroke="${C.tan}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    dairyCream: `<path d="M20 17 H44 V55 H20 Z" fill="${C.cream}" ${S}/><path d="M20 29 H44" ${S2}/><circle cx="32" cy="41" r="7" fill="${C.white}" ${S2}/>` ,
+    condensedMilk: `<path d="M20 13 H44 L47 55 H17 Z" fill="${C.cream}" ${S}/><path d="M18 25 H46 M20 47 H44" ${S2}/><path d="M32 31 C38 38 38 43 32 46 C26 43 26 38 32 31 Z" fill="${C.wheat}" ${S2}/>` ,
+    cartonDairy: `<path d="M19 28 L26 16 L38 16 L45 28 L45 55 L19 55 Z" fill="${C.white}" ${S}/><path d="M19 28 L32 24 L45 28" fill="none" ${S}/><path d="M27 38 Q32 33 37 38 V48 H27 Z" fill="${C.blue}" ${S2}/>` ,
+    coconutSoftServe: `<path d="M20 50 C15 50 15 43 21 42 C14 40 18 32 25 35 C20 29 28 25 32 30 C36 25 44 29 39 35 C46 32 50 40 43 42 C49 43 49 50 44 50 Z" fill="${C.white}" ${S}/><path d="M23 55 Q32 46 41 55" fill="${C.brown}" ${S}/>` ,
+    boneBroth: `<path d="M14 35 C10 28 18 23 23 28 L41 45 C46 40 54 47 48 53 C42 59 35 51 39 47 L21 30 C17 35 14 35 14 35 Z" fill="${C.cream}" ${S}/>` ,
+    vanillaSyrup: `<path d="M20 18 H44 V55 H20 Z" fill="${C.wheat}" ${S}/><path d="M24 13 H40 V20 H24 Z" fill="${C.brown}" ${S2}/><path d="M28 32 Q35 38 29 48 M36 30 Q29 38 36 49" fill="none" stroke="${C.cocoa}" stroke-width="2.5" stroke-linecap="round"/>`,
+    blueberryPowder: `<path d="M15 39 Q32 23 49 39 L46 53 H18 Z" fill="${C.blue}" ${S}/><path d="M22 39 Q32 32 42 39" stroke="${C.purple}" stroke-width="3" fill="none"/><circle cx="49" cy="18" r="7" fill="${C.blue}" ${S2}/>` ,
+    pitayaPowder: `<path d="M15 39 Q32 23 49 39 L46 53 H18 Z" fill="${C.magenta}" ${S}/><path d="M24 40 h.01 M32 35 h.01 M40 41 h.01" stroke="${C.ink}" stroke-width="3" stroke-linecap="round"/>`,
+    seaBuckthorn: `
+      <path d="M18 56 Q29 36 42 11" stroke="${C.brown}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M35 24 Q27 9 30 7 Q39 13 35 24 M38 20 Q47 9 53 12 Q49 20 38 20" fill="${C.lime}" ${S2}/>
+      <ellipse cx="24" cy="33" rx="6" ry="7" fill="${C.orange}" ${S2}/>
+      <ellipse cx="37" cy="30" rx="6" ry="7" fill="${C.yellow}" ${S2}/>
+      <ellipse cx="32" cy="43" rx="6" ry="7" fill="${C.orange}" ${S2}/>
+      <ellipse cx="18" cy="46" rx="6" ry="7" fill="${C.yellow}" ${S2}/>` ,
+    coconutBacon: `<path d="M12 22 Q24 14 32 24 T52 22 L47 34 Q38 40 30 32 T16 36 Z" fill="${C.brown}" ${S}/><path d="M14 40 Q25 32 34 42 T51 40 L47 51 Q38 57 29 49 T16 53 Z" fill="${C.wheat}" ${S}/>` ,
+    muffinCrumble: `<path d="M12 48 L18 35 L27 39 L34 28 L43 37 L52 34 L55 51 Z" fill="${C.wheat}" ${S}/><circle cx="24" cy="42" r="3" fill="${C.blue}" ${S2}/><circle cx="39" cy="39" r="3" fill="${C.blue}" ${S2}/><circle cx="47" cy="46" r="3" fill="${C.blue}" ${S2}/>` ,
+    figJam: `<path d="M16 25 H48 V52 C48 58 16 58 16 52 Z" fill="${C.purple}" ${S}/><path d="M14 17 H50 V26 H14 Z" fill="${C.wheat}" ${S}/><path d="M32 32 C25 37 24 48 32 52 C40 48 39 37 32 32 Z" fill="${C.magenta}" ${S2}/>` ,
+    thyme: `<path d="M18 55 Q31 37 45 12" stroke="${C.deep}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="25" cy="43" rx="6" ry="3" transform="rotate(-30 25 43)" fill="${C.green}" ${S2}/><ellipse cx="35" cy="31" rx="6" ry="3" transform="rotate(-30 35 31)" fill="${C.green}" ${S2}/><ellipse cx="42" cy="20" rx="6" ry="3" transform="rotate(-30 42 20)" fill="${C.lime}" ${S2}/>` ,
+    pistachio: `<path d="M32 10 C46 19 49 43 32 55 C15 43 18 19 32 10 Z" fill="${C.cream}" ${S}/><path d="M32 18 C41 25 42 39 32 47 C22 39 23 25 32 18 Z" fill="${C.lime}" ${S2}/>` ,
+    balsamic: `<path d="M23 15 H41 V22 C41 26 45 29 45 35 V55 H19 V35 C19 29 23 26 23 22 Z" fill="${C.cocoa}" ${S}/><path d="M25 9 H39 V17 H25 Z" fill="${C.wheat}" ${S}/><path d="M25 37 H39 V49 H25 Z" fill="${C.cream}" ${S2}/><path d="M32 39 C36 43 36 46 32 48 C28 46 28 43 32 39 Z" fill="${C.purple}"/>`,
+    genericYogurt: `<path d="M16 25 H48 L45 54 H19 Z" fill="${C.white}" ${S}/><path d="M14 18 H50 V27 H14 Z" fill="${C.blue}" ${S}/><path d="M25 38 Q32 32 39 38 V48 H25 Z" fill="${C.cream}" ${S2}/>` ,
+    waterKefir: `<path d="M18 18 H46 V55 H18 Z" fill="${C.sky}" ${S}/><path d="M22 12 H42 V20 H22 Z" fill="${C.blue}" ${S}/><circle cx="27" cy="38" r="3" fill="${C.magenta}" ${S2}/><circle cx="37" cy="43" r="3" fill="${C.red}" ${S2}/>` ,
+    coconutKefir: `<path d="M18 18 H46 V55 H18 Z" fill="${C.white}" ${S}/><path d="M22 12 H42 V20 H22 Z" fill="${C.brown}" ${S}/><path d="M24 39 A9 7 0 0 0 40 39 Z" fill="${C.brown}" ${S2}/><path d="M28 39 A5 4 0 0 0 36 39 Z" fill="${C.white}"/>` ,
+    dairyKefir: `<path d="M18 18 H46 V55 H18 Z" fill="${C.cream}" ${S}/><path d="M22 12 H42 V20 H22 Z" fill="${C.blue}" ${S}/><path d="M25 35 Q32 29 39 35 V48 H25 Z" fill="${C.white}" ${S2}/>` ,
+    coffeeBeans: `<ellipse cx="24" cy="36" rx="10" ry="15" transform="rotate(-25 24 36)" fill="${C.cocoa}" ${S}/><ellipse cx="42" cy="31" rx="9" ry="14" transform="rotate(24 42 31)" fill="${C.brown}" ${S}/><path d="M20 24 Q29 35 22 48 M45 19 Q36 30 44 43" stroke="${C.wheat}" stroke-width="2" fill="none" stroke-linecap="round"/>` ,
+    cacaoNibs: `<path d="M13 43 L21 29 L31 38 L39 23 L52 40 L46 53 H18 Z" fill="${C.cocoa}" ${S}/><path d="M21 42 L27 37 M36 40 L42 33 M28 49 L34 44" stroke="${C.wheat}" stroke-width="2" stroke-linecap="round"/>` ,
+    cacaoPowder: `<path d="M14 43 Q32 24 50 43 L46 55 H18 Z" fill="${C.cocoa}" ${S}/><path d="M23 43 Q32 34 41 43" stroke="${C.wheat}" stroke-width="2" fill="none"/><path d="M41 17 L51 11" stroke="${C.brown}" stroke-width="5" stroke-linecap="round"/>` ,
+    chocolateSauce: `<path d="M20 15 H44 V53 C44 58 20 58 20 53 Z" fill="${C.cocoa}" ${S}/><path d="M17 22 H47" stroke="${C.wheat}" stroke-width="6" stroke-linecap="round"/><path d="M27 33 Q32 28 37 33 V47 H27 Z" fill="${C.cream}" ${S2}/>` ,
+    superfoodChocolate: `<rect x="14" y="18" width="36" height="36" rx="5" fill="${C.cocoa}" ${S}/><path d="M26 18 V54 M38 18 V54 M14 30 H50 M14 42 H50" stroke="${C.wheat}" stroke-width="2" opacity=".65"/>` ,
+    pumpkinSpice: `<path d="M16 44 Q32 27 48 44 L44 55 H20 Z" fill="${C.wheat}" ${S}/><path d="M24 39 L18 21 M34 36 L38 15 M42 40 L50 24" stroke="${C.cocoa}" stroke-width="4" stroke-linecap="round"/>` ,
+    saffronLatte: `<path d="M17 25 H45 V51 C45 57 17 57 17 51 Z" fill="${C.cream}" ${S}/><path d="M45 31 H51 C57 31 57 44 49 45 H45" fill="none" ${S}/><path d="M22 31 Q31 25 40 31" stroke="${C.orange}" stroke-width="4" fill="none"/><path d="M27 17 L33 29 M37 15 L35 29" stroke="${C.red}" stroke-width="2.5" stroke-linecap="round"/>` ,
+    arugula: `
+      <path d="M31 49 C26 48 23 46 22 43 Q23 41 28 43 L30 41 C23 38 19 34 21 31 Q25 30 30 35 L32 30 C26 27 24 22 27 20 L32 24 C28 16 32 9 36 7 C41 13 39 20 36 25 L43 20 Q48 25 36 32 L36 36 Q45 30 47 33 C49 37 43 40 35 42 L34 45 Q39 42 43 44 C43 48 37 50 32 50 Z" fill="${C.green}" ${S2}/>
+      <path d="M29 58 Q32 47 34 34 Q36 21 36 14 M32 42 L25 35 M34 29 L29 24 M33 41 L43 36" stroke="${C.deep}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+
+    aloeJuice: `
+      <path d="M18 24 H46 L43 55 H21 Z" fill="${C.lime}" ${S}/>
+      <path d="M26 47 Q22 35 25 32 Q30 36 32 45 Q30 28 35 29 L36 45 Q38 35 42 35 L38 48 Z" fill="${C.green}" ${S2}/>
+      <path d="M38 8 L36 25" stroke="${C.deep}" stroke-width="3" stroke-linecap="round"/>`,
+    lemonade: `
+      <path d="M17 21 H46 L42 56 H21 Z" fill="${C.cream}" ${S}/>
+      <path d="M19 32 Q32 29 44 32 L42 56 H21 Z" fill="${C.yellow}"/>
+      <path d="M17 21 H46 L42 56 H21 Z" fill="none" ${S}/>
+      <path d="M30 44 L36 8 L45 5" stroke="${C.red}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="23" y="29" width="8" height="8" rx="2" transform="rotate(-12 27 33)" fill="${C.white}" ${S2}/>
+      <rect x="32" y="40" width="8" height="8" rx="2" transform="rotate(14 36 44)" fill="${C.white}" ${S2}/>
+      <circle cx="17" cy="20" r="10" fill="${C.yellow}" ${S2}/>
+      <circle cx="17" cy="20" r="7" fill="${C.cream}"/>
+      <path d="M17 13 V27 M10 20 H24 M12 15 L22 25 M12 25 L22 15" stroke="${C.orange}" stroke-width="1.4"/>`,
+    elderberrySyrup: `
+      <path d="M24 17 H40 V25 L46 32 V54 H18 V32 L24 25 Z" fill="${C.purple}" ${S}/>
+      <path d="M23 10 H41 V19 H23 Z" fill="${C.cocoa}" ${S2}/>
+      <path d="M22 35 H42 V49 H22 Z" fill="${C.cream}" ${S2}/>
+      <circle cx="28" cy="41" r="3" fill="${C.purple}"/><circle cx="36" cy="41" r="3" fill="${C.purple}"/><circle cx="32" cy="46" r="3" fill="${C.purple}"/>`,
+
     strawberry: `
       <path d="M32 58 C16 50 10 34 16 26 C22 19 42 19 48 26 C54 34 48 50 32 58 Z" fill="${C.red}" ${S}/>
       <path d="M22 22 L27 11 L31 20 Z" fill="${C.green}" ${S}/>
@@ -143,8 +287,13 @@
       <circle cx="32" cy="40" r="8" fill="${C.brown}" ${S2}/>`,
 
     fig: `
-      <path d="M32 9 C30 21 14 25 14 40 C14 50 22 57 32 57 C42 57 50 50 50 40 C50 25 34 21 32 9 Z" fill="${C.purple}" ${S}/>
-      <ellipse cx="32" cy="44" rx="9" ry="7" fill="${C.blush}" ${NS} opacity=".75"/>`,
+      <path d="M21 15 C21 27 8 30 8 43 C8 52 16 57 25 55 C34 54 39 47 36 39 C33 30 27 24 27 15 Z" fill="${C.purple}" ${S}/>
+      <path d="M23 15 L22 9 L27 8" fill="none" stroke="${C.brown}" stroke-width="3" stroke-linecap="round"/>
+      <path d="M17 34 Q12 46 19 50" stroke="${C.pink}" stroke-width="2" fill="none" opacity=".5"/>
+      <path d="M43 18 C40 28 29 33 27 43 C25 52 32 58 42 57 C52 57 58 50 55 41 C52 32 47 28 46 18 Z" fill="${C.purple}" ${S}/>
+      <path d="M44 24 C41 33 32 36 31 44 C29 50 35 54 42 53 C50 53 54 48 51 42 C48 35 45 31 44 24 Z" fill="${C.cream}"/>
+      <path d="M43 32 C39 37 34 39 34 45 C34 50 39 51 43 50 C48 50 50 46 47 42 Z" fill="${C.magenta}"/>
+      <path d="M40 40 l-1 2 M44 38 v2 M37 45 l1 1 M43 45 v2 M47 45 l-1 1" stroke="${C.cream}" stroke-width="1.5" stroke-linecap="round"/>`,
 
     almond: `
       <path d="M41 11 C52 19 55 38 45 48 C37 55 25 53 20 45 C16 37 23 28 29 22 C33 18 37 14 41 11 Z" fill="${C.wheat}" ${S}/>
@@ -669,10 +818,14 @@
       <path d="M18 15 H46 V24 H18 Z" fill="${C.tan}" ${S}/>
       <path d="M32 33 L34 38 L39 38 L35 42 L37 47 L32 44 L27 47 L29 42 L25 38 L30 38 Z" fill="${C.orange}" ${S2}/>`,
     caramel: `
-      <path d="M22 38 C20 46 24 55 32 56 C40 55 44 46 42 38 Z" fill="#C8853F" stroke="#2A2118" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M16 13 H44 C48 13 51 16 51 20 V34 C51 38 48 41 44 41 H16 C12 41 9 38 9 34 V20 C9 16 12 13 16 13 Z" fill="#C8853F" stroke="#2A2118" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M14 21 C22 18 28 23 36 20 C42 18 47 19 50 21" stroke="#8A5A3B" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".5"/>
-      <path d="M15 27 q8 -4 15 -1 M34 33 q7 -2 12 1" stroke="#F0C24F" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>`,
+      <path d="M10 43 H49 C48 53 42 58 30 58 C19 58 12 53 10 43 Z" fill="${C.cream}" ${S}/>
+      <ellipse cx="30" cy="43" rx="20" ry="6" fill="${C.wheat}" ${S}/>
+      <path d="M24 42 Q30 39 36 42" fill="none" stroke="${C.yellow}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M38 18 L55 8" stroke="${C.ink}" stroke-width="6" stroke-linecap="round"/>
+      <path d="M38 18 L55 8" stroke="${C.tan}" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="31" cy="22" rx="13" ry="6" transform="rotate(-18 31 22)" fill="${C.wheat}" ${S}/>
+      <path d="M25 25 C26 31 23 33 26 37 C29 40 33 37 31 33 L30 26" fill="${C.wheat}" stroke="${C.ink}" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M25 21 L34 19" stroke="${C.yellow}" stroke-width="2" stroke-linecap="round"/>`,
     compote: `
       <path d="M12 34 H52 V40 C52 50 44 56 32 56 C20 56 12 50 12 40 Z" fill="#F6EDD8" stroke="#2A2118" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M14 34 C16 28 24 26 30 28 C36 24 46 26 48 32 C52 32 52 38 48 38 C44 42 38 38 34 40 C28 43 22 39 18 40 C14 40 12 36 14 34 Z" fill="#D9568C" stroke="#2A2118" stroke-width="3" stroke-linejoin="round"/>
@@ -923,8 +1076,57 @@
   /* keyword → icon. First match wins, so specific rules go first. */
   const RULES = [
     [/almond butter|peanut butter|cashew butter|nut butter|tahini|seed butter/, 'nutbutter'],
+    [/agua de kefir|water kefir/, 'waterKefir'],
+    [/coconut kefir/, 'coconutKefir'],
+    [/lifeway.*kefir|raw farm kefir/, 'dairyKefir'],
+    [/coffee beans/, 'coffeeBeans'],
+    [/cacao nibs/, 'cacaoNibs'],
+    [/cacao powder|raw cacao powder/, 'cacaoPowder'],
+    [/superfood chocolate sauce/, 'chocolateSauce'],
+    [/(?:erewhon )?superfood chocolate$/, 'superfoodChocolate'],
+    [/pumpkin spice|holiday spice/, 'pumpkinSpice'],
+    [/saffron latte/, 'saffronLatte'],
+    [/arugula/, 'arugula'],
+    [/aloe vera.*juice/, 'aloeJuice'],
+    [/^(?:organic )?lemonade$/, 'lemonade'],
+    [/elderberry syrup/, 'elderberrySyrup'],
+    [/banana water/, 'bananaWater'],
+    [/blueberry muffin crumble/, 'muffinCrumble'],
+    [/coconut bacon/, 'coconutBacon'],
+    [/fig jam/, 'figJam'],
+    [/balsamic vinegar/, 'balsamic'],
+    [/\bthyme\b/, 'thyme'],
+    [/pistachio/, 'pistachio'],
+    [/grass-?fed whipped cream|grassfed whipped cream|dairy cream top/, 'dairyWhip'],
+    [/vegan cream top|vegan whipped cream|pitaya whipped cream|blue spirulina whipped cream/, 'whippedCream'],
+    [/coconut whip(?:ped cream)?/, 'coconutWhip'],
+    [/^dairy cream$/, 'dairyCream'],
+    [/condensed milk/, 'condensedMilk'],
+    [/whole milk|a2(?:\/a2)? milk|raw milk/, 'cartonDairy'],
+    [/coconut (?:creme )?soft serve/, 'coconutSoftServe'],
+    [/orange grapefruit juice|kiwi matcha juice/, 'juiceBlend'],
+    [/apple juice/, 'appleJuice'],
+    [/blueberry juice/, 'blueberryJuice'],
+    [/tart cherry juice/, 'cherryJuice'],
+    [/lemon juice/, 'lemonJuice'],
+    [/lime juice/, 'limeJuice'],
+    [/pomegranate juice/, 'pomegranateJuice'],
+    [/watermelon juice/, 'watermelonJuice'],
+    [/white grape juice/, 'grapeJuice'],
+    [/orange juice|fresh-pressed orange/, 'orangeJuice'],
+    [/carrot juice/, 'carrotJuice'],
+    [/beet juice/, 'beetJuice'],
+    [/ginger juice/, 'gingerJuice'],
+    [/turmeric juice/, 'turmericJuice'],
+    [/vanilla syrup/, 'vanillaSyrup'],
+    [/pumpkin pur[eé]e/, 'pumpkin'],
+    [/freeze-dried strawberries/, 'strawberry'],
+    [/blueberry powder/, 'blueberryPowder'],
+    [/(?:pitaya|dragon ?fruit) powder/, 'pitayaPowder'],
+    [/buckthorn.*pur[eé]e/, 'seaBuckthorn'],
+    [/bone broth protein/, 'boneBroth'],
     [/sesame/, 'sesame'],
-    [/yerba|\bmate\b/, 'mate'],
+    [/yerba|(?:^|\s)mate\b/, 'mate'],
     [/gorgie|energy drink|de soi|spritz/, 'can'],
     [/kin high rhode|high rhode|kombucha/, 'bottle'],
     [/magic mind/, 'bottle'],
@@ -941,7 +1143,7 @@
     [/coconut water/, 'coconutWater'],
     [/coconut cream|cream of coconut|coconut butter/, 'coconutcream'],
     [/coconut flakes|shredded coconut|desiccated coconut/, 'coconutflakes'],
-    [/coconut meat/, 'coconut'],
+    [/coconut meat|^coconut$/, 'coconutMeat'],
     [/kefir/, 'kefir'],
     [/coconut yogurt|cocojune|yogurt|labneh/, 'yogurt'],
     [/coconut/, 'coconut'],
