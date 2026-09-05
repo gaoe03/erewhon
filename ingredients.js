@@ -551,7 +551,8 @@
   }
 
   function matchCanon(raw) {
-    return reviewed.get(normalizeRaw(raw)) || null;
+    const label = normalizeRaw(raw);
+    return reviewed.get(label) || reviewed.get(label.replace(/^organic\s+/, '')) || null;
   }
 
   function groupIngredients(rawList) {

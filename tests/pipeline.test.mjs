@@ -18,6 +18,8 @@ test('ingredient parser preserves long rows and nested commas', () => {
   assert.equal(parsed.at(-1), 'Erewhon Organic Blueberry Muffin Crumbles');
   assert.deepEqual(parseIngredients('Ingredients: Coconut cream (coconut, water), Banana. Contains: Coconut'), ['Coconut cream (coconut, water)', 'Banana']);
   assert.deepEqual(parseIngredients('Ingredients: Banana, Milk\nALLERGENS Milk'), ['Banana', 'Milk']);
+  assert.deepEqual(parseIngredients('Organic Almond Milk, GROW Organic Banana, Organic Strawberry Glaze, Contains: Almonds'), ['Organic Almond Milk', 'GROW Organic Banana', 'Organic Strawberry Glaze']);
+  assert.deepEqual(parseIngredients('Coconut Water, Agent Nateur Marine Collagen, Organic Mango Glaze, Contains: Fish (Marine Collagen) (Cod, Pollock, Haddock),'), ['Coconut Water', 'Agent Nateur Marine Collagen', 'Organic Mango Glaze']);
   assert.deepEqual(parseIngredients('Ingredients: Banana, Contains Vitamins'), ['Banana', 'Contains Vitamins']);
   assert.deepEqual(parseIngredients('Ingredients: Protein Powder (Milk and Soy), Banana'), ['Protein Powder (Milk and Soy)', 'Banana']);
   assert.equal(parseIngredients('Ingredients: Apple (juice, Banana'), null);

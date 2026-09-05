@@ -93,6 +93,11 @@ test('unfamiliar labels cannot silently inherit a substring match', () => {
   }
   assert.equal(ingredients.suggestCanon('Mango Juice'), 'mango', 'a broad proposal is not an approved mapping');
   assert.equal(ingredients.matchCanon('  ORGANIC   BANANA  '), 'banana');
+  assert.equal(ingredients.matchCanon('Organic Carrot Juice'), 'carrot-juice');
+  assert.equal(ingredients.matchCanon('Organic Green Apple'), 'apple');
+  assert.equal(ingredients.matchCanon('Organic Mango Juice'), null);
+  assert.equal(ingredients.matchCanon('Organic Banana Milk'), null);
+  assert.equal(ingredients.matchCanon('Organic Future Collagen Support'), null);
   assert.equal(ingredients.matchCanon('Copina Co. Vanilla Plant-based Collagen Boost'), 'plant-creamer');
   assert.equal(ingredients.matchCanon('Thorne Collagen Plus Passionberry'), 'collagen');
 });

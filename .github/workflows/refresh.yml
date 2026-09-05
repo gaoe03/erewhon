@@ -74,6 +74,12 @@ jobs:
           node scripts/build-data.mjs --check
           node scripts/ingredient-audit.mjs --low-use
 
+      # Save the check result before the PR action restores the base checkout.
+      - name: audit proposed ingredient mappings
+        id: mappings
+        continue-on-error: true
+        run: node scripts/ingredient-audit.mjs --check
+
       - name: check whether editorial review is needed
         id: review
         run: |
@@ -117,7 +123,10 @@ jobs:
             gh pr ready "$PR_NUMBER" --undo
           fi
 
-      # Token-created PR workflows can require approval. Check in this run too,
-      # after the review draft has been saved, without depending on another run.
+      # Token-created PR workflows can require approval. Enforce the saved result
+      # after the draft exists, without rechecking the restored base checkout.
       - name: require reviewed ingredient mappings
-        run: node scripts/ingredient-audit.mjs --check
+        if: steps.mappings.outcome == 'failure'
+        run: |
+          echo 'The saved proposal contains unreviewed ingredient labels. Resolve them in the draft PR.'
+          exit 1

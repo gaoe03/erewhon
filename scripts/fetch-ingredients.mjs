@@ -16,7 +16,7 @@ export function parseIngredients(block, { matchIngredient = matchCanon } = {}) {
   if (!block) return null;
   let s = String(block).trim();
   if (/\bINGREDIENTS\b/i.test(s)) s = s.replace(/^[\s\S]*?\bINGREDIENTS\b\s*:*/i, '');
-  s = s.split(/(?:^|\n|[.])\s*(?:ALLERGENS?|CONTAINS)\s*:?\s/i)[0].trim();
+  s = s.split(/(?:^|\n|[.])\s*(?:ALLERGENS?|CONTAINS)\s*:?\s|,\s*(?:ALLERGENS?|CONTAINS)\s*:\s*/i)[0].trim();
   if (!s || s.length > 5000) return null;
   const parts = [];
   let current = '';
