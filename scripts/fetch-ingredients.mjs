@@ -16,7 +16,21 @@ export function parseIngredients(block, { matchIngredient = matchCanon } = {}) {
   if (!block) return null;
   let s = String(block).trim();
   if (/\bINGREDIENTS\b/i.test(s)) s = s.replace(/^[\s\S]*?\bINGREDIENTS\b\s*:*/i, '');
-  s = s.split(/(?:^|\n|[.])\s*(?:ALLERGENS?|CONTAINS)\s*:?\s|,\s*(?:ALLERGENS?|CONTAINS)\s*:\s*/i)[0].trim();
+  // Allergen notices may follow the final ingredient without punctuation.
+  // Only a top-level notice ends the list, never wording inside a product.
+  let nesting = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') nesting++;
+    if (s[i] === ')') nesting--;
+    if (nesting < 0) return null;
+    const boundary = i === 0 || /[\s,.]/.test(s[i - 1]);
+    const notice = /^(?:allergens?|contains)\s*:/i.test(s.slice(i))
+      || (/(?:^|[\n.])[^\S\n]*$/.test(s.slice(0, i)) && /^(?:allergens?|contains)\s+/i.test(s.slice(i)));
+    if (nesting === 0 && boundary && notice) {
+      s = s.slice(0, i).replace(/[,\s.]+$/, '');
+      break;
+    }
+  }
   if (!s || s.length > 5000) return null;
   const parts = [];
   let current = '';
@@ -54,7 +68,7 @@ export function parseIngredients(block, { matchIngredient = matchCanon } = {}) {
     .filter(Boolean);
   // a sane ingredient list is a handful of items; anything outside that is a broken
   // scrape (a layout change or the wrong text block), so return nothing and leave it for review
-  if (clean.some((p) => p.length < 2 || p.length > 250 || /\b(?:allergens?|contains)\s*:/i.test(p))) return null;
+  if (clean.some((p) => p.length < 2 || p.length > 250)) return null;
   return clean.length >= 2 && clean.length <= 40 ? clean : null;
 }
 

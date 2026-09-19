@@ -52,7 +52,7 @@
     /* ---- cultured & composed first, so flavors don't mis-match ---- */
     { id: 'immunity-shot', name: 'Alo Immunity Rescue', cat: 'specialty', band: 'functional', icon: 'shot', re: /alo.*immunity rescue/,
       blurb: 'A named Alo product listed as an immunity rescue drizzle. Kept as a product rather than inferred individual ingredients.' },
-    { id: 'probiotics', name: 'Probiotics', cat: 'supplement', band: 'functional', icon: 'probiotic', re: /probiotic/,
+    { id: 'probiotics', name: 'Probiotics', cat: 'supplement', band: 'functional', icon: 'probiotic', re: /^(?!.*greens).*probiotic/,
       blurb: 'Probiotics listed as a supplement. Prepared probiotic drinks have a separate profile under Cultured ingredients.' },
     { id: 'water-kefir', name: 'Water kefir', cat: 'cultured', band: 'functional', icon: 'waterKefir', re: /agua de kefir|water kefir/,
       blurb: 'A fermented water drink with a light tartness. The archive version is flavored with dragon fruit and strawberry.' },
@@ -182,8 +182,8 @@
       blurb: 'Pressed pomegranate juice, tart and deep red, used as a liquid base or accent.' },
     { id: 'watermelon-juice', name: 'Watermelon juice', cat: 'liquid', band: 'everyday', icon: 'watermelonJuice', re: /watermelon juice/,
       blurb: 'Pressed watermelon, a light and mildly sweet liquid base.' },
-    { id: 'grape-juice', name: 'White grape juice', cat: 'liquid', band: 'everyday', icon: 'grapeJuice', re: /white grape juice/,
-      blurb: 'Pressed white grapes used as a mild, sweet liquid base.' },
+    { id: 'grape-juice', name: 'Grape juice', cat: 'liquid', band: 'everyday', icon: 'grapeJuice', re: /\bgrape juice\b/,
+      blurb: 'Grape juice used as a sweet liquid base. White grape juice and labels without a grape variety share this profile. The full source wording keeps the variety when one is listed.' },
     { id: 'ginger-juice', name: 'Ginger juice', cat: 'liquid', band: 'everyday', icon: 'gingerJuice', re: /ginger juice/,
       blurb: 'Pressed ginger juice used in small amounts for a sharp, warming flavor.' },
     { id: 'turmeric-juice', name: 'Turmeric juice', cat: 'liquid', band: 'functional', icon: 'turmericJuice', re: /turmeric juice/,
@@ -284,8 +284,8 @@
       blurb: 'The green pigment plants use to catch sunlight, taken as a liquid and sold for skin and detox on thin evidence. It made the Poosh Potion glow green.' },
     { id: 'barley-grass', name: 'Barley grass', cat: 'super', band: 'functional', icon: 'grass', re: /barley/,
       blurb: 'The young grass of the barley plant, dried to powder, a green from the original health food era. The Goddess still carries it.' },
-    { id: 'greens-powder', name: 'Greens powder', cat: 'super', band: 'functional', icon: 'greenspowder', re: /^(?!.*(?:ready[- ]to[- ]drink|\brtd\b|juice)).*(?:huel daily greens|vitality greens|vibrant greens|greens powder)|^greens$/,
-      blurb: 'A prepared greens powder, including Huel Daily Greens and Vitality Greens. Formulas vary by product. They share a browsing profile without counting their components as separate smoothie ingredients.' },
+    { id: 'greens-powder', name: 'Greens blend', cat: 'super', band: 'functional', icon: 'greenspowder', re: /^(?!.*(?:ready[- ]to[- ]drink|\brtd\b|juice)).*(?:huel daily greens|vitality greens|vibrant greens|greens powder|greens blend)|^greens$/,
+      blurb: 'Prepared greens blends, including Huel Daily Greens, Vitality Greens and Probiotic Greens Blend. Formulas vary by product. The complete blend stays together rather than counting its components as separate smoothie ingredients.' },
     { id: 'dulse', name: 'Atlantic dulse', cat: 'super', band: 'functional', icon: 'dulse', re: /dulse/,
       blurb: 'A red seaweed eaten dried, salty and savory, prized in the Medical Medium protocol for binding heavy metals. It appears in the Heavy Metal Detox alongside its sibling algae.' },
     { id: 'sea-moss', name: 'Sea moss', cat: 'super', band: 'functional', icon: 'seamoss', re: /sea ?moss/,
@@ -328,6 +328,8 @@
       blurb: 'Also called tulsi, a basil relative used in Ayurveda as an adaptogen said to help the body handle stress. It brings a clove-like, slightly peppery note to the Sacred Water tonic.' },
     { id: 'anise-hyssop', name: 'Anise hyssop', cat: 'super', band: 'functional', icon: 'anisehyssop', re: /anise hyssop|hyssop/,
       blurb: 'A mint-family herb with tall purple flower spikes and a cool licorice-anise flavor. One of the botanical extracts steeped into the Sacred Water tonic.' },
+    { id: 'anise', name: 'Anise', cat: 'sweet', band: 'everyday', icon: 'jar', re: /^(?:organic )?anise$/,
+      blurb: 'A botanical listed as Anise. The source does not specify its variety or preparation. It stays separate from labels explicitly naming anise hyssop.' },
     { id: 'thyme', name: 'Thyme', cat: 'veg', band: 'everyday', icon: 'thyme', re: /\bthyme\b/,
       blurb: 'A small-leafed culinary herb with an earthy, savory aroma.' },
     { id: 'arugula', name: 'Arugula', cat: 'veg', band: 'everyday', icon: 'arugula', re: /arugula/,
@@ -419,7 +421,7 @@
     { id: 'blackberry', name: 'Blackberry', cat: 'fruit', band: 'everyday', icon: 'blackberry', re: /blackberr/,
       blurb: 'A deep purple berry, dark and a little tart, in the Laufey smoothie and the goth leaning specials.' },
     { id: 'cherry', name: 'Cherry', cat: 'fruit', band: 'everyday', icon: 'cherry', re: /cherry|cherries/,
-      blurb: 'Dark sweet cherries, used fresh, dried and as tart cherry juice, the last of which is tied to sleep and recovery. Sofia Richie Grainge\'s Sweet Cherry made it a headline fruit.' },
+      blurb: 'Cherries used fresh or dried. The original preparation stays in the recipe. Cherry juice has a separate profile.' },
     { id: 'mango', name: 'Mango', cat: 'fruit', band: 'everyday', icon: 'mango', re: /mango/,
       blurb: 'Sweet tropical fruit, soft and high in vitamin C and A, that purees into a silky base. It anchors the Malibu Mango and the glow themed blends.' },
     { id: 'pineapple', name: 'Pineapple', cat: 'fruit', band: 'everyday', icon: 'pineapple', re: /pineapple|tropical/,
@@ -536,6 +538,14 @@
     return String(raw).normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
   }
 
+  // Compare approved labels without certification and typographic decoration.
+  // Keep every word describing a preparation, base, flavor or formula.
+  function ingredientLabelKey(raw) {
+    return normalizeRaw(String(raw).replace(/Â(?=[®™])/g, '').replace(/[®™]/g, ''))
+      .replace(/\borganic\b/g, '').replace(/[*†‡]+$/g, '')
+      .replace(/\s+/g, ' ').trim();
+  }
+
   const REVIEWED = window.REVIEWED_INGREDIENTS;
   if (!REVIEWED || typeof REVIEWED !== 'object' || Array.isArray(REVIEWED)) {
     throw new Error('Reviewed ingredient labels are missing. Load data/ingredient-labels.js first.');
@@ -550,9 +560,16 @@
     reviewed.set(label, entry.id);
   }
 
+  const equivalent = new Map();
+  for (const [label, id] of reviewed) {
+    const key = ingredientLabelKey(label);
+    if (!equivalent.has(key)) equivalent.set(key, id);
+    else if (equivalent.get(key) !== id) equivalent.set(key, null);
+  }
+
   function matchCanon(raw) {
     const label = normalizeRaw(raw);
-    return reviewed.get(label) || reviewed.get(label.replace(/^organic\s+/, '')) || null;
+    return reviewed.get(label) || equivalent.get(ingredientLabelKey(raw)) || null;
   }
 
   function groupIngredients(rawList) {
@@ -572,5 +589,5 @@
     return groups;
   }
 
-  window.ArchiveIngredients = { CANON, CATS, BY_ID, ALIASES, matchCanon, suggestCanon, normalizeRaw, groupIngredients };
+  window.ArchiveIngredients = { CANON, CATS, BY_ID, ALIASES, matchCanon, suggestCanon, normalizeRaw, ingredientLabelKey, groupIngredients };
 })();

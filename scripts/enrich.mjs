@@ -16,6 +16,7 @@ export function loadArchiveIngredients(repoRoot = new URL('..', import.meta.url)
     matchCanon: archive.matchCanon,
     suggestCanon: archive.suggestCanon,
     normalizeRaw: archive.normalizeRaw,
+    ingredientLabelKey: archive.ingredientLabelKey,
     canon: archive.CANON.map((row) => ({ id: row.id, name: row.name, cat: row.cat })),
   };
 }

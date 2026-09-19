@@ -119,7 +119,8 @@ test('dry run writes nothing while planning price and recipe changes', async (t)
   assert.equal(await readFile(resolve(root, 'ingredients.js'), 'utf8'), canonBefore);
   assert.equal(result.report.prices.length, 1);
   assert.equal(result.report.recipes.length, 1);
-  assert.match(result.prBody, /Unresolved ingredient: Unknown Dust/);
+  assert.match(result.prBody, /Unknown Dust: no suggested profile/);
+  assert.equal(result.prBody.includes('Unresolved ingredient: Unknown Dust'), false, 'do not repeat the mapping review list');
 });
 
 test('refresh requires a persistent reviewed mapping even when regexes suggest a profile', async (t) => {
@@ -213,4 +214,57 @@ test('menu snapshot records removal and later return without changing historical
   const returned = await runRefresh({ repoRoot: root, liveHits: [hit, returnedHit], fetchRecipe: async () => ['Banana', 'Milk'] });
   assert.equal(returned.report.returned[0], 'Two Smoothie');
   assert.equal(returned.archive.find((x) => x.id === 'two').status, 'discontinued');
+});
+
+test('live panels preserve products and discard only top-level allergen notices', async () => {
+  const fixtures = JSON.parse(await readFile(new URL('./fixtures/ingredient-panels.json', import.meta.url)));
+  const { loadArchiveIngredients } = await import('../scripts/enrich.mjs');
+  const { matchCanon } = loadArchiveIngredients();
+  const counts = { 'post-workout-smoothie': 7, 'easy-tiger-smoothie-by-megan-moroney': 15, 'mint-chip-energizer': 12, 'sacred-water-by-jolie': 8 };
+  for (const f of fixtures) {
+    const parsed = parseIngredients(f.panel);
+    assert.equal(parsed?.length, counts[f.id], f.id);
+    assert.deepEqual(parsed.filter(raw => !matchCanon(raw)), [], f.id);
+    assert.ok(parsed.every(raw => !/contains:|advisory/i.test(raw)), f.id);
+  }
+  assert.deepEqual(parseIngredients('Banana, Protein blend (contains: milk, soy), Dates Contains: Milk'), ['Banana', 'Protein blend (contains: milk, soy)', 'Dates']);
+  assert.deepEqual(parseIngredients('Banana, Protein blend (Milk. Contains soy), Dates'), ['Banana', 'Protein blend (Milk. Contains soy)', 'Dates']);
+  assert.deepEqual(parseIngredients('Banana, Contains Vitamins'), ['Banana', 'Contains Vitamins']);
+  assert.equal(parseIngredients('Banana, Protein (contains: milk, Dates'), null);
+});
+
+test('wording-only changes retain source history without a full recipe alert', async (t) => {
+  const root = await fixtureRepo(t);
+  const options = { apply: true, repoRoot: root, liveHits: [hit], fetchRecipe: async () => ['Organic Banana', 'Milk'] };
+  await runRefresh({ ...options, fetchRecipe: async () => ['Banana', 'Milk'] });
+  const wording = await runRefresh(options);
+  assert.deepEqual(wording.report.recipes, []);
+  assert.deepEqual(wording.report.wording, ['One Smoothie']);
+  assert.deepEqual(wording.archive[0].ingredients, ['Organic Banana', 'Milk']);
+  assert.ok(wording.archive[0].recipeHistory.some(h => h.ingredients[0] === 'Banana'));
+  const repeated = await runRefresh(options);
+  assert.deepEqual(repeated.report.wording, []);
+  assert.deepEqual(repeated.report.ingredientReview, []);
+  assert.equal(repeated.archive[0].needsReview, false);
+  const material = await runRefresh({ ...options, fetchRecipe: async () => ['Banana Water', 'Milk'] });
+  assert.equal(material.report.recipes.length, 1);
+  assert.equal(material.report.wording.length, 0);
+});
+
+test('Post Workout refresh clears resolved flags and preserves editorial decisions', async (t) => {
+  const root = await fixtureRepo(t);
+  const file = resolve(root, 'data/smoothies.json');
+  const rows = JSON.parse(await readFile(file, 'utf8'));
+  rows[0].needsReview = true;
+  rows[0].reviewReasons = ['Recipe fetch failed: no complete ingredient list returned', 'Unresolved ingredient: GROW Organic Banana', 'Check collaborator attribution'];
+  await writeFile(file, JSON.stringify(rows));
+  const fixtures = JSON.parse(await readFile(new URL('./fixtures/ingredient-panels.json', import.meta.url)));
+  const panel = fixtures.find(row => row.id === 'post-workout-smoothie').panel;
+  const result = await runRefresh({ apply: true, repoRoot: root, liveHits: [hit], fetchRecipe: async (_, _id, options) => parseIngredients(panel, options) });
+  assert.equal(result.archive[0].ingredients.length, 7);
+  assert.deepEqual(result.report.ingredientReview, []);
+  assert.deepEqual(result.archive[0].reviewReasons, ['Check collaborator attribution']);
+  assert.equal(result.archive[0].needsReview, true);
+  assert.deepEqual(result.archive[0].recipeHistory[0].ingredients, ['Banana']);
+  assert.deepEqual(JSON.parse(await readFile(file, 'utf8'))[0].ingredients, result.archive[0].ingredients);
 });

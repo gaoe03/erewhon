@@ -42,12 +42,17 @@ function makePrBody(report) {
     `  - After: ${x.after.join(', ')}`,
     `  - Source: ${x.source}`,
   ]), '');
+  if (report.wording.length) body.push('Source wording updated, ingredients unchanged:',
+    ...report.wording.map((x) => `- ${x}`), '');
   if (report.ingredientReview.length) body.push('Ingredient mappings to review:',
     'These labels remain ungrouped until reviewed. Suggested matches are not approvals.',
     ...report.ingredientReview.map((x) => `- ${x.raw}: ${x.suggestion ? `suggested ${x.suggestion.name} (${x.suggestion.id})` : 'no suggested profile'}. Appears in ${x.smoothies.join(', ')}.`),
     '', 'Reuse an existing ingredient type where it fits. Keep juices, milks, oils and whole ingredients distinct. Collagen-containing mixes share Collagen, while collagen boosters without collagen do not. Brands and low usage alone do not create profiles.',
     'Review README.md and docs/ingredient-audit-2026-09-05.md, then add approved labels to data/ingredient-labels.js. Do not infer components from a product name.', '');
-  if (report.review.length) body.push('Human review needed:', ...report.review.flatMap((x) => x.reasons.map((r) => `- ${x.name}: ${r}`)), '');
+  const otherReview = report.review.flatMap((x) => x.reasons
+    .filter((r) => !r.startsWith('Unresolved ingredient:'))
+    .map((r) => `- ${x.name}: ${r}`));
+  if (otherReview.length) body.push('Other review needed:', ...otherReview, '');
   return body.join('\n').trim() + '\n';
 }
 
@@ -82,8 +87,8 @@ export async function planRefresh({
   };
   if (sourceMeta && menu.index && sourceMeta.index !== menu.index) throw new Error('live source does not match the saved Grove menu source');
 
-  const report = { menu, added: planned.added, returned: [], removed: [], prices: [], recipes: [], review: [], ingredientReview: [] };
-  const { matchCanon, suggestCanon, normalizeRaw, canon } = loadArchiveIngredients(repoRoot);
+  const report = { menu, added: planned.added, returned: [], removed: [], prices: [], recipes: [], wording: [], review: [], ingredientReview: [] };
+  const { matchCanon, suggestCanon, normalizeRaw, ingredientLabelKey, canon } = loadArchiveIngredients(repoRoot);
   const pendingIngredients = new Map();
   const imageWrites = [];
   for (let i = 0; i < candidates.length; i++) {
@@ -108,7 +113,10 @@ export async function planRefresh({
         const old = entry.ingredients || [];
         if (old.length) entry.recipeHistory = [...(entry.recipeHistory || []), { observedAt: entry.ingredientsCheckedAt || null, source: entry.ingredientsSource || null, ingredients: old }];
         entry.ingredients = raw;
-        report.recipes.push({ name: entry.name, before: old, after: raw, source: recipeSource });
+        const wordingOnly = old.length === raw.length && old.every((label, index) =>
+          ingredientLabelKey(label) === ingredientLabelKey(raw[index]));
+        if (wordingOnly) report.wording.push(entry.name);
+        else report.recipes.push({ name: entry.name, before: old, after: raw, source: recipeSource });
       }
       entry.ingredientsSource = recipeSource;
       if (!entry.sources.includes(recipeSource)) entry.sources.unshift(recipeSource);

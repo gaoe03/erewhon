@@ -278,7 +278,7 @@
       return `<li><${tag} class="ing-row"${def ? ` data-i="${def.id}"` : ''}>
         ${iconSVG(def ? def.icon : 'jar', '', 'icon')}
         <span><span class="r-name">${esc(name)}</span>
-        ${detail.map((raw) => `<span class="r-raw">${esc(raw)}</span>`).join('')}</span>
+        ${detail.map((raw) => `<span class="r-raw">${esc(raw.replace(/Â(?=[®™])/g, ''))}</span>`).join('')}</span>
       </${tag}></li>`;
     }).join('');
     const sources = (s.sources || []).slice(0, 4).map((u) => {
@@ -316,6 +316,7 @@
       .sort((a, b) => b.sortKey - a.sortKey);
     const seenVar = new Set();
     const variants = [...e.variants]
+      .map((v) => v.replace(/Â(?=[®™])/g, ''))
       .filter((v) => rawAddsInfo(v, def.name))
       .filter((v) => {
         const k = v.toLowerCase().replace(/[®™]/g, '').trim();

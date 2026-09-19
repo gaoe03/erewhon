@@ -389,10 +389,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/6855121000/matchacado-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: GROW Organic Banana"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "mint-chip-energizer",
@@ -454,10 +452,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/6853391000/mint-chip-energizer",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: Probiotic Greens Blend"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "peanut-butter-blast",
@@ -506,10 +502,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/6852881000/peanut-butter-blast",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: GROW Organic Banana"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "pitaya-smoothie",
@@ -901,10 +895,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/7784411000/coconut-cloud-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: GROW Organic Banana"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "orange-ya-glad-there-are-mushrooms-in-here-smoothie",
@@ -1030,10 +1022,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/7791691000/strawberry-glaze-skin-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: GROW Organic Banana"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "kefir-matcha-cloud",
@@ -1432,11 +1422,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/7879461000/malibu-mango-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: Vita Coco Farmers Organic Coconut Water",
-      "Unresolved ingredient: GROW Organic Banana"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "post-workout-smoothie",
@@ -1455,13 +1442,13 @@
     "color": "#8FB3DC",
     "colorDark": "#4F7BC0",
     "ingredients": [
-      "Blueberries",
+      "Vita CocoÂ® Farmers Organic Coconut Water",
+      "Organic Blueberries",
       "Grass-fed Vanilla Collagen",
-      "Chia Seeds",
-      "Lucuma",
-      "Vita Coco® Farmers Coconut Water",
-      "Grass-fed Whey Protein",
-      "Maca"
+      "Erewhon A2 Whey Protein (milk)",
+      "Organic Chia Seeds",
+      "Organic Lucuma",
+      "Organic Maca"
     ],
     "ingredientsComplete": true,
     "notes": "Joined the standing menu by mid-2023 and has held its slot since.",
@@ -1472,10 +1459,25 @@
     "productIds": [
       "7805821000"
     ],
-    "reviewReasons": [
-      "Recipe fetch failed: no complete ingredient list returned"
+    "reviewReasons": [],
+    "needsReview": false,
+    "recipeHistory": [
+      {
+        "observedAt": null,
+        "source": null,
+        "ingredients": [
+          "Blueberries",
+          "Grass-fed Vanilla Collagen",
+          "Chia Seeds",
+          "Lucuma",
+          "Vita Coco® Farmers Coconut Water",
+          "Grass-fed Whey Protein",
+          "Maca"
+        ]
+      }
     ],
-    "needsReview": true
+    "ingredientsCheckedAt": "2026-09-19T11:12:33.107Z",
+    "ingredientsSource": "https://erewhon.com/product/7805821000/post-workout-smoothie"
   },
   {
     "id": "summer-crush-strawberry-lemonade-smoothie",
@@ -2613,10 +2615,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/8359071000/vanilla-matcha-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: Malk Organic Oat Milk*"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "jflare-smoothie-by-jack-flaherty",
@@ -2748,12 +2748,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/8343881000/raw-farms-strawberry-smoothie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: GROW Organic Banana",
-      "Unresolved ingredient: Erewhon A2 Whey Protein (Milk)",
-      "Unresolved ingredient: Colostrum (Milk)"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "kupp-of-sunshine-smoothie",
@@ -4127,11 +4123,8 @@
     ],
     "ingredientsSource": "https://erewhon.com/product/8559671000/sacred-water-by-jolie",
     "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
-    "reviewReasons": [
-      "Unresolved ingredient: Organic Grape Juice",
-      "Unresolved ingredient: Organic Anise"
-    ],
-    "needsReview": true
+    "reviewReasons": [],
+    "needsReview": false
   },
   {
     "id": "iced-chocolate-hojicha",
@@ -4402,11 +4395,9 @@
       "https://erewhon.com/product/8568771000/gary-brecka-s-perfect-amino-passionfruit-lemonade"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
+    "needsReview": false,
     "dateKind": "first-seen",
-    "reviewReasons": [
-      "Editorial review of the imported recipe and ingredient profiles is pending."
-    ],
+    "reviewReasons": [],
     "productIds": [
       "8568771000"
     ],
@@ -4465,12 +4456,12 @@
     "image": "img/easy-tiger-smoothie-by-megan-moroney.png",
     "name": "Easy Tiger Smoothie by Megan Moroney",
     "collaborator": "Megan Moroney",
-    "collabType": "unknown",
+    "collabType": "celebrity",
     "sortKey": 2026.708,
     "date": "Sep 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-09-15",
     "lastSeen": "2026-09-15",
     "price": "$22.00",
@@ -4496,17 +4487,12 @@
     "ingredientsComplete": true,
     "notes": "",
     "sources": [
-      "https://erewhon.com/product/8580101000/easy-tiger-smoothie-by-megan-moroney"
+      "https://erewhon.com/product/8580101000/easy-tiger-smoothie-by-megan-moroney",
+      "https://malkorganics.com/blogs/news/megan-moroney-s-easy-tiger-smoothie-at-erewhon-features-malk-organic-almond-milk"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Stonyfield Organic Whole Milk Plain Greek Yogurt",
-      "Unresolved ingredient: Wedderspoon Organic Raw Manuka Honey MGO 150",
-      "Unresolved ingredient: Thorne Creatine",
-      "Unresolved ingredient: Organic Dried Cherries"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8580101000"
     ],

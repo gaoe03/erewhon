@@ -342,3 +342,39 @@ test('low-use corrections retain useful forms and accept reusable profile names'
     assert.equal(ingredients.matchCanon(entry.name), entry.id, entry.name);
   }
 });
+
+test('harmless decorations reuse only complete approved labels', () => {
+  const cases = [
+    ['GROW Organic Banana', 'banana'],
+    ['Vita CocoÂ® Farmers Organic Coconut Water', 'coconut-water'],
+    ['Malk Organic Oat Milk*', 'oat-milk'],
+    ['MALK™ Organic Oat Milk†', 'oat-milk'],
+    ['Erewhon A2 Whey Protein (Milk)', 'whey'],
+    ['Colostrum (Milk)', 'colostrum'],
+    ['Probiotic Greens Blend', 'greens-powder'],
+    ['Stonyfield Organic Whole Milk Plain Greek Yogurt', 'yogurt'],
+    ['Wedderspoon Organic Raw Manuka Honey MGO 150', 'honey'],
+    ['Thorne Creatine', 'creatine'],
+    ['Organic Dried Cherries', 'cherry'],
+    ['Organic Grape Juice', 'grape-juice'],
+    ['Organic Anise', 'anise'],
+  ];
+  for (const [raw, id] of cases) assert.equal(ingredients.matchCanon(raw), id, raw);
+  for (const raw of ['GROW Organic Banana Water', 'MALK Organic Oat Milk Powder*', 'New Brand Collagen Booster', 'Colostrum (Milk, Honey)', 'Organic Cherry Juice Powder']) {
+    assert.equal(ingredients.matchCanon(raw), null, raw);
+  }
+  assert.notEqual(ingredients.matchCanon('Anise'), ingredients.matchCanon('Anise Hyssop'));
+  assert.equal(ingredients.suggestCanon('Organic Grape Juice'), 'grape-juice');
+  assert.equal(ingredients.suggestCanon('Probiotic Greens Blend'), 'greens-powder');
+});
+
+test('equivalent-label collisions never approve an ambiguous future spelling', () => {
+  const context = { window: {} };
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'data/ingredient-labels.js'), 'utf8'), context);
+  context.window.REVIEWED_INGREDIENTS['organic example'] = 'banana';
+  context.window.REVIEWED_INGREDIENTS.example = 'banana-water';
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'ingredients.js'), 'utf8'), context);
+  assert.equal(context.window.ArchiveIngredients.matchCanon('Organic Example'), 'banana');
+  assert.equal(context.window.ArchiveIngredients.matchCanon('Example'), 'banana-water');
+  assert.equal(context.window.ArchiveIngredients.matchCanon('Example™'), null);
+});

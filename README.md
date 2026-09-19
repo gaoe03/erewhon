@@ -77,7 +77,7 @@ Categories are browsing shelves, not a second ingredient identity. Use the exist
 | Ultima Replenisher | Electrolytes | Proteins & supplements |
 | BodyHealth Perfect Amino | Amino acids | Proteins & supplements |
 | Sprout Living Epic Protein | Plant protein | Proteins & supplements |
-| Huel Daily Greens | Greens powder | Powders, mushrooms & extracts |
+| Huel Daily Greens or Probiotic Greens Blend | Greens blend | Powders, mushrooms & extracts |
 | Marine collagen, holi(mane), Collagen Plus or Greens & Collagen | Collagen, with each complete product named underneath | Proteins & supplements |
 | Copina Vanilla Collagen Boost | Plant-based creamer, contains no collagen peptides | Coffee, tea & prepared drinks |
 | The Fullest saffron latte or Blume pumpkin spice latte | Latte mix | Coffee, tea & prepared drinks |
@@ -110,7 +110,9 @@ For future proposals, identify the complete preparation first and reuse an accur
 
 ### Enforcement in automated refreshes
 
-The browser and refresh load the same reviewed label registry. Case, whitespace and Unicode normalization do not create a new review. A leading organic label also reuses an approved exact ingredient name, so Organic Carrot Juice shares Carrot Juice without approving an unfamiliar Mango Juice as Mango. Other unfamiliar wording stays ungrouped, even if a regex suggests a familiar ingredient. A label does not become approved merely because an earlier refresh saved it in a recipe.
+The browser and refresh load the same reviewed label registry. Case, whitespace, Unicode normalization, trademark symbols, trailing footnote markers and the word Organic do not create a new review. This works inside an approved product name too, so GROW Organic Banana reuses GROW Banana and MALK Organic Oat Milk* reuses MALK Oat Milk. The remaining complete label must match a reviewed label. Preparation, flavor, brand and formula words stay significant. Mango Juice cannot match Mango, and a new collagen booster cannot match Collagen. Conflicting normalized labels stay unresolved unless the exact full label is approved. A label does not become approved merely because an earlier refresh saved it in a recipe.
+
+Allergen parentheses inside an ingredient stay in the source label. Erewhon A2 Whey Protein (Milk) and Colostrum (Milk) have explicit reviewed mappings. The matcher does not discard arbitrary parentheses or infer a blend's identity from one component. Probiotic Greens Blend shares Greens blend, not Probiotics. Grape Juice shares the juice profile without assuming white grapes. Anise stays separate from Anise hyssop because the source does not establish that they are the same ingredient.
 
 Refreshes never write the registry, ingredient definitions, icons or categories. A refresh with unfamiliar ingredients or failed recipe checks opens a draft PR, or returns an existing proposal to draft. Its report lists each unfamiliar label, the proposed existing profile and the affected smoothies, alongside the grouping rules. PR validation fails on any unreviewed archive label. The refresh run checks the proposed data before the PR action restores the checkout, then enforces that saved result after creating the draft. This is independent of a separate PR workflow that [GitHub may hold for approval](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow). Known products automatically reuse the saved mappings on every future run.
 
@@ -141,6 +143,10 @@ The refresh runs on the 1st and 15th and can be started manually in GitHub Actio
 The pipeline reads Erewhon's public search feed and checks every page of results before changing menu membership. Missing fields, duplicate feed IDs, implausible additions or removals, and incomplete pagination stop the run. Removal checks compare with the previous menu snapshot, not the entire archive.
 
 Successful recipe checks retain the original wording and save the checked product URL in `ingredientsSource`. A changed recipe keeps its previous list and known provenance in `recipeHistory`. A failed check preserves the existing list, adds a review reason and is retried on the next run. Never turn a failed scrape into an empty or supposedly complete recipe. Parse only the ingredient panel, keep commas inside parentheses together, and exclude allergen statements. Preserve complete product names containing and, such as Greens and Collagen. Split a final and only when it unambiguously separates two approved labels. Unfamiliar compound wording stays intact for review.
+
+An allergen notice such as Contains: Milk can follow the final ingredient with only whitespace. It ends the ingredient list only outside parentheses. Wording such as Protein blend (contains: milk, soy) remains part of the product. Regression fixtures include the Post Workout panel that previously failed this check.
+
+The PR report separates harmless source wording updates from recipe changes using the same label normalization as the matcher. Both retain the original strings and recipe history. A changed flavor, brand, preparation, ingredient order or ingredient count still appears in the recipe comparison. Unresolved mappings appear once with the affected smoothies instead of being repeated under every review flag. Successful retries clear fetch and mapping flags, while unrelated editorial review reasons remain until reviewed.
 
 Unresolved ingredients are included in the review report. The scheduled refresh does not invent canonical rules, icons, ingredient descriptions, collaborator classifications, or health claims. A maintainer reviews those decisions with source evidence.
 
