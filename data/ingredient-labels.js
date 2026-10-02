@@ -252,6 +252,7 @@ window.REVIEWED_INGREDIENTS = {
   "lemon mango compote": "compote",
   "lemonade": "lemonade",
   "lifeway grassfed plain kefir": "dairy-kefir",
+  "lifeway kefir": "dairy-kefir",
   "lifeway low fat plain kefir": "dairy-kefir",
   "lifeway plain kefir": "dairy-kefir",
   "lily of the desert aloe vera juice": "aloe-juice",
