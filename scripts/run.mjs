@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync, renameSync, mkdirSync, rmSync, rmdirSync, 
 import { resolve, dirname } from 'node:path';
 import { mkdtemp } from 'node:fs/promises';
 import { fetchLiveSmoothies, hitToCandidate } from './fetch-live.mjs';
-import { classify, EXCLUDE } from './dedupe.mjs';
+import { classify, normName, EXCLUDE } from './dedupe.mjs';
 import { checkGuards } from './guards.mjs';
 import { planClassifications } from './append.mjs';
 import { fetchIngredients } from './fetch-ingredients.mjs';
@@ -14,6 +14,7 @@ import { healthCheck } from './health.mjs';
 
 const DEFAULT_REPO = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const complete = (raw) => Array.isArray(raw) && raw.length >= 2;
 const unique = (values) => [...new Set(values.filter(Boolean))];
 const reasonFor = (prefix) => (reason) => String(reason).startsWith(prefix);
 
@@ -33,6 +34,10 @@ function syncReview(entry, currentReasons, unresolved) {
 function makePrBody(report) {
   const body = ['Automated Grove tonic bar menu refresh.', '', `Menu checked: ${report.menu.checkedAt}`, `Source: ${report.menu.source}`, `Current menu: ${report.menu.smoothieIds.length} smoothies`, ''];
   if (report.added.length) body.push('New archive entries:', ...report.added.map((x) => `- ${x}`), '');
+  if (report.relaunches.length) body.push('New editions on a reused Erewhon listing:',
+    ...report.relaunches.map((x) => `- ${x.name} took over the listing of ${x.fromName}. The recipe changed, so it is saved as a new drink. Merge them if it is only a rename.`), '');
+  if (report.renamed.length) body.push('Renamed on the menu, kept as the same drink:',
+    ...report.renamed.map((x) => `- ${x.name} is now listed as ${x.listedAs}`), '');
   if (report.returned.length) body.push('Returned to the current menu:', ...report.returned.map((x) => `- ${x}`), '');
   if (report.removed.length) body.push('No longer on the current Grove menu:', ...report.removed.map((x) => `- ${x}`), '');
   if (report.prices.length) body.push('Price changes:', ...report.prices.map((x) => `- ${x.name}: ${x.before || 'not recorded'} to ${x.after}`), '');
@@ -70,6 +75,37 @@ export async function planRefresh({
   const sourceMeta = hits.sourceMeta || null;
   const candidates = hits.map(hitToCandidate).filter((c) => !EXCLUDE.has(c.productId));
   const classifications = candidates.map((c) => classify(c, original));
+  const { matchCanon, suggestCanon, normalizeRaw, ingredientLabelKey, canon } = loadArchiveIngredients(repoRoot);
+
+  // Each listing's recipe is fetched once. A page load can time out once and work
+  // on the next try, so allow a second attempt.
+  const recipes = new Map();
+  const loadRecipe = async (cand, slug) => {
+    if (!recipes.has(cand.productId)) {
+      let raw = null;
+      let error = null;
+      for (let attempt = 0; attempt < 2 && !complete(raw); attempt++) {
+        try { raw = await fetchRecipe(cand.productId, slug, { matchIngredient: matchCanon }); error = null; } catch (e) { error = e; }
+      }
+      recipes.set(cand.productId, { raw, error });
+    }
+    return recipes.get(cand.productId);
+  };
+
+  // Erewhon reuses a listing id for relaunches and also for plain renames, such as
+  // Coconut Cloud Smoothie becoming Cloud Smoothie. The same recipe means the same drink.
+  const recipeKey = (list) => list.map(ingredientLabelKey).sort().join('|');
+  for (let i = 0; i < candidates.length; i++) {
+    const cls = classifications[i];
+    if (cls.action !== 'relaunch') continue;
+    const prev = original.find((s) => s.id === cls.reusedFrom);
+    if (!prev?.ingredients?.length) continue;
+    const { raw } = await loadRecipe(candidates[i], menuIdFor(candidates[i], cls));
+    if (complete(raw) && recipeKey(raw) === recipeKey(prev.ingredients)) {
+      classifications[i] = { action: 'rename', matchId: prev.id, reusedFrom: prev.id };
+    }
+  }
+
   const guard = checkGuards(candidates, classifications, { previousMenu, sourceMeta });
   if (!guard.ok) throw new Error('GUARDS FAILED: ' + guard.errors.join('; '));
 
@@ -87,8 +123,7 @@ export async function planRefresh({
   };
   if (sourceMeta && menu.index && sourceMeta.index !== menu.index) throw new Error('live source does not match the saved Grove menu source');
 
-  const report = { menu, added: planned.added, returned: [], removed: [], prices: [], recipes: [], wording: [], review: [], ingredientReview: [] };
-  const { matchCanon, suggestCanon, normalizeRaw, ingredientLabelKey, canon } = loadArchiveIngredients(repoRoot);
+  const report = { menu, added: planned.added, renamed: [], relaunches: planned.relaunches, returned: [], removed: [], prices: [], recipes: [], wording: [], review: [], ingredientReview: [] };
   const pendingIngredients = new Map();
   const imageWrites = [];
   for (let i = 0; i < candidates.length; i++) {
@@ -97,6 +132,7 @@ export async function planRefresh({
     const entry = archive.find((s) => s.id === id);
     if (!entry) throw new Error(`planned menu id is missing from archive: ${id}`);
     const before = original.find((s) => s.id === id);
+    if (before && normName(before.name) !== normName(cand.name)) report.renamed.push({ name: before.name, listedAs: cand.name });
     if (before && !previousIds.has(id)) report.returned.push(entry.name);
     if (before && before.price !== cand.price) report.prices.push({ name: entry.name, before: before.price, after: cand.price });
     entry.price = cand.price;
@@ -105,14 +141,9 @@ export async function planRefresh({
     entry.productIds = unique([...(entry.productIds || []), cand.productId]);
 
     const reasons = [];
-    // A page load can time out once and work on the next try, so allow a second attempt.
-    let raw = null;
-    let recipeError = null;
-    for (let attempt = 0; attempt < 2 && !(Array.isArray(raw) && raw.length >= 2); attempt++) {
-      try { raw = await fetchRecipe(cand.productId, id, { matchIngredient: matchCanon }); recipeError = null; } catch (error) { recipeError = error; }
-    }
+    const { raw, error: recipeError } = await loadRecipe(cand, id);
     if (recipeError) reasons.push(`Recipe fetch failed: ${recipeError.message}`);
-    if (Array.isArray(raw) && raw.length >= 2) {
+    if (complete(raw)) {
       const recipeSource = `https://erewhon.com/product/${cand.productId}/${id}`;
       if (!same(entry.ingredients || [], raw)) {
         const old = entry.ingredients || [];

@@ -344,3 +344,31 @@ test('recipe scrape gets a second attempt before the drink is flagged', async (t
   assert.equal(calls, 2);
   assert.deepEqual(result.archive[0].reviewReasons, []);
 });
+
+async function reusedListingRepo(t) {
+  const root = await fixtureRepo(t);
+  const rows = JSON.parse(await readFile(resolve(root, 'data/smoothies.json'), 'utf8'));
+  rows[0].ingredients = ['Banana', 'Milk'];
+  await writeFile(resolve(root, 'data/smoothies.json'), JSON.stringify(rows));
+  return root;
+}
+
+test('a renamed listing with the same recipe stays one drink', async (t) => {
+  const root = await reusedListingRepo(t);
+  let calls = 0;
+  const result = await runRefresh({ apply: true, repoRoot: root, liveHits: [{ ...hit, ProductName: 'Uno Smoothie' }], fetchRecipe: async () => { calls++; return ['Organic Banana', 'Milk']; } });
+  assert.equal(calls, 1, 'the recipe is fetched once per listing');
+  assert.deepEqual(result.archive.map((s) => s.id), ['one']);
+  assert.deepEqual(result.menu.smoothieIds, ['one']);
+  assert.equal(result.archive[0].productId, '1');
+  assert.match(result.prBody, /One Smoothie is now listed as Uno Smoothie/);
+  assert.doesNotMatch(result.prBody, /New archive entries/);
+});
+
+test('a reused listing with a changed recipe is a new edition called out in the report', async (t) => {
+  const root = await reusedListingRepo(t);
+  const result = await runRefresh({ repoRoot: root, liveHits: [{ ...hit, ProductName: 'Uno Smoothie' }], fetchRecipe: async () => ['Mango', 'Milk'] });
+  assert.deepEqual(result.archive.map((s) => s.id), ['one', 'uno-smoothie']);
+  assert.equal(result.archive[0].productId, '');
+  assert.match(result.prBody, /Uno Smoothie took over the listing of One Smoothie/);
+});

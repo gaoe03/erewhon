@@ -883,7 +883,7 @@
   },
   {
     "id": "coconut-cloud-smoothie",
-    "productId": "",
+    "productId": "7784411000",
     "image": "img/coconut-cloud-smoothie.jpg",
     "name": "Coconut Cloud Smoothie",
     "collaborator": "Marianna Hewitt",
@@ -893,7 +893,7 @@
     "era": "2022",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$20.00",
     "color": "#F3EADA",
     "colorDark": "#CDB892",
@@ -935,7 +935,7 @@
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7784411000/coconut-cloud-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -4538,49 +4538,6 @@
       "8580101000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8580101000/easy-tiger-smoothie-by-megan-moroney",
-    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
-  },
-  {
-    "id": "cloud-smoothie",
-    "productId": "7784411000",
-    "image": "img/cloud-smoothie.png",
-    "name": "Cloud Smoothie",
-    "collaborator": "",
-    "collabType": "unknown",
-    "sortKey": 2026.792,
-    "date": "Oct 2026",
-    "dateKind": "first-seen",
-    "era": "2026",
-    "status": "unknown",
-    "firstSeen": "2026-10-02",
-    "lastSeen": "2026-10-02",
-    "price": "$20.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
-    "ingredients": [
-      "Malk Organic Almond Milk",
-      "Organic Pineapple",
-      "GROW Organic Banana",
-      "Organic Avocado",
-      "Organic Almond Butter",
-      "Grass-fed Vanilla Collagen",
-      "Blue Majik Spirulina",
-      "Organic Coconut Cream"
-    ],
-    "ingredientsComplete": true,
-    "notes": "",
-    "sources": [
-      "https://erewhon.com/product/7784411000/cloud-smoothie"
-    ],
-    "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review"
-    ],
-    "productIds": [
-      "7784411000"
-    ],
-    "ingredientsSource": "https://erewhon.com/product/7784411000/cloud-smoothie",
     "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
   },
   {
