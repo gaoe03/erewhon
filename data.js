@@ -4619,8 +4619,7 @@ window.SMOOTHIES = [
     "subcategory": "Signatures",
     "needsReview": true,
     "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Lifeway Kefir"
+      "New archive entry needs editorial review"
     ],
     "productIds": [
       "8583341000"
