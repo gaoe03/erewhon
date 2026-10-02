@@ -6,6 +6,7 @@
 // and never touch Erewhon's private ordering backend. Get them from the live site's
 // frontend JS. Locally: export ALGOLIA_APP_ID / ALGOLIA_API_KEY / ALGOLIA_INDEX.
 // In GitHub Actions: repository secrets.
+import { TransientError, transientStatus, withRetry } from './retry.mjs';
 
 export async function fetchLiveSmoothies({
   fetchImpl = fetch,
@@ -13,8 +14,14 @@ export async function fetchLiveSmoothies({
   apiKey = process.env.ALGOLIA_API_KEY,
   index = process.env.ALGOLIA_INDEX || 'GROVE_SEARCH_INDEX',
   hitsPerPage = 100,
+  retry = {},
 } = {}) {
   if (!appId || !apiKey) throw new Error('Set ALGOLIA_APP_ID and ALGOLIA_API_KEY in the environment.');
+  // A whole retry restarts pagination, so a feed that changes mid-fetch is read again from page 0.
+  return withRetry(() => fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, retry }), retry);
+}
+
+async function fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, retry }) {
   const url = `https://${appId}-dsn.algolia.net/1/indexes/${index}/query`;
   const allHits = [];
   let page = 0;
@@ -22,15 +29,19 @@ export async function fetchLiveSmoothies({
   let reportedHits = null;
   do {
     const params = new URLSearchParams({ query: 'smoothie', hitsPerPage: String(hitsPerPage), page: String(page) });
-    const res = await fetchImpl(url, {
-    method: 'POST',
-    headers: {
-      'X-Algolia-Application-Id': appId,
-      'X-Algolia-API-Key': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ params: params.toString() }),
-    });
+    const res = await withRetry(async () => {
+      const response = await fetchImpl(url, {
+        method: 'POST',
+        headers: {
+          'X-Algolia-Application-Id': appId,
+          'X-Algolia-API-Key': apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ params: params.toString() }),
+      });
+      if (transientStatus(response.status)) throw new TransientError(`Algolia returned ${response.status}.`);
+      return response;
+    }, retry);
     if (!res.ok) throw new Error(`Algolia returned ${res.status}. The key may have rotated, recopy it from the live site.`);
     const data = await res.json();
     if (!Array.isArray(data.hits) || !Number.isInteger(data.nbPages) || data.nbPages < 1 || data.nbPages > 100
@@ -41,7 +52,7 @@ export async function fetchLiveSmoothies({
       expectedPages = data.nbPages;
       reportedHits = data.nbHits;
     } else if (data.nbPages !== expectedPages || data.nbHits !== reportedHits) {
-      throw new Error('Algolia pagination changed during the fetch. Retry the refresh.');
+      throw new TransientError('Algolia pagination changed during the fetch.');
     }
     allHits.push(...data.hits);
     page++;

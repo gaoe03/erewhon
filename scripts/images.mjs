@@ -1,5 +1,7 @@
 // Download a product image and retain the extension identified from its bytes.
 // Reject non-images and tiny error pages before any archive file is written.
+import { TransientError, transientStatus, withRetry } from './retry.mjs';
+
 export function imageType(buf) {
   if (buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpg';
   if (buf.length >= 8 && buf.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) return 'png';
@@ -7,8 +9,15 @@ export function imageType(buf) {
   return null;
 }
 
-export async function fetchImage(url, { fetchImpl = fetch } = {}) {
-  const res = await fetchImpl(url);
+export async function fetchImage(url, { fetchImpl = fetch, retry = {} } = {}) {
+  let res;
+  try {
+    res = await withRetry(async () => {
+      const response = await fetchImpl(url);
+      if (transientStatus(response.status)) throw new TransientError(`http ${response.status}`);
+      return response;
+    }, retry);
+  } catch (error) { return { status: 'failed', reason: error.message }; }
   if (!res.ok) return { status: 'failed', reason: `http ${res.status}` };
   const ct = res.headers.get('content-type') || '';
   if (!ct.startsWith('image/')) return { status: 'failed', reason: `not an image (${ct})` };

@@ -9,6 +9,8 @@ import { classify } from '../scripts/dedupe.mjs';
 import { checkGuards } from '../scripts/guards.mjs';
 import { runRefresh } from '../scripts/run.mjs';
 import { planClassifications } from '../scripts/append.mjs';
+import { fetchImage } from '../scripts/images.mjs';
+import { withRetry, TransientError } from '../scripts/retry.mjs';
 
 const sydney = 'INGREDIENTS MALK Organic Almond Milk, Banagua Organic Banana Water, Codeage Hair Vitamins, Ancient Nutrition Vanilla Bone Broth Protein, Erewhon Organic A2 Whey Protein, Organic Blueberries, Organic Acai, Organic Banana, Organic Almond Butter, Organic Tocotrienols, Organic Lucuma, Organic Maple, Organic Pitaya Whipped Cream, Organic Blue Spirulina Whipped Cream, Organic Vegan Coconut Bacon and Erewhon Organic Blueberry Muffin Crumbles. Contains: Milk, Eggs, Wheat, Almonds';
 
@@ -267,4 +269,78 @@ test('Post Workout refresh clears resolved flags and preserves editorial decisio
   assert.equal(result.archive[0].needsReview, true);
   assert.deepEqual(result.archive[0].recipeHistory[0].ingredients, ['Banana']);
   assert.deepEqual(JSON.parse(await readFile(file, 'utf8'))[0].ingredients, result.archive[0].ingredients);
+});
+
+const newHit = { objectID: '2', ProductName: 'Two Smoothie', DisplayPrice: '14.00', Department: 'Tonic', Category: 'Smoothies', SubCategory: 'House', ImageFileName: '' };
+const jpgBytes = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff]), Buffer.alloc(2100)]);
+
+test('new drink listed before its photo is saved without one and gets the photo later', async (t) => {
+  const root = await fixtureRepo(t);
+  const options = { apply: true, repoRoot: root, fetchRecipe: async () => ['Banana', 'Milk'] };
+  await runRefresh({ ...options, liveHits: [hit, newHit], fetchImageBytes: async () => assert.fail('no photo URL to fetch') });
+  const saved = JSON.parse(await readFile(resolve(root, 'data/smoothies.json'), 'utf8')).find((s) => s.id === 'two-smoothie');
+  assert.equal(saved.image, '');
+  assert.equal(saved.needsReview, true);
+  assert.match(saved.reviewReasons.join('\n'), /Photo missing: no image URL/);
+
+  const withPhoto = { ...newHit, ImageFileName: 'https://example.test/2.jpg' };
+  const later = await runRefresh({ ...options, liveHits: [hit, withPhoto], fetchImageBytes: async () => ({ status: 'downloaded', bytes: jpgBytes, extension: 'jpg' }) });
+  const row = later.archive.find((s) => s.id === 'two-smoothie');
+  assert.equal(row.image, 'img/two-smoothie.jpg');
+  assert.deepEqual(await readFile(resolve(root, 'img/two-smoothie.jpg')), jpgBytes);
+  assert.equal(row.reviewReasons.some((r) => r.startsWith('Photo missing:')), false);
+  assert.match(later.prBody, /Two Smoothie/);
+});
+
+test('failed photo download flags the drink instead of stopping the refresh', async (t) => {
+  const root = await fixtureRepo(t);
+  const withPhoto = { ...newHit, ImageFileName: 'https://example.test/2.jpg' };
+  const result = await runRefresh({ apply: true, repoRoot: root, liveHits: [hit, withPhoto], fetchRecipe: async () => ['Banana', 'Milk'], fetchImageBytes: async () => ({ status: 'failed', reason: 'http 503' }) });
+  const row = result.archive.find((s) => s.id === 'two-smoothie');
+  assert.equal(row.image, '');
+  assert.match(row.reviewReasons.join('\n'), /Photo missing: http 503/);
+  assert.match(result.prBody, /Two Smoothie: Photo missing: http 503/);
+});
+
+const noWait = { delayMs: 0 };
+
+test('retry repeats only transient failures and gives up after the limit', async () => {
+  let calls = 0;
+  assert.equal(await withRetry(async () => { if (++calls < 3) throw new TransientError('blip'); return 'ok'; }, noWait), 'ok');
+  assert.equal(calls, 3);
+  calls = 0;
+  await assert.rejects(withRetry(async () => { calls++; throw new Error('bad data'); }, noWait), /bad data/);
+  assert.equal(calls, 1, 'bad data is not retried');
+  calls = 0;
+  await assert.rejects(withRetry(async () => { calls++; throw new TypeError('fetch failed'); }, noWait), /fetch failed/);
+  assert.equal(calls, 3, 'network errors are retried up to the limit');
+});
+
+test('Algolia fetch retries server errors but not a rejected key', async () => {
+  let calls = 0;
+  const flaky = async () => (++calls === 1 ? { ok: false, status: 503 } : { ok: true, status: 200, json: async () => ({ hits: [{ objectID: '1', Department: 'Tonic', Category: 'Smoothies' }], nbPages: 1, nbHits: 1, page: 0 }) });
+  const hits = await fetchLiveSmoothies({ fetchImpl: flaky, appId: 'a', apiKey: 'k', retry: noWait });
+  assert.deepEqual(hits.map((x) => x.objectID), ['1']);
+  assert.equal(calls, 2);
+  calls = 0;
+  await assert.rejects(fetchLiveSmoothies({ fetchImpl: async () => { calls++; return { ok: false, status: 403 }; }, appId: 'a', apiKey: 'k', retry: noWait }), /403/);
+  assert.equal(calls, 1);
+});
+
+test('photo download retries server errors and reports network failures', async () => {
+  let calls = 0;
+  const ok = { ok: true, status: 200, headers: new Map([['content-type', 'image/jpeg']]), arrayBuffer: async () => jpgBytes };
+  const image = await fetchImage('https://example.test/2.jpg', { fetchImpl: async () => (++calls < 3 ? { ok: false, status: 502 } : ok), retry: noWait });
+  assert.equal(image.status, 'downloaded');
+  assert.equal(calls, 3);
+  const down = await fetchImage('https://example.test/2.jpg', { fetchImpl: async () => { throw new TypeError('fetch failed'); }, retry: noWait });
+  assert.deepEqual(down, { status: 'failed', reason: 'fetch failed' });
+});
+
+test('recipe scrape gets a second attempt before the drink is flagged', async (t) => {
+  const root = await fixtureRepo(t);
+  let calls = 0;
+  const result = await runRefresh({ repoRoot: root, liveHits: [hit], fetchRecipe: async () => { if (++calls === 1) throw new Error('timeout'); return ['Banana', 'Milk']; } });
+  assert.equal(calls, 2);
+  assert.deepEqual(result.archive[0].reviewReasons, []);
 });

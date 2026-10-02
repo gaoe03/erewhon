@@ -24,7 +24,7 @@ function menuIdFor(cand, cls) {
 
 function syncReview(entry, currentReasons, unresolved) {
   const oldReasons = entry.reviewReasons || [];
-  const preserved = oldReasons.filter((r) => !reasonFor('Recipe fetch failed:')(r) && !reasonFor('Unresolved ingredient:')(r));
+  const preserved = oldReasons.filter((r) => !reasonFor('Recipe fetch failed:')(r) && !reasonFor('Unresolved ingredient:')(r) && !reasonFor('Photo missing:')(r));
   if (entry.needsReview && oldReasons.length === 0) preserved.push('Existing editorial review still required');
   entry.reviewReasons = unique([...preserved, ...currentReasons, ...unresolved.map((raw) => `Unresolved ingredient: ${raw}`)]);
   entry.needsReview = entry.reviewReasons.length > 0;
@@ -105,8 +105,13 @@ export async function planRefresh({
     entry.productIds = unique([...(entry.productIds || []), cand.productId]);
 
     const reasons = [];
+    // A page load can time out once and work on the next try, so allow a second attempt.
     let raw = null;
-    try { raw = await fetchRecipe(cand.productId, id, { matchIngredient: matchCanon }); } catch (error) { reasons.push(`Recipe fetch failed: ${error.message}`); }
+    let recipeError = null;
+    for (let attempt = 0; attempt < 2 && !(Array.isArray(raw) && raw.length >= 2); attempt++) {
+      try { raw = await fetchRecipe(cand.productId, id, { matchIngredient: matchCanon }); recipeError = null; } catch (error) { recipeError = error; }
+    }
+    if (recipeError) reasons.push(`Recipe fetch failed: ${recipeError.message}`);
     if (Array.isArray(raw) && raw.length >= 2) {
       const recipeSource = `https://erewhon.com/product/${cand.productId}/${id}`;
       if (!same(entry.ingredients || [], raw)) {
@@ -131,16 +136,22 @@ export async function planRefresh({
       const pending = pendingIngredients.get(key);
       if (!pending.smoothies.includes(entry.name)) pending.smoothies.push(entry.name);
     }
+    // Erewhon can list a drink before its photo exists. Save the drink without one
+    // and retry on later refreshes. The site draws a cup until the photo arrives.
+    if (!entry.image) {
+      let image = { status: 'failed', reason: 'no image URL in the listing yet' };
+      if (cand.imageUrl) {
+        try { image = await fetchImageBytes(cand.imageUrl); } catch (error) { image = { status: 'failed', reason: error.message }; }
+      }
+      if (image.status === 'downloaded') {
+        const path = `img/${id}.${image.extension}`;
+        entry.image = path;
+        imageWrites.push({ path, bytes: image.bytes });
+      } else reasons.push(`Photo missing: ${image.reason}`);
+    }
+
     syncReview(entry, reasons, unresolved);
     if (entry.needsReview) report.review.push({ name: entry.name, reasons: entry.reviewReasons || ['Editorial review needed'] });
-
-    if (!before && cand.imageUrl) {
-      const image = await fetchImageBytes(cand.imageUrl);
-      if (image.status !== 'downloaded') throw new Error(`image fetch failed for ${entry.name}: ${image.reason}`);
-      const path = `img/${id}.${image.extension}`;
-      entry.image = path;
-      imageWrites.push({ path, bytes: image.bytes });
-    }
   }
   report.removed = (previousMenu.smoothieIds || []).filter((id) => !menuIds.includes(id)).map((id) => original.find((s) => s.id === id)?.name || id);
   report.ingredientReview = [...pendingIngredients.values()];

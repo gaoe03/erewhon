@@ -3,17 +3,17 @@
 //  rename     -> attach the productId to the legacy entry, update lastSeen
 //  relaunch   -> add a new edition and preserve the reused id in the older history
 //  new        -> add, with mechanical fields filled and ingredients left for review
-// Images for new entries are fetched and staged by run.mjs.
+// Photos are fetched and staged by run.mjs, which sets image once a download succeeds.
 export const slugify = (n) => String(n).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-export function makeNewEntry(cand, slug, imagePath, now = new Date()) {
+export function makeNewEntry(cand, slug, now = new Date()) {
   const seen = now.toISOString().slice(0, 10);
   const namedCollab = cand.name.match(/\bby (.+)$/i)?.[1] || '';
   const collab = namedCollab || (/^erewhon$/i.test(cand.brand) ? '' : cand.brand);
   return {
     id: slug,
     productId: cand.productId,
-    image: imagePath,
+    image: '',
     name: cand.name,
     collaborator: collab,
     collabType: 'unknown',
@@ -68,7 +68,6 @@ export function planClassifications(archive, candidates, classifications, { now 
     // new or relaunch -> a new archive entry
     summary[cls.action]++;
     const slug = slugify(cand.name);
-    const imagePath = `img/${slug}.jpg`;
     if (cls.action === 'relaunch') {
       // Erewhon reassigned the active listing id. Preserve it in the older edition's
       // productIds history while the current productId points to the live edition.
@@ -80,7 +79,7 @@ export function planClassifications(archive, candidates, classifications, { now 
       }
     }
     if (bySlug[slug]) throw new Error(`slug collision for ${cand.name}: ${slug}`);
-    const entry = makeNewEntry(cand, slug, imagePath, now);
+    const entry = makeNewEntry(cand, slug, now);
     archive.push(entry);
     bySlug[slug] = entry;
     addedEntries.push(entry);

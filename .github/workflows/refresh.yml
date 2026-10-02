@@ -1,9 +1,10 @@
 name: refresh smoothies
 
 # Runs on the 1st and 15th (about every two weeks), plus a manual button.
+# The 2nd and 16th are catch-up days that run only if the day before produced no PR.
 on:
   schedule:
-    - cron: '0 14 1,15 * *'
+    - cron: '0 14 1,2,15,16 * *'
   workflow_dispatch:
   pull_request:
 
@@ -32,13 +33,52 @@ jobs:
           node scripts/build-data.mjs --check
           node scripts/ingredient-audit.mjs --check
 
-  refresh:
+  # A catch-up run proceeds only when no refresh since the day before reached its PR step.
+  gate:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - name: check for a proposal from the day before
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          day=$(date -u +%d)
+          if [ "$EVENT" != schedule ] || { [ "$day" != 02 ] && [ "$day" != 16 ]; }; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          since=$(date -u -d yesterday +%Y-%m-%d)
+          for id in $(gh api "repos/$GH_REPO/actions/workflows/refresh.yml/runs?created=>=$since&per_page=50" \
+              --jq ".workflow_runs[] | select(.id != $RUN_ID and (.event == \"schedule\" or .event == \"workflow_dispatch\")) | .id"); do
+            # Matches the step name of the PR step below. Rename both together.
+            opened=$(gh api "repos/$GH_REPO/actions/runs/$id/jobs" \
+              --jq '[.jobs[].steps[]? | select(.name == "open a pull request if anything changed" and .conclusion == "success")] | length')
+            if [ "$opened" != 0 ]; then
+              echo "Run $id already opened or updated the proposal. Skipping the catch-up."
+              echo 'run=false' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+          echo 'No proposal since yesterday. Running the catch-up.'
+          echo 'run=true' >> "$GITHUB_OUTPUT"
+
+  refresh:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: write
       pull-requests: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -123,6 +163,19 @@ jobs:
             gh pr ready "$PR_NUMBER" --undo
           fi
 
+      # A later run that reaches its PR resolves any earlier crash report.
+      - name: close the failure issue after a successful proposal
+        if: steps.proposal.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_URL: ${{ steps.proposal.outputs.pull-request-url }}
+        run: |
+          number=$(gh issue list --state open --search '"Smoothie refresh failed" in:title' --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue close "$number" --comment "A later refresh succeeded and updated $PR_URL."
+          fi
+
       # Token-created PR workflows can require approval. Enforce the saved result
       # after the draft exists, without rechecking the restored base checkout.
       - name: require reviewed ingredient mappings
@@ -130,3 +183,23 @@ jobs:
         run: |
           echo 'The saved proposal contains unreviewed ingredient labels. Resolve them in the draft PR.'
           exit 1
+
+      # A crash before the PR step leaves nothing to review, so nobody notices.
+      # Open an issue instead. A draft PR with unreviewed labels is not a crash.
+      - name: report a refresh that stopped before its pull request
+        if: (failure() || cancelled()) && !steps.proposal.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          title='Smoothie refresh failed'
+          body="The $EVENT refresh stopped before it opened a pull request. Logs: $RUN_URL"
+          number=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body" --assignee "$OWNER"
+          fi

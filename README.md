@@ -138,11 +138,17 @@ Existing historical statuses remain as recorded. The display says Archived inste
 
 ## Refresh and review
 
-The refresh runs on the 1st and 15th and can be started manually in GitHub Actions. It opens a reviewable pull request. It does not merge or deploy its own changes.
+The refresh runs on the 1st and 15th, with catch-up runs on the 2nd and 16th, and can be started manually in GitHub Actions. It opens a reviewable pull request. It does not merge or deploy its own changes.
 
 The pipeline reads Erewhon's public search feed and checks every page of results before changing menu membership. Missing fields, duplicate feed IDs, implausible additions or removals, and incomplete pagination stop the run. Removal checks compare with the previous menu snapshot, not the entire archive.
 
 Successful recipe checks retain the original wording and save the checked product URL in `ingredientsSource`. A changed recipe keeps its previous list and known provenance in `recipeHistory`. A failed check preserves the existing list, adds a review reason and is retried on the next run. Never turn a failed scrape into an empty or supposedly complete recipe. Parse only the ingredient panel, keep commas inside parentheses together, and exclude allergen statements. Preserve complete product names containing and, such as Greens and Collagen. Split a final and only when it unambiguously separates two approved labels. Unfamiliar compound wording stays intact for review.
+
+Erewhon sometimes lists a new drink before its photo is uploaded. The refresh saves the drink with no photo, the site draws a cup for it, and the review report says the photo is missing. Each later run tries the download again and clears that note once the photo arrives. A failed photo download is handled the same way, so it never stops the refresh.
+
+Network calls retry before anything is flagged. Algolia requests and photo downloads try three times with growing pauses when the server times out, rate limits, returns a 5xx error or drops the connection. A recipe page gets a second attempt. A rejected key, malformed feed data, a guard or a health check fails at once, because trying again would give the same answer.
+
+If a run still stops before it opens a pull request, the workflow opens a GitHub issue titled Smoothie refresh failed, assigns it to the owner and links the logs. The schedule also runs on the 2nd and 16th. Those runs check whether a refresh since the day before reached its pull request step and skip if one did. Once a later run opens or updates the pull request, it closes the issue.
 
 An allergen notice such as Contains: Milk can follow the final ingredient with only whitespace. It ends the ingredient list only outside parentheses. Wording such as Protein blend (contains: milk, soy) remains part of the product. Regression fixtures include the Post Workout panel that previously failed this check.
 
