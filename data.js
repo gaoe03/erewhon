@@ -12,7 +12,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$20.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
@@ -33,7 +33,7 @@ window.SMOOTHIES = [
       "Organic Ghee",
       "Organic Tocos",
       "Organic Cinnamon",
-      "Toffee Stevia",
+      "Chocolate Stevia",
       "Organic Hemp Seeds"
     ],
     "ingredientsComplete": true,
@@ -69,10 +69,34 @@ window.SMOOTHIES = [
           "Toffee Stevia",
           "Hemp Seeds"
         ]
+      },
+      {
+        "observedAt": "2026-09-15T17:54:30.153Z",
+        "source": "https://erewhon.com/product/6852841000/activated-smoothie",
+        "ingredients": [
+          "Organic Cold Brew Coffee",
+          "Organic Raw Almond Milk",
+          "Organic Coconut Cream",
+          "Organic Dates",
+          "Dandy Blend",
+          "Organic Coffee Beans",
+          "Organic Lucuma",
+          "Organic Mesquite",
+          "Organic Maca",
+          "Organic Cacao Nibs",
+          "Organic Raw Cacao Powder",
+          "Organic Grass-fed Collagen",
+          "MCT Oil",
+          "Organic Ghee",
+          "Organic Tocos",
+          "Organic Cinnamon",
+          "Toffee Stevia",
+          "Organic Hemp Seeds"
+        ]
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852841000/activated-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -88,7 +112,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$16.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
@@ -121,7 +145,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852941000/almond-butter-blast",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -137,7 +161,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$13.00",
     "color": "#F3EADA",
     "colorDark": "#CDB892",
@@ -175,7 +199,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852891000/body-ecology-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -284,7 +308,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$19.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
@@ -299,7 +323,7 @@ window.SMOOTHIES = [
       "Organic Goji Berries",
       "Organic Almonds",
       "Organic Dates",
-      "Vanilla Stevia"
+      "Chocolate Stevia"
     ],
     "ingredientsComplete": true,
     "notes": "Vegan, gluten-free house staple, unchanged for years.",
@@ -328,10 +352,27 @@ window.SMOOTHIES = [
           "Dates",
           "Toffee Stevia"
         ]
+      },
+      {
+        "observedAt": "2026-09-15T17:54:30.153Z",
+        "source": "https://erewhon.com/product/6853361000/maca-bomb",
+        "ingredients": [
+          "Organic Raw Almond Milk",
+          "Organic Hemp Seeds",
+          "Organic Maca",
+          "Organic Mesquite",
+          "Organic Tocos",
+          "Organic Lucuma",
+          "Organic Cacao Nibs",
+          "Organic Goji Berries",
+          "Organic Almonds",
+          "Organic Dates",
+          "Vanilla Stevia"
+        ]
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853361000/maca-bomb",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -347,7 +388,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$18.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
@@ -389,7 +430,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6855121000/matchacado-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -405,7 +446,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$19.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
@@ -452,7 +493,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853391000/mint-chip-energizer",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -468,7 +509,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$16.00",
     "color": "#B08968",
     "colorDark": "#7A5640",
@@ -502,7 +543,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852881000/peanut-butter-blast",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -518,7 +559,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$13.00",
     "color": "#E687AE",
     "colorDark": "#C2517F",
@@ -552,7 +593,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852911000/pitaya-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -598,7 +639,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$22.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
@@ -646,7 +687,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853501000/strawberry-probiotic-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -662,7 +703,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$19.00",
     "color": "#7BA48E",
     "colorDark": "#4C7A62",
@@ -713,7 +754,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6860971000/the-goddess-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -729,7 +770,7 @@ window.SMOOTHIES = [
     "era": "Undated house staples",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$16.00",
     "color": "#F0B45A",
     "colorDark": "#D88A35",
@@ -771,7 +812,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853031000/turmeric-crush",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -843,7 +884,7 @@ window.SMOOTHIES = [
   },
   {
     "id": "coconut-cloud-smoothie",
-    "productId": "7784411000",
+    "productId": "",
     "image": "img/coconut-cloud-smoothie.jpg",
     "name": "Coconut Cloud Smoothie",
     "collaborator": "Marianna Hewitt",
@@ -973,7 +1014,7 @@ window.SMOOTHIES = [
     "era": "2022",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$21.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
@@ -1022,7 +1063,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7791691000/strawberry-glaze-skin-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -1372,7 +1413,7 @@ window.SMOOTHIES = [
     "era": "2023",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$21.00",
     "color": "#F0B45A",
     "colorDark": "#D88A35",
@@ -1422,7 +1463,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7879461000/malibu-mango-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -1438,7 +1479,7 @@ window.SMOOTHIES = [
     "era": "2023",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$18.00",
     "color": "#8FB3DC",
     "colorDark": "#4F7BC0",
@@ -1477,7 +1518,7 @@ window.SMOOTHIES = [
         ]
       }
     ],
-    "ingredientsCheckedAt": "2026-09-19T11:12:33.107Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "ingredientsSource": "https://erewhon.com/product/7805821000/post-workout-smoothie"
   },
   {
@@ -2565,7 +2606,7 @@ window.SMOOTHIES = [
     "era": "2024",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$21.00",
     "color": "#9DB868",
     "colorDark": "#5E8C4F",
@@ -2615,7 +2656,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/8359071000/vanilla-matcha-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -2701,7 +2742,7 @@ window.SMOOTHIES = [
     "era": "2024",
     "status": "permanent",
     "firstSeen": "",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$20.00",
     "color": "#F2A7BB",
     "colorDark": "#C76A86",
@@ -2748,7 +2789,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/8343881000/raw-farms-strawberry-smoothie",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -4368,7 +4409,7 @@ window.SMOOTHIES = [
     "era": "2026",
     "status": "limited",
     "firstSeen": "2026-08-15",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$22.00",
     "color": "#E7DFCF",
     "colorDark": "#B7A98C",
@@ -4403,7 +4444,7 @@ window.SMOOTHIES = [
       "8568771000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8568771000/gary-brecka-s-perfect-amino-passionfruit-lemonade",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z"
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
   },
   {
     "id": "the-fig-sea-salt-smoothie",
@@ -4464,7 +4505,7 @@ window.SMOOTHIES = [
     "era": "2026",
     "status": "limited",
     "firstSeen": "2026-09-15",
-    "lastSeen": "2026-09-15",
+    "lastSeen": "2026-10-02",
     "price": "$22.00",
     "color": "#E7DFCF",
     "colorDark": "#B7A98C",
@@ -4498,35 +4539,169 @@ window.SMOOTHIES = [
       "8580101000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8580101000/easy-tiger-smoothie-by-megan-moroney",
-    "ingredientsCheckedAt": "2026-09-15T17:54:30.153Z"
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
+  },
+  {
+    "id": "cloud-smoothie",
+    "productId": "7784411000",
+    "image": "img/cloud-smoothie.png",
+    "name": "Cloud Smoothie",
+    "collaborator": "",
+    "collabType": "unknown",
+    "sortKey": 2026.792,
+    "date": "Oct 2026",
+    "dateKind": "first-seen",
+    "era": "2026",
+    "status": "unknown",
+    "firstSeen": "2026-10-02",
+    "lastSeen": "2026-10-02",
+    "price": "$20.00",
+    "color": "#E7DFCF",
+    "colorDark": "#B7A98C",
+    "ingredients": [
+      "Malk Organic Almond Milk",
+      "Organic Pineapple",
+      "GROW Organic Banana",
+      "Organic Avocado",
+      "Organic Almond Butter",
+      "Grass-fed Vanilla Collagen",
+      "Blue Majik Spirulina",
+      "Organic Coconut Cream"
+    ],
+    "ingredientsComplete": true,
+    "notes": "",
+    "sources": [
+      "https://erewhon.com/product/7784411000/cloud-smoothie"
+    ],
+    "subcategory": "Signatures",
+    "needsReview": true,
+    "reviewReasons": [
+      "New archive entry needs editorial review"
+    ],
+    "productIds": [
+      "7784411000"
+    ],
+    "ingredientsSource": "https://erewhon.com/product/7784411000/cloud-smoothie",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
+  },
+  {
+    "id": "fall-in-love-smoothie-by-lifeway",
+    "productId": "8583341000",
+    "image": "img/fall-in-love-smoothie-by-lifeway.png",
+    "name": "Fall in Love Smoothie by Lifeway",
+    "collaborator": "Lifeway",
+    "collabType": "unknown",
+    "sortKey": 2026.792,
+    "date": "Oct 2026",
+    "dateKind": "first-seen",
+    "era": "2026",
+    "status": "unknown",
+    "firstSeen": "2026-10-02",
+    "lastSeen": "2026-10-02",
+    "price": "$11.00",
+    "color": "#E7DFCF",
+    "colorDark": "#B7A98C",
+    "ingredients": [
+      "Lifeway Kefir",
+      "Organic Pumpkin Puree",
+      "Organic Cold Brew",
+      "Organic Dates",
+      "Organic Banana",
+      "Erewhon Organic A2 Whey",
+      "Organic Pumpkin Spice Seasoning",
+      "Organic Cinnamon"
+    ],
+    "ingredientsComplete": true,
+    "notes": "",
+    "sources": [
+      "https://erewhon.com/product/8583341000/fall-in-love-smoothie-by-lifeway"
+    ],
+    "subcategory": "Signatures",
+    "needsReview": true,
+    "reviewReasons": [
+      "New archive entry needs editorial review",
+      "Unresolved ingredient: Lifeway Kefir"
+    ],
+    "productIds": [
+      "8583341000"
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8583341000/fall-in-love-smoothie-by-lifeway",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
+  },
+  {
+    "id": "the-spirulina-cleanse-by-true-botanicals",
+    "productId": "8587671000",
+    "image": "img/the-spirulina-cleanse-by-true-botanicals.png",
+    "name": "The Spirulina Cleanse by True Botanicals",
+    "collaborator": "True Botanicals",
+    "collabType": "unknown",
+    "sortKey": 2026.792,
+    "date": "Oct 2026",
+    "dateKind": "first-seen",
+    "era": "2026",
+    "status": "unknown",
+    "firstSeen": "2026-10-02",
+    "lastSeen": "2026-10-02",
+    "price": "$11.00",
+    "color": "#E7DFCF",
+    "colorDark": "#B7A98C",
+    "ingredients": [
+      "Organic Coconut Milk",
+      "Organic Coconut cream",
+      "Organic Blue Majik Spirulina",
+      "Organic Spirulina",
+      "Organic Oats",
+      "Organic Banana",
+      "Organic Walnuts",
+      "Organic Ginger",
+      "Organic Maca",
+      "Organic Tocos",
+      "Organic Cinnamon",
+      "Organic Vanilla"
+    ],
+    "ingredientsComplete": true,
+    "notes": "",
+    "sources": [
+      "https://erewhon.com/product/8587671000/the-spirulina-cleanse-by-true-botanicals"
+    ],
+    "subcategory": "Signatures",
+    "needsReview": true,
+    "reviewReasons": [
+      "New archive entry needs editorial review"
+    ],
+    "productIds": [
+      "8587671000"
+    ],
+    "ingredientsSource": "https://erewhon.com/product/8587671000/the-spirulina-cleanse-by-true-botanicals",
+    "ingredientsCheckedAt": "2026-10-02T21:25:27.532Z"
   }
 ];
 window.MENU = {
-  "checkedAt": "2026-09-15T17:54:30.153Z",
+  "checkedAt": "2026-10-02T21:25:27.532Z",
   "source": "https://erewhon.com/shop",
   "scope": "Grove online tonic bar menu",
   "index": "GROVE_SEARCH_INDEX",
   "smoothieIds": [
     "strawberry-glaze-skin-smoothie",
     "malibu-mango-smoothie",
-    "coconut-cloud-smoothie",
+    "cloud-smoothie",
     "peanut-butter-blast",
-    "matchacado-smoothie",
-    "the-fig-sea-salt-smoothie",
     "strawberry-probiotic-smoothie",
-    "gary-brecka-s-perfect-amino-passionfruit-lemonade",
-    "turmeric-crush",
-    "vanilla-matcha-smoothie",
     "body-ecology-smoothie",
-    "post-workout-smoothie",
-    "raw-farms-strawberry-smoothie",
-    "activated-smoothie",
+    "easy-tiger-smoothie-by-megan-moroney",
+    "turmeric-crush",
+    "matchacado-smoothie",
     "the-goddess-smoothie",
+    "gary-brecka-s-perfect-amino-passionfruit-lemonade",
+    "vanilla-matcha-smoothie",
+    "raw-farms-strawberry-smoothie",
+    "post-workout-smoothie",
     "pitaya-smoothie",
+    "activated-smoothie",
     "almond-butter-blast",
     "mint-chip-energizer",
-    "easy-tiger-smoothie-by-megan-moroney",
     "maca-bomb",
-    "sacred-water-by-jolie"
+    "fall-in-love-smoothie-by-lifeway",
+    "the-spirulina-cleanse-by-true-botanicals"
   ]
 };
