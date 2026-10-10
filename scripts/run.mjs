@@ -11,6 +11,7 @@ import { loadArchiveIngredients } from './enrich.mjs';
 import { fetchImage } from './images.mjs';
 import { renderData } from './build-data.mjs';
 import { healthCheck } from './health.mjs';
+import { checkDuplicates, describeCandidate } from './duplicates.mjs';
 
 const DEFAULT_REPO = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -34,6 +35,10 @@ function syncReview(entry, currentReasons, unresolved) {
 function makePrBody(report) {
   const body = ['Automated Grove tonic bar menu refresh.', '', `Menu checked: ${report.menu.checkedAt}`, `Source: ${report.menu.source}`, `Current menu: ${report.menu.smoothieIds.length} smoothies`, ''];
   if (report.added.length) body.push('New archive entries:', ...report.added.map((x) => `- ${x}`), '');
+  if (report.duplicates.length) body.push('Possible duplicates to check:',
+    'Each new drink is compared with archived drinks that share at least 40% of its recipe or most of its name. Merge only if it is the same menu item under a new name.',
+    ...report.duplicates.flatMap((x) => [`- ${x.entry.name}`, ...x.candidates.map((c) => `  - ${describeCandidate(c)}`),
+      ...(x.error ? [`  - Jev check unavailable: ${x.error}. Every match above is flagged.`] : [])]), '');
   if (report.relaunches.length) body.push('New editions on a reused Erewhon listing:',
     ...report.relaunches.map((x) => `- ${x.name} took over the listing of ${x.fromName}. The recipe changed, so it is saved as a new drink. Merge them if it is only a rename.`), '');
   if (report.renamed.length) body.push('Renamed on the menu, kept as the same drink:',
@@ -55,7 +60,7 @@ function makePrBody(report) {
     '', 'Reuse an existing ingredient type where it fits. Keep juices, milks, oils and whole ingredients distinct. Collagen-containing mixes share Collagen, while collagen boosters without collagen do not. Brands and low usage alone do not create profiles.',
     'Review README.md and docs/ingredient-audit-2026-09-05.md, then add approved labels to data/ingredient-labels.js. Do not infer components from a product name.', '');
   const otherReview = report.review.flatMap((x) => x.reasons
-    .filter((r) => !r.startsWith('Unresolved ingredient:'))
+    .filter((r) => !r.startsWith('Unresolved ingredient:') && !r.startsWith('Possible duplicate:'))
     .map((r) => `- ${x.name}: ${r}`));
   if (otherReview.length) body.push('Other review needed:', ...otherReview, '');
   return body.join('\n').trim() + '\n';
@@ -68,6 +73,8 @@ export async function planRefresh({
   fetchLive = fetchLiveSmoothies,
   fetchRecipe = fetchIngredients,
   fetchImageBytes = fetchImage,
+  typesafeKey = process.env.TYPESAFE_API_KEY,
+  fetchJudge = fetch,
 } = {}) {
   const original = JSON.parse(readFileSync(resolve(repoRoot, 'data/smoothies.json'), 'utf8'));
   const previousMenu = JSON.parse(readFileSync(resolve(repoRoot, 'data/menu.json'), 'utf8'));
@@ -123,7 +130,7 @@ export async function planRefresh({
   };
   if (sourceMeta && menu.index && sourceMeta.index !== menu.index) throw new Error('live source does not match the saved Grove menu source');
 
-  const report = { menu, added: planned.added, renamed: [], relaunches: planned.relaunches, returned: [], removed: [], prices: [], recipes: [], wording: [], review: [], ingredientReview: [] };
+  const report = { menu, added: planned.added, duplicates: [], renamed: [], relaunches: planned.relaunches, returned: [], removed: [], prices: [], recipes: [], wording: [], review: [], ingredientReview: [] };
   const pendingIngredients = new Map();
   const imageWrites = [];
   for (let i = 0; i < candidates.length; i++) {
@@ -183,6 +190,16 @@ export async function planRefresh({
 
     syncReview(entry, reasons, unresolved);
     if (entry.needsReview) report.review.push({ name: entry.name, reasons: entry.reviewReasons || ['Editorial review needed'] });
+  }
+  report.duplicates = await checkDuplicates(planned.addedEntries, archive, { labelKey: ingredientLabelKey, apiKey: typesafeKey, previousMenuIds: previousMenu.smoothieIds || [], fetchImpl: fetchJudge });
+  for (const { entry, candidates } of report.duplicates) {
+    const reasons = candidates.filter((c) => c.flagged).map((c) => `Possible duplicate: ${c.drink.name}`);
+    if (!reasons.length) continue;
+    entry.reviewReasons = unique([...(entry.reviewReasons || []), ...reasons]);
+    entry.needsReview = true;
+    const listed = report.review.find((x) => x.name === entry.name);
+    if (listed) listed.reasons = entry.reviewReasons;
+    else report.review.push({ name: entry.name, reasons: entry.reviewReasons });
   }
   report.removed = (previousMenu.smoothieIds || []).filter((id) => !menuIds.includes(id)).map((id) => original.find((s) => s.id === id)?.name || id);
   report.ingredientReview = [...pendingIngredients.values()];

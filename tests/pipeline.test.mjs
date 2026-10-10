@@ -372,3 +372,48 @@ test('a reused listing with a changed recipe is a new edition called out in the 
   assert.equal(result.archive[0].productId, '');
   assert.match(result.prBody, /Uno Smoothie took over the listing of One Smoothie/);
 });
+
+const twoHit = { ...newHit, ImageFileName: 'https://example.test/2.jpg' };
+const photo = async () => ({ status: 'downloaded', bytes: jpgBytes, extension: 'jpg' });
+const recipesByListing = (byPid) => async (pid) => byPid[pid];
+const jevReply = (value) => async (_url, init) => ({ ok: true, status: 200, json: async () => ({ answers: Object.fromEntries(Object.keys(JSON.parse(init.body).questions).map((k) => [k, { type: 'noul', noul: value }])) }) });
+
+test('a new drink close to an archived one is rated by Jev and flagged when likely the same', async (t) => {
+  const root = await fixtureRepo(t);
+  let request = null;
+  const judge = async (url, init) => { request = { url, init, body: JSON.parse(init.body) }; return jevReply(0.83)(url, init); };
+  const result = await runRefresh({ repoRoot: root, liveHits: [hit, twoHit], fetchImageBytes: photo, fetchRecipe: recipesByListing({ 1: ['Banana', 'Milk', 'Dates'], 2: ['Banana', 'Milk'] }), typesafeKey: 'test-key', fetchJudge: judge });
+  assert.equal(request.url, 'https://api.typesafe.ai/v1/systemone');
+  assert.equal(request.init.headers.Authorization, 'Bearer test-key');
+  assert.equal(request.body.model, 'jev-latest');
+  assert.equal(request.body.state.new_listing.name, 'Two Smoothie');
+  assert.equal(request.body.questions.same_0.instructions.archived_drink.name, 'One Smoothie');
+  assert.equal(request.body.questions.same_0.instructions.archived_drink.onPreviousMenu, true);
+  const row = result.archive.find((s) => s.id === 'two-smoothie');
+  assert.ok(row.reviewReasons.includes('Possible duplicate: One Smoothie'));
+  assert.match(result.prBody, /One Smoothie shares 67% of the recipe\. Jev rates it likely the same drink \(83%\)\./);
+});
+
+test('a drink Jev rates as different is listed but not flagged', async (t) => {
+  const root = await fixtureRepo(t);
+  const result = await runRefresh({ repoRoot: root, liveHits: [hit, twoHit], fetchImageBytes: photo, fetchRecipe: recipesByListing({ 1: ['Banana', 'Milk', 'Dates'], 2: ['Banana', 'Milk'] }), typesafeKey: 'test-key', fetchJudge: jevReply(0.2) });
+  const row = result.archive.find((s) => s.id === 'two-smoothie');
+  assert.equal(row.reviewReasons.some((r) => r.startsWith('Possible duplicate:')), false);
+  assert.match(result.prBody, /Jev rates it likely a different drink \(20%\)/);
+});
+
+test('an identical recipe is flagged even when Jev rates it different', async (t) => {
+  const root = await fixtureRepo(t);
+  const result = await runRefresh({ repoRoot: root, liveHits: [hit, twoHit], fetchImageBytes: photo, fetchRecipe: async () => ['Banana', 'Milk'], typesafeKey: 'test-key', fetchJudge: jevReply(0.2) });
+  assert.ok(result.archive.find((s) => s.id === 'two-smoothie').reviewReasons.includes('Possible duplicate: One Smoothie'));
+});
+
+test('a failed or missing Jev check flags every match without stopping the refresh', async (t) => {
+  const root = await fixtureRepo(t);
+  const options = { repoRoot: root, liveHits: [hit, twoHit], fetchImageBytes: photo, fetchRecipe: recipesByListing({ 1: ['Banana', 'Milk', 'Dates'], 2: ['Banana', 'Milk'] }) };
+  const failed = await runRefresh({ ...options, typesafeKey: 'test-key', fetchJudge: async () => ({ ok: false, status: 401 }) });
+  assert.ok(failed.archive.find((s) => s.id === 'two-smoothie').reviewReasons.includes('Possible duplicate: One Smoothie'));
+  assert.match(failed.prBody, /Jev check unavailable: TypeSafe returned 401/);
+  const missing = await runRefresh({ ...options, typesafeKey: '', fetchJudge: async () => assert.fail('no key, no call') });
+  assert.match(missing.prBody, /Jev check unavailable: no TypeSafe key configured/);
+});
