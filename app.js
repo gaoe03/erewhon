@@ -142,7 +142,7 @@
     const data = catalogData();
     const q = query.trim().toLocaleLowerCase();
     const list = data.filter((s) => (filter === 'all' || s.collabType === filter)
-      && (!q || `${s.name} ${s.collaborator}`.toLocaleLowerCase().includes(q)));
+      && (!q || [s.name, s.collaborator, ...(s.formerNames || [])].join(' ').toLocaleLowerCase().includes(q)));
     if (sort === 'az') list.sort((a, b) => a.name.localeCompare(b.name));
     else list.sort((a, b) => {
       const d = a.sortKey - b.sortKey;

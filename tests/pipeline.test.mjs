@@ -12,6 +12,9 @@ import { planClassifications } from '../scripts/append.mjs';
 import { fetchImage } from '../scripts/images.mjs';
 import { withRetry, TransientError } from '../scripts/retry.mjs';
 
+// The refresh reads this key by default. Tests must never call the real TypeSafe API.
+delete process.env.TYPESAFE_API_KEY;
+
 const sydney = 'INGREDIENTS MALK Organic Almond Milk, Banagua Organic Banana Water, Codeage Hair Vitamins, Ancient Nutrition Vanilla Bone Broth Protein, Erewhon Organic A2 Whey Protein, Organic Blueberries, Organic Acai, Organic Banana, Organic Almond Butter, Organic Tocotrienols, Organic Lucuma, Organic Maple, Organic Pitaya Whipped Cream, Organic Blue Spirulina Whipped Cream, Organic Vegan Coconut Bacon and Erewhon Organic Blueberry Muffin Crumbles. Contains: Milk, Eggs, Wheat, Almonds';
 
 test('ingredient parser preserves long rows and nested commas', () => {
@@ -361,6 +364,8 @@ test('a renamed listing with the same recipe stays one drink', async (t) => {
   assert.deepEqual(result.archive.map((s) => s.id), ['one']);
   assert.deepEqual(result.menu.smoothieIds, ['one']);
   assert.equal(result.archive[0].productId, '1');
+  assert.equal(result.archive[0].name, 'Uno Smoothie');
+  assert.deepEqual(result.archive[0].formerNames, ['One Smoothie']);
   assert.match(result.prBody, /One Smoothie is now listed as Uno Smoothie/);
   assert.doesNotMatch(result.prBody, /New archive entries/);
 });
@@ -391,7 +396,7 @@ test('a new drink close to an archived one is rated by Jev and flagged when like
   assert.equal(request.body.questions.same_0.instructions.archived_drink.onPreviousMenu, true);
   const row = result.archive.find((s) => s.id === 'two-smoothie');
   assert.ok(row.reviewReasons.includes('Possible duplicate: One Smoothie'));
-  assert.match(result.prBody, /One Smoothie shares 67% of the recipe\. Jev rates it likely the same drink \(83%\)\./);
+  assert.match(result.prBody, /One Smoothie shares 2 of the 3 ingredients across both recipes\. Jev rates it likely the same drink \(83%\)\./);
 });
 
 test('a drink Jev rates as different is listed but not flagged', async (t) => {
@@ -416,4 +421,36 @@ test('a failed or missing Jev check flags every match without stopping the refre
   assert.match(failed.prBody, /Jev check unavailable: TypeSafe returned 401/);
   const missing = await runRefresh({ ...options, typesafeKey: '', fetchJudge: async () => assert.fail('no key, no call') });
   assert.match(missing.prBody, /Jev check unavailable: no TypeSafe key configured/);
+});
+
+test('a failing Algolia page is tried three times, not once per pagination restart', async () => {
+  let calls = 0;
+  await assert.rejects(fetchLiveSmoothies({ fetchImpl: async () => { calls++; return { ok: false, status: 503 }; }, appId: 'a', apiKey: 'k', retry: noWait }), /503/);
+  assert.equal(calls, 3);
+});
+
+test('a reused listing whose recipe cannot be fetched is saved separately but flagged', async (t) => {
+  const root = await reusedListingRepo(t);
+  const result = await runRefresh({ repoRoot: root, liveHits: [{ ...hit, ProductName: 'Uno Smoothie' }], fetchRecipe: async () => null });
+  const row = result.archive.find((s) => s.id === 'uno-smoothie');
+  assert.ok(row.reviewReasons.includes('Possible duplicate: One Smoothie'));
+  assert.match(result.prBody, /The recipe could not be compared, so it is saved as a new drink and flagged/);
+});
+
+test('a name changed back is not also kept as a former name', async (t) => {
+  const root = await reusedListingRepo(t);
+  const rows = JSON.parse(await readFile(resolve(root, 'data/smoothies.json'), 'utf8'));
+  Object.assign(rows[0], { name: 'Uno Smoothie', formerNames: ['One Smoothie'] });
+  await writeFile(resolve(root, 'data/smoothies.json'), JSON.stringify(rows));
+  const result = await runRefresh({ repoRoot: root, liveHits: [hit], fetchRecipe: async () => ['Banana', 'Milk'] });
+  assert.equal(result.archive[0].name, 'One Smoothie');
+  assert.deepEqual(result.archive[0].formerNames, ['Uno Smoothie']);
+});
+
+test('a duplicate flag from an earlier refresh stays visible in later reports', async (t) => {
+  const root = await fixtureRepo(t);
+  const options = { apply: true, repoRoot: root, liveHits: [hit, twoHit], fetchImageBytes: photo, fetchRecipe: async () => ['Banana', 'Milk'] };
+  await runRefresh(options);
+  const later = await runRefresh(options);
+  assert.match(later.prBody, /Other review needed:[\s\S]*Two Smoothie: Possible duplicate: One Smoothie/);
 });

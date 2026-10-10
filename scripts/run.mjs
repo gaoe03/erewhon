@@ -5,7 +5,7 @@ import { mkdtemp } from 'node:fs/promises';
 import { fetchLiveSmoothies, hitToCandidate } from './fetch-live.mjs';
 import { classify, normName, EXCLUDE } from './dedupe.mjs';
 import { checkGuards } from './guards.mjs';
-import { planClassifications } from './append.mjs';
+import { planClassifications, slugify } from './append.mjs';
 import { fetchIngredients } from './fetch-ingredients.mjs';
 import { loadArchiveIngredients } from './enrich.mjs';
 import { fetchImage } from './images.mjs';
@@ -21,7 +21,7 @@ const reasonFor = (prefix) => (reason) => String(reason).startsWith(prefix);
 
 function menuIdFor(cand, cls) {
   if (cls.action === 'still-live' || cls.action === 'rename') return cls.matchId;
-  return String(cand.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return slugify(cand.name);
 }
 
 function syncReview(entry, currentReasons, unresolved) {
@@ -36,11 +36,13 @@ function makePrBody(report) {
   const body = ['Automated Grove tonic bar menu refresh.', '', `Menu checked: ${report.menu.checkedAt}`, `Source: ${report.menu.source}`, `Current menu: ${report.menu.smoothieIds.length} smoothies`, ''];
   if (report.added.length) body.push('New archive entries:', ...report.added.map((x) => `- ${x}`), '');
   if (report.duplicates.length) body.push('Possible duplicates to check:',
-    'Each new drink is compared with archived drinks that share at least 40% of its recipe or most of its name. Merge only if it is the same menu item under a new name.',
+    'Each new drink is compared with archived drinks when at least 40% of the ingredients across both recipes are shared, or when every word of the shorter name appears in the other. Merge only if it is the same menu item under a new name.',
     ...report.duplicates.flatMap((x) => [`- ${x.entry.name}`, ...x.candidates.map((c) => `  - ${describeCandidate(c)}`),
       ...(x.error ? [`  - Jev check unavailable: ${x.error}. Every match above is flagged.`] : [])]), '');
   if (report.relaunches.length) body.push('New editions on a reused Erewhon listing:',
-    ...report.relaunches.map((x) => `- ${x.name} took over the listing of ${x.fromName}. The recipe changed, so it is saved as a new drink. Merge them if it is only a rename.`), '');
+    ...report.relaunches.map((x) => `- ${x.name} took over the listing of ${x.fromName}. ${x.compared
+      ? 'The recipe changed, so it is saved as a new drink.'
+      : 'The recipe could not be compared, so it is saved as a new drink and flagged.'} Merge them if it is only a rename.`), '');
   if (report.renamed.length) body.push('Renamed on the menu, kept as the same drink:',
     ...report.renamed.map((x) => `- ${x.name} is now listed as ${x.listedAs}`), '');
   if (report.returned.length) body.push('Returned to the current menu:', ...report.returned.map((x) => `- ${x}`), '');
@@ -59,8 +61,10 @@ function makePrBody(report) {
     ...report.ingredientReview.map((x) => `- ${x.raw}: ${x.suggestion ? `suggested ${x.suggestion.name} (${x.suggestion.id})` : 'no suggested profile'}. Appears in ${x.smoothies.join(', ')}.`),
     '', 'Reuse an existing ingredient type where it fits. Keep juices, milks, oils and whole ingredients distinct. Collagen-containing mixes share Collagen, while collagen boosters without collagen do not. Brands and low usage alone do not create profiles.',
     'Review README.md and docs/ingredient-audit-2026-09-05.md, then add approved labels to data/ingredient-labels.js. Do not infer components from a product name.', '');
+  // Duplicate flags are detailed above only on the run that found them. Later runs list them here.
+  const detailed = new Set(report.duplicates.map((x) => x.entry.name));
   const otherReview = report.review.flatMap((x) => x.reasons
-    .filter((r) => !r.startsWith('Unresolved ingredient:') && !r.startsWith('Possible duplicate:'))
+    .filter((r) => !r.startsWith('Unresolved ingredient:') && !(r.startsWith('Possible duplicate:') && detailed.has(x.name)))
     .map((r) => `- ${x.name}: ${r}`));
   if (otherReview.length) body.push('Other review needed:', ...otherReview, '');
   return body.join('\n').trim() + '\n';
@@ -106,9 +110,9 @@ export async function planRefresh({
     const cls = classifications[i];
     if (cls.action !== 'relaunch') continue;
     const prev = original.find((s) => s.id === cls.reusedFrom);
-    if (!prev?.ingredients?.length) continue;
     const { raw } = await loadRecipe(candidates[i], menuIdFor(candidates[i], cls));
-    if (complete(raw) && recipeKey(raw) === recipeKey(prev.ingredients)) {
+    if (!prev?.ingredients?.length || !complete(raw)) classifications[i] = { ...cls, uncompared: true };
+    else if (recipeKey(raw) === recipeKey(prev.ingredients)) {
       classifications[i] = { action: 'rename', matchId: prev.id, reusedFrom: prev.id };
     }
   }

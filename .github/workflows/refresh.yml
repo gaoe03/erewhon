@@ -55,12 +55,21 @@ jobs:
             echo 'run=true' >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          # If GitHub's API fails, run the refresh anyway. An extra run only updates the same PR.
           since=$(date -u -d yesterday +%Y-%m-%d)
-          for id in $(gh api "repos/$GH_REPO/actions/workflows/refresh.yml/runs?created=>=$since&per_page=50" \
-              --jq ".workflow_runs[] | select(.id != $RUN_ID and (.event == \"schedule\" or .event == \"workflow_dispatch\")) | .id"); do
-            # Matches the step name of the PR step below. Rename both together.
-            opened=$(gh api "repos/$GH_REPO/actions/runs/$id/jobs" \
-              --jq '[.jobs[].steps[]? | select(.name == "open a pull request if anything changed" and .conclusion == "success")] | length')
+          if ! ids=$(gh api "repos/$GH_REPO/actions/workflows/refresh.yml/runs?created=>=$since&per_page=50" \
+              --jq ".workflow_runs[] | select(.id != $RUN_ID and (.event == \"schedule\" or .event == \"workflow_dispatch\")) | .id"); then
+            echo 'Could not list earlier runs. Running the catch-up.'
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          for id in $ids; do
+            # Matches the step name of the PR step below. Rename both together. The PR
+            # branch is deleted on merge, so its update time cannot answer this.
+            if ! opened=$(gh api "repos/$GH_REPO/actions/runs/$id/jobs" \
+                --jq '[.jobs[].steps[]? | select(.name == "open a pull request if anything changed" and .conclusion == "success")] | length'); then
+              opened=0
+            fi
             if [ "$opened" != 0 ]; then
               echo "Run $id already opened or updated the proposal. Skipping the catch-up."
               echo 'run=false' >> "$GITHUB_OUTPUT"
@@ -74,7 +83,10 @@ jobs:
     needs: gate
     if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Each of about 21 recipe pages can take two attempts of up to 37 seconds.
+    timeout-minutes: 45
+    outputs:
+      pr: ${{ steps.proposal.outputs.pull-request-number }}
     permissions:
       contents: write
       pull-requests: write
@@ -185,10 +197,19 @@ jobs:
           echo 'The saved proposal contains unreviewed ingredient labels. Resolve them in the draft PR.'
           exit 1
 
-      # A crash before the PR step leaves nothing to review, so nobody notices.
-      # Open an issue instead. A draft PR with unreviewed labels is not a crash.
-      - name: report a refresh that stopped before its pull request
-        if: (failure() || cancelled()) && !steps.proposal.outputs.pull-request-number
+  # A crash, timeout or gate failure before the PR step leaves nothing to review.
+  # Open an issue instead. A draft PR with unreviewed labels is not a crash.
+  # This runs as its own job because steps inside a timed-out job may never run.
+  report:
+    needs: [gate, refresh]
+    if: >-
+      always() && (needs.gate.result == 'failure'
+      || ((needs.refresh.result == 'failure' || needs.refresh.result == 'cancelled') && needs.refresh.outputs.pr == ''))
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: open or update the failure issue
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

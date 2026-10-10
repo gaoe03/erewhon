@@ -4,6 +4,8 @@
 //  relaunch   -> add a new edition and preserve the reused id in the older history
 //  new        -> add, with mechanical fields filled and ingredients left for review
 // Photos are fetched and staged by run.mjs, which sets image once a download succeeds.
+import { normName } from './dedupe.mjs';
+
 export const slugify = (n) => String(n).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 export function makeNewEntry(cand, slug, now = new Date()) {
@@ -59,6 +61,11 @@ export function planClassifications(archive, candidates, classifications, { now 
     if (cls.action === 'rename') {
       summary.rename++;
       const e = bySlug[cls.matchId];
+      // A renamed listing takes Erewhon's current name. Earlier names stay searchable.
+      if (normName(e.name) !== normName(cand.name)) {
+        e.formerNames = [...new Set([...(e.formerNames || []), e.name])].filter((n) => normName(n) !== normName(cand.name));
+        e.name = cand.name;
+      }
       e.productId = cand.productId;
       e.productIds = [...new Set([...(e.productIds || []), cand.productId].filter(Boolean))];
       e.lastSeen = now.toISOString().slice(0, 10);
@@ -68,11 +75,13 @@ export function planClassifications(archive, candidates, classifications, { now 
     // new or relaunch -> a new archive entry
     summary[cls.action]++;
     const slug = slugify(cand.name);
+    let fromName = '';
     if (cls.action === 'relaunch') {
       // Erewhon reassigned the active listing id. Preserve it in the older edition's
       // productIds history while the current productId points to the live edition.
       const prev = bySlug[cls.reusedFrom];
-      relaunches.push({ id: slug, name: cand.name, productId: cand.productId, fromId: cls.reusedFrom, fromName: prev ? prev.name : cls.reusedFrom });
+      fromName = prev ? prev.name : cls.reusedFrom;
+      relaunches.push({ id: slug, name: cand.name, productId: cand.productId, fromId: cls.reusedFrom, fromName, compared: !cls.uncompared });
       if (prev && prev.productId === cand.productId) {
         prev.productIds = [...new Set([...(prev.productIds || []), prev.productId].filter(Boolean))];
         prev.productId = '';
@@ -80,6 +89,8 @@ export function planClassifications(archive, candidates, classifications, { now 
     }
     if (bySlug[slug]) throw new Error(`slug collision for ${cand.name}: ${slug}`);
     const entry = makeNewEntry(cand, slug, now);
+    // Without a recipe comparison a relaunch may still be a rename. A person decides.
+    if (cls.uncompared) entry.reviewReasons.push(`Possible duplicate: ${fromName}`);
     archive.push(entry);
     bySlug[slug] = entry;
     addedEntries.push(entry);

@@ -17,9 +17,13 @@ export async function fetchLiveSmoothies({
   retry = {},
 } = {}) {
   if (!appId || !apiKey) throw new Error('Set ALGOLIA_APP_ID and ALGOLIA_API_KEY in the environment.');
-  // A whole retry restarts pagination, so a feed that changes mid-fetch is read again from page 0.
-  return withRetry(() => fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, retry }), retry);
+  // Each request retries on its own. Only a feed that changes mid-fetch restarts
+  // pagination from page 0, so a failing page is never tried more than three times.
+  return withRetry(() => fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, retry }),
+    { ...retry, retryOn: (error) => error instanceof PaginationChanged });
 }
+
+class PaginationChanged extends Error {}
 
 async function fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, retry }) {
   const url = `https://${appId}-dsn.algolia.net/1/indexes/${index}/query`;
@@ -52,7 +56,7 @@ async function fetchAllPages({ fetchImpl, appId, apiKey, index, hitsPerPage, ret
       expectedPages = data.nbPages;
       reportedHits = data.nbHits;
     } else if (data.nbPages !== expectedPages || data.nbHits !== reportedHits) {
-      throw new TransientError('Algolia pagination changed during the fetch.');
+      throw new PaginationChanged('Algolia pagination changed during the fetch.');
     }
     allHits.push(...data.hits);
     page++;

@@ -32,8 +32,8 @@ export function findCandidates(entry, archive, labelKey, { limit = 3 } = {}) {
     .map((drink) => {
       const theirs = new Set((drink.ingredients || []).map(labelKey));
       const union = new Set([...mine, ...theirs]).size;
-      const overlap = union ? [...mine].filter((k) => theirs.has(k)).length / union : 0;
-      return { drink, overlap, nameMatch: nameContains(entry.name, drink.name) };
+      const shared = [...mine].filter((k) => theirs.has(k)).length;
+      return { drink, shared, union, overlap: union ? shared / union : 0, nameMatch: nameContains(entry.name, drink.name) };
     })
     .filter((c) => c.overlap >= RECIPE_OVERLAP || c.nameMatch)
     .sort((a, b) => b.overlap - a.overlap)
@@ -100,7 +100,7 @@ export async function checkDuplicates(entries, archive, { labelKey, apiKey, prev
 }
 
 export function describeCandidate(c) {
-  const overlap = `shares ${Math.round(c.overlap * 100)}% of the recipe`;
+  const overlap = `shares ${c.shared} of the ${c.union} ingredients across both recipes`;
   if (c.same === null) return `${c.drink.name} ${overlap}${c.nameMatch ? ' and a similar name' : ''}.`;
   const verdict = c.same >= LIKELY_SAME ? 'likely the same drink' : c.same >= UNCLEAR ? 'unclear' : 'likely a different drink';
   return `${c.drink.name} ${overlap}. Jev rates it ${verdict} (${Math.round(c.same * 100)}%).`;

@@ -886,7 +886,10 @@ window.SMOOTHIES = [
     "id": "coconut-cloud-smoothie",
     "productId": "7784411000",
     "image": "img/coconut-cloud-smoothie.jpg",
-    "name": "Coconut Cloud Smoothie",
+    "name": "Cloud Smoothie",
+    "formerNames": [
+      "Coconut Cloud Smoothie"
+    ],
     "collaborator": "Marianna Hewitt",
     "collabType": "celebrity",
     "sortKey": 2022.208,
