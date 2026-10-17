@@ -4640,17 +4640,17 @@ window.SMOOTHIES = [
     "image": "img/midnight-sun-by-zara-larsson.png",
     "name": "Midnight Sun by Zara Larsson",
     "collaborator": "Zara Larsson",
-    "collabType": "unknown",
+    "collabType": "celebrity",
     "sortKey": 2026.792,
     "date": "Oct 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-10-15",
     "lastSeen": "2026-10-15",
     "price": "$21.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#E687AE",
+    "colorDark": "#C2517F",
     "ingredients": [
       "MALK Organic Coconut Milk",
       "Roar Hydration Organic Dragon Fruit Punch",
@@ -4678,10 +4678,8 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8588351000/midnight-sun-by-zara-larsson"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8588351000"
     ],
