@@ -4549,18 +4549,18 @@ window.SMOOTHIES = [
     "productId": "8583341000",
     "image": "img/fall-in-love-smoothie-by-lifeway.png",
     "name": "Fall in Love Smoothie by Lifeway",
-    "collaborator": "Lifeway",
-    "collabType": "unknown",
+    "collaborator": "Lifeway Foods",
+    "collabType": "brand",
     "sortKey": 2026.792,
     "date": "Oct 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-10-02",
     "lastSeen": "2026-10-15",
     "price": "$11.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#D08A4F",
+    "colorDark": "#9A5F2E",
     "ingredients": [
       "Lifeway Kefir",
       "Organic Pumpkin Puree",
@@ -4577,10 +4577,8 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8583341000/fall-in-love-smoothie-by-lifeway"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8583341000"
     ],
@@ -4593,17 +4591,17 @@ window.SMOOTHIES = [
     "image": "img/the-spirulina-cleanse-by-true-botanicals.png",
     "name": "The Spirulina Cleanse by True Botanicals",
     "collaborator": "True Botanicals",
-    "collabType": "unknown",
+    "collabType": "brand",
     "sortKey": 2026.792,
     "date": "Oct 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-10-02",
     "lastSeen": "2026-10-15",
     "price": "$11.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#8FB3DC",
+    "colorDark": "#4F7BC0",
     "ingredients": [
       "Organic Coconut Milk",
       "Organic Coconut cream",
@@ -4624,10 +4622,8 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8587671000/the-spirulina-cleanse-by-true-botanicals"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8587671000"
     ],
