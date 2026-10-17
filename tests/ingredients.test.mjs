@@ -272,6 +272,7 @@ test('specialty formulas and distinct preparations do not disappear into compone
   for (const [prepared, component] of [
     ['Probiotic Drink', 'Probiotics'],
     ['Hydration Drink', 'Electrolytes'],
+    ['Roar Hydration Organic Dragon Fruit Punch', 'Organic Dragonfruit'],
     ['Plant-based Collagen Booster', 'Collagen'],
     ['Greens & Collagen Blend', 'Greens Powder'],
     ['Sea Moss Drink', 'Sea Moss'],
@@ -285,6 +286,13 @@ test('specialty formulas and distinct preparations do not disappear into compone
   }
   assert.equal(ingredients.suggestCanon('Homemade Superfood Caramel (dates, maple syrup, Dandy Blend, he shou wu)'), 'caramel');
   assert.equal(ingredients.suggestCanon('Future Mystery Formula'), null);
+  // A bottled hydration drink is proposed as the drink, not its flavor fruit.
+  for (const raw of ['Roar Hydration Organic Dragon Fruit Punch', 'ROAR Organic Mango Clementine', 'BARCODE Lemon Lime']) {
+    assert.equal(ingredients.suggestCanon(raw), 'hydration-drink', raw);
+  }
+  for (const raw of ['Liquid I.V. Hydration Multiplier', 'Hydration Powder', 'Hydration Drops']) {
+    assert.notEqual(ingredients.suggestCanon(raw), 'hydration-drink', raw);
+  }
   for (const raw of ['GORGIE Energy Drink Mix', 'Energy Drink Powder', 'Huel Daily Greens Ready-to-drink', 'Huel Daily Greens Juice']) {
     assert.equal(ingredients.suggestCanon(raw), null, `${raw} needs a preparation review`);
   }

@@ -28,8 +28,8 @@
   const CANON = [
 
     /* ---- distinct preparations before their component ingredients ---- */
-    { id: 'hydration-drink', name: 'Hydration drink', cat: 'brew', band: 'functional', icon: 'bottle', re: /^(?!.*(?:powder|drink mix)).*(?:\bbarcode\b|\b(?:hydration|sports|electrolyte) drink\b)/,
-      blurb: 'A prepared drink with added electrolytes. The archive includes BARCODE Lemon Lime. Bottled drinks stay separate from electrolyte powders and drops.' },
+    { id: 'hydration-drink', name: 'Hydration drink', cat: 'brew', band: 'functional', icon: 'bottle', re: /^(?!.*(?:powder|drink mix|drops|tablets?|multiplier|sticks?|packets?)).*(?:\bbarcode\b|\broar\b|\bhydration\b|\b(?:sports|electrolyte) drink\b)/,
+      blurb: 'A prepared drink with added electrolytes. The archive includes BARCODE Lemon Lime and ROAR Dragon Fruit Punch. Bottled drinks stay separate from electrolyte powders and drops.' },
     { id: 'cola', name: 'Cola', cat: 'brew', band: 'functional', icon: 'bottle', re: /\bcola\b/,
       blurb: 'A prepared cola drink used as a smoothie ingredient. The archive lists GT\'s ALIVE Cola, with the product name preserved below.' },
     { id: 'probiotic-drink', name: 'Probiotic drink', cat: 'cultured', band: 'functional', icon: 'shot', re: /\bbio-?k\b|\bprobiotic (?:drink|shot)\b/,
