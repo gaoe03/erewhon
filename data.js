@@ -4680,11 +4680,7 @@ window.SMOOTHIES = [
     "subcategory": "Signatures",
     "needsReview": true,
     "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Roar Hydration Organic Dragon Fruit Punch",
-      "Unresolved ingredient: Eidon Silica",
-      "Unresolved ingredient: The Fruitist Organic Blueberries",
-      "Unresolved ingredient: Organic Dragonfruit"
+      "New archive entry needs editorial review"
     ],
     "productIds": [
       "8588351000"
