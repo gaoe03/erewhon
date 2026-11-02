@@ -82,7 +82,8 @@ jobs:
   refresh:
     needs: gate
     if: needs.gate.outputs.run == 'true'
-    runs-on: ubuntu-latest
+    # Pinned: Playwright 1.55 cannot install Chromium on ubuntu-latest (26.04).
+    runs-on: ubuntu-24.04
     # Each of about 21 recipe pages can take two attempts of up to 37 seconds.
     timeout-minutes: 45
     outputs:
