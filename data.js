@@ -96,7 +96,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852841000/activated-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -145,7 +145,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852941000/almond-butter-blast",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -199,7 +199,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852891000/body-ecology-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -372,7 +372,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853361000/maca-bomb",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -430,7 +430,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6855121000/matchacado-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -493,7 +493,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853391000/mint-chip-energizer",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -543,7 +543,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852881000/peanut-butter-blast",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -593,7 +593,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6852911000/pitaya-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -687,7 +687,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853501000/strawberry-probiotic-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -754,7 +754,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6860971000/the-goddess-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -812,7 +812,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/6853031000/turmeric-crush",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -939,7 +939,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7784411000/coconut-cloud-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -1066,7 +1066,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7791691000/strawberry-glaze-skin-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -1466,7 +1466,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/7879461000/malibu-mango-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -1521,7 +1521,7 @@ window.SMOOTHIES = [
         ]
       }
     ],
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "ingredientsSource": "https://erewhon.com/product/7805821000/post-workout-smoothie"
   },
   {
@@ -2659,7 +2659,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/8359071000/vanilla-matcha-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -2792,7 +2792,7 @@ window.SMOOTHIES = [
       }
     ],
     "ingredientsSource": "https://erewhon.com/product/8343881000/raw-farms-strawberry-smoothie",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z",
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z",
     "reviewReasons": [],
     "needsReview": false
   },
@@ -4447,7 +4447,7 @@ window.SMOOTHIES = [
       "8568771000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8568771000/gary-brecka-s-perfect-amino-passionfruit-lemonade",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z"
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z"
   },
   {
     "id": "the-fig-sea-salt-smoothie",
@@ -4628,7 +4628,7 @@ window.SMOOTHIES = [
       "8587671000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8587671000/the-spirulina-cleanse-by-true-botanicals",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z"
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z"
   },
   {
     "id": "midnight-sun-by-zara-larsson",
@@ -4680,7 +4680,7 @@ window.SMOOTHIES = [
       "8588351000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8588351000/midnight-sun-by-zara-larsson",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z"
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z"
   },
   {
     "id": "almond-mocha-magic",
@@ -4722,7 +4722,7 @@ window.SMOOTHIES = [
       "8588811000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8588811000/almond-mocha-magic",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z"
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z"
   },
   {
     "id": "sonoma-spice-by-clover-sonoma",
@@ -4764,11 +4764,11 @@ window.SMOOTHIES = [
       "8589991000"
     ],
     "ingredientsSource": "https://erewhon.com/product/8589991000/sonoma-spice-by-clover-sonoma",
-    "ingredientsCheckedAt": "2026-11-02T00:29:58.581Z"
+    "ingredientsCheckedAt": "2026-11-02T00:45:11.513Z"
   }
 ];
 window.MENU = {
-  "checkedAt": "2026-11-02T00:29:58.581Z",
+  "checkedAt": "2026-11-02T00:45:11.513Z",
   "source": "https://erewhon.com/shop",
   "scope": "Grove online tonic bar menu",
   "index": "GROVE_SEARCH_INDEX",
