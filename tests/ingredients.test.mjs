@@ -44,6 +44,8 @@ test('ingredient proposals preserve intended identity and form', () => {
     ['Organic Coconut Yogurt', 'coconut-yogurt'],
     ['Whipped Cream', 'whipped-cream'],
     ['Organic Coconut Whipped Cream', 'coconut-whip'],
+    ['Organic Chai', 'chai'],
+    ['Organic Almond Extract', 'almond-extract'],
   ]);
   for (const [raw, expected] of fixtures) assert.equal(ingredients.suggestCanon(raw), expected, raw);
 });
@@ -58,6 +60,8 @@ test('materially different forms do not collapse together', () => {
   assert.notEqual(ingredients.suggestCanon('Cacao Nibs'), ingredients.suggestCanon('Cacao Powder'));
   assert.notEqual(ingredients.suggestCanon('Saffron'), ingredients.suggestCanon('Saffron Latte'));
   assert.notEqual(ingredients.suggestCanon('Arugula'), ingredients.suggestCanon('Fresh Herbs'));
+  const almond = ['Almond Extract', 'Almonds', 'Almond Milk', 'Almond Butter'];
+  assert.equal(new Set(almond.map(ingredients.suggestCanon)).size, almond.length);
   assert.equal(ingredients.suggestCanon('Mystery Fruit Jam'), null);
   assert.equal(ingredients.suggestCanon('Unknown Future Foam'), null);
 });
