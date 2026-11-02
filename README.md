@@ -152,6 +152,8 @@ Each new drink is compared with archived drinks when at least 40% of the ingredi
 
 If a run still stops before it opens a pull request, the workflow opens a GitHub issue titled Smoothie refresh failed, assigns it to the owner and links the logs. The schedule also runs on the 2nd and 16th. Those runs check whether a refresh since the day before reached its pull request step and skip if one did. Once a later run opens or updates the pull request, it closes the issue.
 
+A run that finds new ingredient labels still ends green, with a warning on the run. Its pull request stays a draft and lists the labels to map before merging. A red run means the refresh itself broke.
+
 An allergen notice such as Contains: Milk can follow the final ingredient with only whitespace. It ends the ingredient list only outside parentheses. Wording such as Protein blend (contains: milk, soy) remains part of the product. Regression fixtures include the Post Workout panel that previously failed this check.
 
 The PR report separates harmless source wording updates from recipe changes using the same label normalization as the matcher. Both retain the original strings and recipe history. A changed flavor, brand, preparation, ingredient order or ingredient count still appears in the recipe comparison. Unresolved mappings appear once with the affected smoothies instead of being repeated under every review flag. Successful retries clear fetch and mapping flags, while unrelated editorial review reasons remain until reviewed.

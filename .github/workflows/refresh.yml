@@ -21,8 +21,8 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: run offline pipeline tests
@@ -93,8 +93,8 @@ jobs:
       pull-requests: write
       issues: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -149,13 +149,16 @@ jobs:
       # the ephemeral package.json out of the commit. Merging deploys via Vercel.
       - name: open a pull request if anything changed
         id: proposal
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           add-paths: |
             data/smoothies.json
             data/menu.json
             data.js
             img/**
+          # A personal token lets the PR checks start on their own. Without the
+          # secret, GitHub holds them for approval and marks them failed on close.
+          token: ${{ secrets.REFRESH_PAT || github.token }}
           branch: smoothie-refresh
           title: Menu refresh from the tonic bar
           commit-message: refresh smoothies
@@ -190,13 +193,11 @@ jobs:
             gh issue close "$number" --comment "A later refresh succeeded and updated $PR_URL."
           fi
 
-      # Token-created PR workflows can require approval. Enforce the saved result
-      # after the draft exists, without rechecking the restored base checkout.
-      - name: require reviewed ingredient mappings
+      # New labels are normal review work, not a crash. The PR stays a draft and its
+      # body lists the labels, so the run ends green with a warning. Red means broken.
+      - name: flag unreviewed ingredient mappings
         if: steps.mappings.outcome == 'failure'
-        run: |
-          echo 'The saved proposal contains unreviewed ingredient labels. Resolve them in the draft PR.'
-          exit 1
+        run: echo '::warning title=Ingredient review needed::The draft PR has new ingredient labels to map before merging.'
 
   # A crash, timeout or gate failure before the PR step leaves nothing to review.
   # Open an issue instead. A draft PR with unreviewed labels is not a crash.
