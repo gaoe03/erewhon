@@ -4688,17 +4688,17 @@ window.SMOOTHIES = [
     "image": "img/almond-mocha-magic.png",
     "name": "Almond Mocha Magic",
     "collaborator": "",
-    "collabType": "unknown",
+    "collabType": "house",
     "sortKey": 2026.875,
     "date": "Nov 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-11-02",
     "lastSeen": "2026-11-02",
     "price": "$9.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#A47E66",
+    "colorDark": "#6E4E3C",
     "ingredients": [
       "Organic Cacao Powder",
       "Organic Vanilla Syrup",
@@ -4716,12 +4716,8 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8588811000/almond-mocha-magic"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Organic Almond Extract",
-      "Unresolved ingredient: Organic Espresso"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8588811000"
     ],
@@ -4734,17 +4730,17 @@ window.SMOOTHIES = [
     "image": "img/sonoma-spice-by-clover-sonoma.png",
     "name": "Sonoma Spice By Clover Sonoma",
     "collaborator": "Clover Sonoma",
-    "collabType": "unknown",
+    "collabType": "brand",
     "sortKey": 2026.875,
     "date": "Nov 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-11-02",
     "lastSeen": "2026-11-02",
     "price": "$12.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#C69466",
+    "colorDark": "#8E5E36",
     "ingredients": [
       "Clover Organic Whole Milk",
       "Clover Organic Heavy Cream",
@@ -4762,14 +4758,8 @@ window.SMOOTHIES = [
       "https://erewhon.com/product/8589991000/sonoma-spice-by-clover-sonoma"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Clover Organic Whole Milk",
-      "Unresolved ingredient: Clover Organic Heavy Cream",
-      "Unresolved ingredient: Organic Superfood Caramel (dates, vanilla, sea salt)",
-      "Unresolved ingredient: Organic Chai"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8589991000"
     ],
