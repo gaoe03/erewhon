@@ -4771,17 +4771,17 @@
     "image": "img/french-kiss-smoothie-by-doja-cat.png",
     "name": "French Kiss Smoothie by Doja Cat",
     "collaborator": "Doja Cat",
-    "collabType": "unknown",
+    "collabType": "celebrity",
     "sortKey": 2026.875,
     "date": "Nov 2026",
     "dateKind": "first-seen",
     "era": "2026",
-    "status": "unknown",
+    "status": "limited",
     "firstSeen": "2026-11-15",
     "lastSeen": "2026-11-15",
     "price": "$21.00",
-    "color": "#E7DFCF",
-    "colorDark": "#B7A98C",
+    "color": "#D65A6E",
+    "colorDark": "#9E2F45",
     "ingredients": [
       "Malk Chocolate Almond",
       "Copra Coconut Water",
@@ -4804,16 +4804,8 @@
       "https://erewhon.com/product/8593661000/french-kiss-smoothie-by-doja-cat"
     ],
     "subcategory": "Signatures",
-    "needsReview": true,
-    "reviewReasons": [
-      "New archive entry needs editorial review",
-      "Unresolved ingredient: Malk Chocolate Almond",
-      "Unresolved ingredient: Copra Coconut Water",
-      "Unresolved ingredient: Eidon Multimineral",
-      "Unresolved ingredient: Sun Chlorella",
-      "Unresolved ingredient: Erewhon GF Brownie",
-      "Unresolved ingredient: House Made Organic Raspberry Sauce"
-    ],
+    "needsReview": false,
+    "reviewReasons": [],
     "productIds": [
       "8593661000"
     ],
