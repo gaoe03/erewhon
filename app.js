@@ -355,6 +355,7 @@
 
   /* ---- routing ---- */
   function setView(v) {
+    const changed = v !== view;
     view = v;
     document.getElementById('view-archive').hidden = v === 'ingredients';
     document.getElementById('view-ingredients').hidden = v !== 'ingredients';
@@ -369,6 +370,11 @@
       if (a.dataset.nav === v) a.setAttribute('aria-current', 'page');
       else a.removeAttribute('aria-current');
     });
+    // A new tab opens at its top. The sticky tab bar stays where it is.
+    if (changed) {
+      const top = document.querySelector('.hero').getBoundingClientRect().bottom + window.scrollY;
+      if (window.scrollY > top) window.scrollTo(0, top);
+    }
   }
 
   function openSheet(html) {
@@ -446,7 +452,7 @@
     sel.style.width = (Math.ceil(probe.getBoundingClientRect().width) + 42) + 'px';
     probe.remove();
   };
-  ['sort-select', 'ing-sort'].forEach((id) => {
+  ['sort-select', 'ing-category', 'ing-sort'].forEach((id) => {
     const sel = document.getElementById(id);
     if (!sel) return;
     fit(sel);

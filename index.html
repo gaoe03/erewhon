@@ -48,7 +48,6 @@
     </nav>
 
     <section id="view-archive" aria-label="Smoothies">
-      <p class="menu-note" id="menu-note"></p>
       <div class="toolbar">
         <input class="catalog-search" id="catalog-search" type="search" placeholder="Find a smoothie or collaborator" aria-label="Search smoothies and collaborators" />
         <div class="segmented" id="chips" role="group" aria-label="filter by type"></div>
@@ -58,25 +57,30 @@
           <option value="az">A to Z</option>
         </select>
       </div>
+      <p class="menu-note" id="menu-note"></p>
       <p class="result-count" id="catalog-results" aria-live="polite"></p>
       <ol class="catalog" id="catalog"></ol>
     </section>
 
     <section id="view-ingredients" aria-label="Ingredients" hidden>
-      <p class="view-note" id="ing-hero-stats"></p>
       <div class="toolbar ing-toolbar">
         <input class="ing-search" id="ing-search" type="search" placeholder="Search ingredients" aria-label="search ingredients" />
-        <label class="ing-filter-label" for="ing-category">Category</label>
-        <select class="sort-select" id="ing-category">
-          <option value="all">All categories</option>
-        </select>
-        <label class="ing-sort-label" for="ing-sort">Sort</label>
-        <select class="sort-select" id="ing-sort" aria-label="sort ingredients">
-          <option value="type">By type</option>
-          <option value="most">Most used</option>
-          <option value="az">A to Z</option>
-        </select>
+        <span class="tool-pair">
+          <label class="ing-filter-label" for="ing-category">Category</label>
+          <select class="sort-select" id="ing-category">
+            <option value="all">All categories</option>
+          </select>
+        </span>
+        <span class="tool-pair ing-sort-pair">
+          <label class="ing-sort-label" for="ing-sort">Sort</label>
+          <select class="sort-select" id="ing-sort" aria-label="sort ingredients">
+            <option value="type">By type</option>
+            <option value="most">Most used</option>
+            <option value="az">A to Z</option>
+          </select>
+        </span>
       </div>
+      <p class="view-note" id="ing-hero-stats"></p>
       <p class="ing-policy">Brands share ingredient profiles where they fit. Original names and flavors stay in the recipes. Most-used ingredients come first within each type.</p>
       <div id="ing-categories"></div>
     </section>

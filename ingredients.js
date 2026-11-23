@@ -205,7 +205,7 @@
     { id: 'magnesium', name: 'Magnesium', cat: 'supplement', band: 'functional', icon: 'salt', re: /magnesium|natural vitality.*\bcalm\b/,
       blurb: 'Magnesium supplements used in a smoothie. The archive includes Natural Vitality CALM and a yuzu citrus version from PYM. Product names and flavors remain in the recipe.' },
     { id: 'hyaluronic-acid', name: 'Hyaluronic acid', cat: 'supplement', band: 'functional', icon: 'serum', re: /hyaluronic/,
-      blurb: 'A molecule the body makes to hold water in skin and joints, sold as a supplement for hydration though the evidence for swallowing it is mixed. Early versions of the Strawberry Glaze listed NeoCell hyaluronic acid; the current recipe drops it.' },
+      blurb: 'A molecule the body makes to hold water in skin and joints, sold as a supplement for hydration though the evidence for swallowing it is mixed. Early versions of the Strawberry Glaze listed NeoCell hyaluronic acid, and the current recipe leaves it out.' },
     { id: 'multivitamin', name: 'Multivitamin', cat: 'supplement', band: 'functional', icon: 'multivitamin', re: /multivitamin|mary\s*ruth|codeage.*hair vitamins|\bhair vitamins?(?: blend)?\b/,
       blurb: 'Preparations combining multiple vitamins, including MaryRuth liquid products and Codeage Hair Vitamins. Some formulas add other supplements. Their product names and listed forms remain visible in each recipe.' },
     { id: 'fulvic', name: 'Fulvic minerals', cat: 'supplement', band: 'functional', icon: 'fulvic', re: /fulvic/,

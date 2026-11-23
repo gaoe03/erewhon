@@ -93,7 +93,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
   margin: 18px 0 0;
 }
 
-.menu-note, .view-note { font-size: 13px; color: var(--secondary); margin: 24px 0 0; line-height: 1.6; }
+.menu-note, .view-note { font-size: 13px; color: var(--secondary); margin: 14px 0 0; line-height: 1.6; }
 .menu-note:empty { display: none; }
 
 /* ---- toolbar ------------------------------------------------- */
@@ -266,9 +266,11 @@ main { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
 #ing-categories { margin: 28px 0 70px; }
 
-.ing-toolbar { justify-content: flex-start; gap: 10px; margin: 30px 0 0; }
+.ing-toolbar { justify-content: flex-start; gap: 10px; }
+.tool-pair { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.ing-sort-pair { margin-left: auto; }
 .ing-filter-label { font-size: 13.5px; color: var(--secondary); }
-.ing-sort-label { font-size: 13.5px; color: var(--secondary); margin-left: auto; }
+.ing-sort-label { font-size: 13.5px; color: var(--secondary); }
 .ing-policy { max-width: 76ch; font-size: 13px; line-height: 1.6; color: var(--secondary); margin: 16px 0 0; }
 .ing-category-note { font-size: 13px; line-height: 1.6; color: var(--secondary); margin: -4px 0 16px; }
 #ing-category { max-width: 100%; }
@@ -521,7 +523,7 @@ div.ing-row:hover { background: none; }
   .segmented button { font-size: 12.5px; padding: 6px 10px; }
   .segmented .count { display: none; }
   .ing-search { width: 100%; }
-  .ing-sort-label { margin-left: 0; }
+  .ing-sort-pair { margin-left: 0; }
 
   main { padding: 0 14px; }
 

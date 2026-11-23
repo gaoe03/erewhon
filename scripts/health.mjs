@@ -60,6 +60,8 @@ export function healthCheck(repoRoot, options = {}) {
     }
     for (const ingredient of s.ingredients) if (!matchCanon(ingredient)) warns.push(`unresolved ingredient "${ingredient}" in ${s.id}`);
     if (s.needsReview && (!Array.isArray(s.reviewReasons) || s.reviewReasons.length === 0)) warns.push(`${s.id} needs review but has no review reason`);
+    // New drinks start with the placeholder color from scripts/append.mjs. Review should set a real one.
+    if (!s.needsReview && s.color === '#E7DFCF') warns.push(`${s.id} is reviewed but still has the placeholder color`);
   }
 
   if (!menu || typeof menu.checkedAt !== 'string' || Number.isNaN(Date.parse(menu.checkedAt)) || !/^https?:\/\//.test(menu.source)

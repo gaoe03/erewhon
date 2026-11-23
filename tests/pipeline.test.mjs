@@ -454,3 +454,17 @@ test('a duplicate flag from an earlier refresh stays visible in later reports', 
   const later = await runRefresh(options);
   assert.match(later.prBody, /Other review needed:[\s\S]*Two Smoothie: Possible duplicate: One Smoothie/);
 });
+
+test('health warns when a reviewed drink keeps the placeholder color', async () => {
+  const { healthCheck } = await import('../scripts/health.mjs');
+  const root = resolve(import.meta.dirname, '..');
+  const smoothies = JSON.parse(await readFile(resolve(root, 'data/smoothies.json'), 'utf8'));
+  const reviewed = smoothies.find((s) => !s.needsReview);
+  const placeholderWarn = (rows) => healthCheck(root, { smoothies: rows }).warns.filter((w) => w.includes('placeholder color'));
+  assert.equal(placeholderWarn(smoothies).length, 0);
+  const stale = smoothies.map((s) => (s === reviewed ? { ...s, color: '#E7DFCF' } : s));
+  assert.deepEqual(placeholderWarn(stale), [`${reviewed.id} is reviewed but still has the placeholder color`]);
+  // A new drink still waiting for review keeps the placeholder without a warning.
+  const fresh = smoothies.map((s) => (s === reviewed ? { ...s, color: '#E7DFCF', needsReview: true, reviewReasons: ['New archive entry needs editorial review'] } : s));
+  assert.equal(placeholderWarn(fresh).length, 0);
+});
